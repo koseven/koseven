@@ -3,6 +3,7 @@
 return array(
 
 	'default' => array(
+		'type'       => 'mcrypt',
 		/**
 		 * The following options must be set:
 		 *

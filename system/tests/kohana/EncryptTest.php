@@ -662,15 +662,15 @@ class Kohana_EncryptTest extends Unittest_TestCase
 		$expected_mode = $config[$config_group]['mode'];
 		$expected_key_size = mcrypt_get_key_size($expected_cipher, $expected_mode);
 		$expected_key = substr($config[$config_group]['key'], 0, $expected_key_size);
-
+		
 		// assert
-		$this->assertSameProtectedProperty($expected_key, $e, '_key');
-		$this->assertSameProtectedProperty($expected_cipher, $e, '_cipher');
-		$this->assertSameProtectedProperty($expected_mode, $e, '_mode');
+		$this->assertSameProtectedProperty($expected_key, $e->_engine, '_key');
+		$this->assertSameProtectedProperty($expected_cipher, $e->_engine, '_cipher');
+		$this->assertSameProtectedProperty($expected_mode, $e->_engine, '_mode');
 	}
 
 	/**
-	 * Helper method to test for private/protected properties
+	 * Helper method to test for private/protected properties of the egine
 	 *
 	 * @param mixed $expect Expected value
 	 * @param mixed $object object that holds the private/protected property
@@ -739,9 +739,27 @@ class Kohana_EncryptTest_KeyNormalized extends Kohana_EncryptTest_IvStubbed
 	{
 		parent::__construct($key, $iv, $mode, $cipher);
 
-		$this->_key = $this->_normalize_key($this->_key, $this->_cipher, $this->_mode);
-	}
+		// Encrypt config is moved to the engine.
+		// Since these properties and function are protected use reflection
+		// to update the key value in the engine class.
+		$refl = new ReflectionClass($this->_engine);
+		$method = $refl->getMethod('_normalize_key');
+		$method->setAccessible(TRUE);
 
+		$key_property = $refl->getProperty('_key');
+		$key_property->setAccessible(TRUE);
+		$_key = $key_property->getValue($this->_engine);
+		
+		$cipher_property = $refl->getProperty('_cipher');
+		$cipher_property->setAccessible(TRUE);
+		$_cipher = $cipher_property->getValue($this->_engine);
+
+		$mode_property = $refl->getProperty('_mode');
+		$mode_property->setAccessible(TRUE);
+		$_mode = $mode_property->getValue($this->_engine);
+
+		$key_property->setValue($this->_engine, $method->invoke($this->_engine, $_key, $_cipher, $_mode));
+	}
 
 }
 
