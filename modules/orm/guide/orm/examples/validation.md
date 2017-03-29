@@ -13,7 +13,7 @@ This example will create user accounts and demonstrate how to handle model and c
 
 ## Model
 	
-	<?php defined('SYSPATH') or die('No direct access allowed.');
+	<?php
 
 	class Model_Member extends ORM {
 

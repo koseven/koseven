@@ -1,12 +1,12 @@
-<?php defined('SYSPATH') OR die('No direct script access.');
+<?php
 /**
  * Syslog log writer.
  *
  * @package    Kohana
  * @category   Logging
  * @author     Jeremy Bush
- * @copyright  (c) 2012 Kohana Team
- * @license    http://kohanaframework.org/license
+ * @copyright  (c) Kohana Team
+ * @license    https://koseven.ga/LICENSE.md
  */
 class Kohana_Log_Syslog extends Log_Writer {
 

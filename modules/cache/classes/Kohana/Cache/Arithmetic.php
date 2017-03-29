@@ -1,4 +1,4 @@
-<?php defined('SYSPATH') or die('No direct script access.');
+<?php
 /**
  * Kohana Cache Arithmetic Interface, for basic cache integer based
  * arithmetic, addition and subtraction
@@ -6,8 +6,8 @@
  * @package    Kohana/Cache
  * @category   Base
  * @author     Kohana Team
- * @copyright  (c) 2009-2012 Kohana Team
- * @license    http://kohanaphp.com/license
+ * @copyright  (c) Kohana Team
+ * @license    https://koseven.ga/LICENSE.md
  * @since      3.2.0
  */
 interface Kohana_Cache_Arithmetic {

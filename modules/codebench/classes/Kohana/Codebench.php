@@ -1,12 +1,12 @@
-<?php defined('SYSPATH') or die('No direct access allowed.');
+<?php
 /**
  * Codebench — A benchmarking module.
  *
  * @package    Kohana/Codebench
  * @category   Base
  * @author     Kohana Team
- * @copyright  (c) 2009 Kohana Team
- * @license    http://kohanaphp.com/license.html
+ * @copyright  (c) Kohana Team
+ * @license    https://koseven.ga/LICENSE.md
  */
 abstract class Kohana_Codebench {
 
@@ -129,7 +129,7 @@ abstract class Kohana_Codebench {
 		// these values will be overwritten using min() and max() later on.
 		// The 999999999 values look like a hack, I know, but they work,
 		// unless your method runs for more than 31 years or consumes over 1GB of memory.
-		$fastest_method = $fastest_subject = array('time' => 999999999, 'memory' => 999999999); 
+		$fastest_method = $fastest_subject = array('time' => 999999999, 'memory' => 999999999);
 		$slowest_method = $slowest_subject = array('time' => 0, 'memory' => 0);
 
 		// Find the fastest and slowest benchmarks, needed for the percentage calculations

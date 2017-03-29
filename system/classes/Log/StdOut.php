@@ -1,3 +1,3 @@
-<?php defined('SYSPATH') OR die('No direct script access.');
+<?php
 
 class Log_StdOut extends Kohana_Log_StdOut {}

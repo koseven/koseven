@@ -1,4 +1,4 @@
-<?php defined('SYSPATH') OR die('No direct script access.');
+<?php
 /**
  * Contains the most low-level helpers methods in Kohana:
  *
@@ -10,8 +10,8 @@
  * @package    Kohana
  * @category   Base
  * @author     Kohana Team
- * @copyright  (c) 2008-2012 Kohana Team
- * @license    http://kohanaframework.org/license
+ * @copyright  (c) Kohana Team
+ * @license    https://koseven.ga/LICENSE.md
  */
 class Kohana_Core {
 
@@ -829,102 +829,138 @@ class Kohana_Core {
 		return include $file;
 	}
 
-	/**
-	 * Provides simple file-based caching for strings and arrays:
-	 *
-	 *     // Set the "foo" cache
-	 *     Kohana::cache('foo', 'hello, world');
-	 *
-	 *     // Get the "foo" cache
-	 *     $foo = Kohana::cache('foo');
-	 *
-	 * All caches are stored as PHP code, generated with [var_export][ref-var].
-	 * Caching objects may not work as expected. Storing references or an
-	 * object or array that has recursion will cause an E_FATAL.
-	 *
-	 * The cache directory and default cache lifetime is set by [Kohana::init]
-	 *
-	 * [ref-var]: http://php.net/var_export
-	 *
-	 * @throws  Kohana_Exception
-	 * @param   string  $name       name of the cache
-	 * @param   mixed   $data       data to cache
-	 * @param   integer $lifetime   number of seconds the cache is valid for
-	 * @return  mixed    for getting
-	 * @return  boolean  for setting
-	 */
-	public static function cache($name, $data = NULL, $lifetime = NULL)
-	{
-		// Cache file is a hash of the name
-		$file = sha1($name).'.txt';
+    /**
+     * Cache variables using current cache module if enabled, if not uses Kohana::file_cache
+     *
+     *     // Set the "foo" cache
+     *     Kohana::cache('foo', 'hello, world');
+     *
+     *     // Get the "foo" cache
+     *     $foo = Kohana::cache('foo');
+     *     
+     * @throws  Kohana_Exception
+     * @param   string  $name       name of the cache
+     * @param   mixed   $data       data to cache
+     * @param   integer $lifetime   number of seconds the cache is valid for
+     * @return  mixed    for getting
+     * @return  boolean  for setting
+     */
+    public static function cache($name, $data = NULL, $lifetime = NULL)
+    {
+        //in case the Kohana_Cache is not yet loaded we need to use the normal cache...sucks but happens onload
+        if (class_exists('Kohana_Cache'))
+        {
+            //deletes the cache
+            if ($lifetime===0)
+                return Cache::instance()->delete($name);
 
-		// Cache directories are split by keys to prevent filesystem overload
-		$dir = Kohana::$cache_dir.DIRECTORY_SEPARATOR.$file[0].$file[1].DIRECTORY_SEPARATOR;
+            //no data provided we read
+            if ($data===NULL)
+                return Cache::instance()->get($name);
+            //saves data
+            else
+                return Cache::instance()->set($name,$data, $lifetime);
+        }
+        else
+            return self::file_cache($name, $data, $lifetime);
+    }
 
-		if ($lifetime === NULL)
-		{
-			// Use the default lifetime
-			$lifetime = Kohana::$cache_life;
-		}
+    /**
+     * Provides simple file-based caching for strings and arrays:
+     *
+     *     // Set the "foo" cache
+     *     Kohana::file_cache('foo', 'hello, world');
+     *
+     *     // Get the "foo" cache
+     *     $foo = Kohana::file_cache('foo');
+     *
+     * All caches are stored as PHP code, generated with [var_export][ref-var].
+     * Caching objects may not work as expected. Storing references or an
+     * object or array that has recursion will cause an E_FATAL.
+     *
+     * The cache directory and default cache lifetime is set by [Kohana::init]
+     *
+     * [ref-var]: http://php.net/var_export
+     *
+     * @throws  Kohana_Exception
+     * @param   string  $name       name of the cache
+     * @param   mixed   $data       data to cache
+     * @param   integer $lifetime   number of seconds the cache is valid for
+     * @return  mixed    for getting
+     * @return  boolean  for setting
+     */
+    public static function file_cache($name, $data = NULL, $lifetime = NULL)
+    {
+        // Cache file is a hash of the name
+        $file = sha1($name).'.txt';
 
-		if ($data === NULL)
-		{
-			if (is_file($dir.$file))
-			{
-				if ((time() - filemtime($dir.$file)) < $lifetime)
-				{
-					// Return the cache
-					try
-					{
-						return unserialize(file_get_contents($dir.$file));
-					}
-					catch (Exception $e)
-					{
-						// Cache is corrupt, let return happen normally.
-					}
-				}
-				else
-				{
-					try
-					{
-						// Cache has expired
-						unlink($dir.$file);
-					}
-					catch (Exception $e)
-					{
-						// Cache has mostly likely already been deleted,
-						// let return happen normally.
-					}
-				}
-			}
+        // Cache directories are split by keys to prevent filesystem overload
+        $dir = Kohana::$cache_dir.DIRECTORY_SEPARATOR.$file[0].$file[1].DIRECTORY_SEPARATOR;
 
-			// Cache not found
-			return NULL;
-		}
+        if ($lifetime === NULL)
+        {
+            // Use the default lifetime
+            $lifetime = Kohana::$cache_life;
+        }
 
-		if ( ! is_dir($dir))
-		{
-			// Create the cache directory
-			mkdir($dir, 0777, TRUE);
+        if ($data === NULL)
+        {
+            if (is_file($dir.$file))
+            {
+                if ((time() - filemtime($dir.$file)) < $lifetime)
+                {
+                    // Return the cache
+                    try
+                    {
+                        return unserialize(file_get_contents($dir.$file));
+                    }
+                    catch (Exception $e)
+                    {
+                        // Cache is corrupt, let return happen normally.
+                    }
+                }
+                else
+                {
+                    try
+                    {
+                        // Cache has expired
+                        unlink($dir.$file);
+                    }
+                    catch (Exception $e)
+                    {
+                        // Cache has mostly likely already been deleted,
+                        // let return happen normally.
+                    }
+                }
+            }
 
-			// Set permissions (must be manually set to fix umask issues)
-			chmod($dir, 0777);
-		}
+            // Cache not found
+            return NULL;
+        }
 
-		// Force the data to be a string
-		$data = serialize($data);
+        if ( ! is_dir($dir))
+        {
+            // Create the cache directory
+            mkdir($dir, 0777, TRUE);
 
-		try
-		{
-			// Write the cache
-			return (bool) file_put_contents($dir.$file, $data, LOCK_EX);
-		}
-		catch (Exception $e)
-		{
-			// Failed to write cache
-			return FALSE;
-		}
-	}
+            // Set permissions (must be manually set to fix umask issues)
+            chmod($dir, 0777);
+        }
+
+        // Force the data to be a string
+        $data = serialize($data);
+
+        try
+        {
+            // Write the cache
+            return (bool) file_put_contents($dir.$file, $data, LOCK_EX);
+        }
+        catch (Exception $e)
+        {
+            // Failed to write cache
+            return FALSE;
+        }
+    }
 
 	/**
 	 * Get a message from a file. Messages are arbitrary strings that are stored

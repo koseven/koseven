@@ -1,4 +1,4 @@
-<?php defined('SYSPATH') OR die('No direct script access.');
+<?php
 
 class ORM_Behavior_Slug extends ORM_Behavior {
 

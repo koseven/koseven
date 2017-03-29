@@ -1,4 +1,4 @@
-<?php defined('SYSPATH') OR die('Kohana bootstrap needs to be included before tests run');
+<?php
 
 /**
  * Tests the Validation lib that's shipped with Kohana
@@ -11,8 +11,8 @@
  * @category   Tests
  * @author     Kohana Team
  * @author     BRMatt <matthew@sigswitch.com>
- * @copyright  (c) 2008-2012 Kohana Team
- * @license    http://kohanaframework.org/license
+ * @copyright  (c) Kohana Team
+ * @license    https://koseven.ga/LICENSE.md
  */
 class Kohana_ValidationTest extends Unittest_TestCase
 {
@@ -610,7 +610,7 @@ class Kohana_ValidationTest extends Unittest_TestCase
 	public function test_offsetSet_throws_exception()
 	// @codingStandardsIgnoreEnd
 	{
-		$this->setExpectedException('Kohana_Exception');
+		$this->expectException('Kohana_Exception');
 
 		$validation = Validation::factory(array());
 
@@ -639,7 +639,7 @@ class Kohana_ValidationTest extends Unittest_TestCase
 	public function test_offsetUnset()
 	// @codingStandardsIgnoreEnd
 	{
-		$this->setExpectedException('Kohana_Exception');
+		$this->expectException('Kohana_Exception');
 
 		$validation = Validation::factory(array(
 			'one' => 'Hello, World!',

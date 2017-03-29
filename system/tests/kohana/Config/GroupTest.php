@@ -1,5 +1,5 @@
-<?php defined('SYSPATH') OR die('Kohana bootstrap needs to be included before tests run');
-
+<?php
+use PHPUnit\Framework\TestCase;
 /**
  * Tests the Config group lib
  *
@@ -10,10 +10,10 @@
  * @author     Kohana Team
  * @author     Jeremy Bush <contractfrombelow@gmail.com>
  * @author     Matt Button <matthew@sigswitch.com>
- * @copyright  (c) 2008-2014 Kohana Team
- * @license    http://kohanaframework.org/license
+ * @copyright  (c) Kohana Team
+ * @license    https://koseven.ga/LICENSE.md
  */
-class Kohana_Config_GroupTest extends Kohana_Unittest_TestCase
+class Kohana_Config_GroupTest extends TestCase
 {
 	/**
 	 * Create a mock Kohana_Config instance
@@ -133,7 +133,7 @@ class Kohana_Config_GroupTest extends Kohana_Unittest_TestCase
 	 */
 	public function test_writes_changes_to_config()
 	{
-		$mock  = $this->getMock('Kohana_Config', array('_write_config'));
+		$mock  = $this->createMock('Kohana_Config', array('_write_config'));
 
 		$mock
 			->expects($this->exactly(3))

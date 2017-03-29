@@ -1,4 +1,4 @@
-<?php defined('SYSPATH') or die('No direct script access.');
+<?php
 /**
  * [Kohana Cache](api/Kohana_Cache) Wincache driver. Provides an opcode based
  * driver for the Kohana Cache library.
@@ -38,8 +38,8 @@
  * @package    Kohana/Cache
  * @category   Base
  * @author     Kohana Team
- * @copyright  (c) 2009-2012 Kohana Team
- * @license    http://kohanaphp.com/license
+ * @copyright  (c) Kohana Team
+ * @license    https://koseven.ga/LICENSE.md
  */
 class Kohana_Cache_Wincache extends Cache {
 

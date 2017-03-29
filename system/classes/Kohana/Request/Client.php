@@ -1,4 +1,4 @@
-<?php defined('SYSPATH') OR die('No direct script access.');
+<?php
 /**
  * Request Client. Processes a [Request] and handles [HTTP_Caching] if
  * available. Will usually return a [Response] object as a result of the
@@ -7,8 +7,8 @@
  * @package    Kohana
  * @category   Base
  * @author     Kohana Team
- * @copyright  (c) 2008-2012 Kohana Team
- * @license    http://kohanaframework.org/license
+ * @copyright  (c) Kohana Team
+ * @license    https://koseven.ga/LICENSE.md
  * @since      3.1.0
  */
 abstract class Kohana_Request_Client {

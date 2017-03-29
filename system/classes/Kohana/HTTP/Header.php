@@ -1,4 +1,4 @@
-<?php defined('SYSPATH') OR die('No direct script access.');
+<?php
 /**
  * The Kohana_HTTP_Header class provides an Object-Orientated interface
  * to HTTP headers. This can parse header arrays returned from the
@@ -9,8 +9,8 @@
  * @category   HTTP
  * @author     Kohana Team
  * @since      3.1.0
- * @copyright  (c) 2008-2014 Kohana Team
- * @license    http://kohanaframework.org/license
+ * @copyright  (c) Kohana Team
+ * @license    https://koseven.ga/LICENSE.md
  */
 class Kohana_HTTP_Header extends ArrayObject {
 

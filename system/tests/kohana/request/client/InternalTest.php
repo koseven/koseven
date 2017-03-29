@@ -1,4 +1,4 @@
-<?php defined('SYSPATH') OR die('Kohana bootstrap needs to be included before tests run');
+<?php
 
 /**
  * Unit tests for internal request client
@@ -12,8 +12,8 @@
  * @package    Kohana
  * @category   Tests
  * @author     Kohana Team
- * @copyright  (c) 2008-2012 Kohana Team
- * @license    http://kohanaframework.org/license
+ * @copyright  (c) Kohana Team
+ * @license    https://koseven.ga/LICENSE.md
  */
 class Kohana_Request_Client_InternalTest extends Unittest_TestCase
 {
@@ -61,7 +61,7 @@ class Kohana_Request_Client_InternalTest extends Unittest_TestCase
 	public function test_response_failure_status($directory, $controller, $action, $uri, $expected)
 	{
 		// Mock for request object
-		$request = $this->getMock('Request', array('directory', 'controller', 'action', 'uri', 'response', 'method'), array($uri));
+		$request = $this->createMock('Request', array('directory', 'controller', 'action', 'uri', 'response', 'method'), array($uri));
 
 		$request->expects($this->any())
 			->method('directory')
@@ -80,8 +80,8 @@ class Kohana_Request_Client_InternalTest extends Unittest_TestCase
 			->will($this->returnValue($uri));
 
 		$request->expects($this->any())
-			->method('response')
-			->will($this->returnValue($this->getMock('Response')));
+			->method('execute')
+			->will($this->returnValue($this->createMock('Response')));
 
 		// mock `method` method to avoid fatals in newer versions of PHPUnit
 		$request->expects($this->any())

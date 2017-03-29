@@ -1,4 +1,4 @@
-<?php defined('SYSPATH') or die('No direct script access.');
+<?php
 
 /**
  * PHPUnit testsuite for kohana application
@@ -7,8 +7,8 @@
  * @author     Kohana Team
  * @author     BRMatt <matthew@sigswitch.com>
  * @author	   Paul Banks
- * @copyright  (c) 2008-2009 Kohana Team
- * @license    http://kohanaphp.com/license
+ * @copyright  (c) Kohana Team
+ * @license    https://koseven.ga/LICENSE.md
  */
 class Kohana_Unittest_Tests {
 	static protected $cache = array();

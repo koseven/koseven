@@ -1,4 +1,4 @@
-<?php defined('SYSPATH') OR die('No direct script access.');
+<?php
 
 /**
  * Database reader for the kohana config system
@@ -6,8 +6,8 @@
  * @package    Kohana/Database
  * @category   Configuration
  * @author     Kohana Team
- * @copyright  (c) 2012 Kohana Team
- * @license    http://kohanaframework.org/license
+ * @copyright  (c) Kohana Team
+ * @license    https://koseven.ga/LICENSE.md
  */
 class Kohana_Config_Database_Reader implements Kohana_Config_Reader
 {

@@ -1,4 +1,4 @@
-<?php defined('SYSPATH') OR die('No direct script access.');
+<?php
 
 class Kohana_ORM_Behavior_LocalBehavior extends ORM_Behavior {
 

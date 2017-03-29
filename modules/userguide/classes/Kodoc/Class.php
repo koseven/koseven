@@ -1,3 +1,3 @@
-<?php defined('SYSPATH') or die('No direct script access.');
+<?php
 
 class Kodoc_Class extends Kohana_Kodoc_Class {}

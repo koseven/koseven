@@ -1,4 +1,4 @@
-<?php defined('SYSPATH') or die('No direct script access.');
+<?php
 /**
  * [Kohana Cache](api/Kohana_Cache) File driver. Provides a file based
  * driver for the Kohana Cache library. This is one of the slowest
@@ -35,8 +35,8 @@
  * @package    Kohana/Cache
  * @category   Base
  * @author     Kohana Team
- * @copyright  (c) 2009-2012 Kohana Team
- * @license    http://kohanaphp.com/license
+ * @copyright  (c) Kohana Team
+ * @license    https://koseven.ga/LICENSE.md
  */
 class Kohana_Cache_File extends Cache implements Cache_GarbageCollect {
 

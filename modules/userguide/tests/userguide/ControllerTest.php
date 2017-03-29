@@ -1,4 +1,4 @@
-<?php defined('SYSPATH') OR die('Kohana bootstrap needs to be included before tests run');
+<?php
 
 /**
  * Unit tests for internal methods of userguide controller
@@ -10,8 +10,8 @@
  * @package    Kohana/Userguide
  * @category   Tests
  * @author     Kohana Team
- * @copyright  (c) 2008-2013 Kohana Team
- * @license    http://kohanaframework.org/license
+ * @copyright  (c) Kohana Team
+ * @license    https://koseven.ga/LICENSE.md
  */
 class Userguide_ControllerTest extends Unittest_TestCase
 {

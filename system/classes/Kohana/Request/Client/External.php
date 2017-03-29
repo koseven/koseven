@@ -1,4 +1,4 @@
-<?php defined('SYSPATH') OR die('No direct script access.');
+<?php
 /**
  * [Request_Client_External] provides a wrapper for all external request
  * processing. This class should be extended by all drivers handling external
@@ -25,8 +25,8 @@
  * @package    Kohana
  * @category   Base
  * @author     Kohana Team
- * @copyright  (c) 2008-2012 Kohana Team
- * @license    http://kohanaframework.org/license
+ * @copyright  (c) Kohana Team
+ * @license    https://koseven.ga/LICENSE.md
  * @uses       [PECL HTTP](http://php.net/manual/en/book.http.php)
  */
 abstract class Kohana_Request_Client_External extends Request_Client {

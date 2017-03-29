@@ -1,4 +1,4 @@
-<?php defined('SYSPATH') OR die('Kohana bootstrap needs to be included before tests run');
+<?php
 
 /**
  * Tests the encrypt class
@@ -11,8 +11,8 @@
  * @category   Tests
  * @author     Kohana Team
  * @author     Samuel Demirdjian <sam@enov.ws>
- * @copyright  (c) 2014 Kohana Team
- * @license    http://kohanaframework.org/license
+ * @copyright  (c) Kohana Team
+ * @license    https://koseven.ga/LICENSE.md
  */
 class Kohana_EncryptTest extends Unittest_TestCase
 {

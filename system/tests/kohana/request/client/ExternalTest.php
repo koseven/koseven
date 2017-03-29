@@ -1,4 +1,4 @@
-<?php defined('SYSPATH') OR die('Kohana bootstrap needs to be included before tests run');
+<?php
 /**
  * Unit tests for external request client
  *
@@ -10,8 +10,8 @@
  * @package    Kohana
  * @category   Tests
  * @author     Kohana Team
- * @copyright  (c) 2008-2012 Kohana Team
- * @license    http://kohanaframework.org/license
+ * @copyright  (c) Kohana Team
+ * @license    https://koseven.ga/LICENSE.md
  */
 class Kohana_Request_Client_ExternalTest extends Unittest_TestCase {
 
@@ -153,39 +153,5 @@ class Kohana_Request_Client_ExternalTest extends Unittest_TestCase {
 				)
 			)
 		);
-	}
-
-	/**
-	 * Tests the [Request_Client_External::_send_message()] method
-	 *
-	 * @dataProvider provider_execute
-	 * 
-	 * @return  void
-	 */
-	public function test_execute($content_type, $body, $post, $expected)
-	{
-		$old_request = Request::$initial;
-		Request::$initial = TRUE;
-
-		// Create a mock Request
-		$request = new Request('http://kohanaframework.org/');
-		$request->method(HTTP_Request::POST)
-			->headers('content-type', $content_type)
-			->body($body)
-			->post($post);
-
-		$client = $this->getMock('Request_Client_External', array('_send_message'));
-		$client->expects($this->once())
-			->method('_send_message')
-			->with($request)
-			->will($this->returnValue($this->getMock('Response')));
-
-		$request->client($client);
-
-		$this->assertInstanceOf('Response', $request->execute());
-		$this->assertSame($expected['body'], $request->body());
-		$this->assertSame($expected['content-type'], (string) $request->headers('content-type'));
-
-		Request::$initial = $old_request;
 	}
 }

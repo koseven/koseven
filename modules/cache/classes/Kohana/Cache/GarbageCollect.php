@@ -1,4 +1,4 @@
-<?php defined('SYSPATH') or die('No direct script access.');
+<?php
 /**
  * Garbage Collection interface for caches that have no GC methods
  * of their own, such as [Cache_File] and [Cache_Sqlite]. Memory based
@@ -8,8 +8,8 @@
  * @category   Base
  * @version    2.0
  * @author     Kohana Team
- * @copyright  (c) 2009-2012 Kohana Team
- * @license    http://kohanaphp.com/license
+ * @copyright  (c) Kohana Team
+ * @license    https://koseven.ga/LICENSE.md
  * @since      3.0.8
  */
 interface Kohana_Cache_GarbageCollect {

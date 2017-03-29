@@ -11,7 +11,7 @@ First we need to create a controller that handles the requests for uploading an 
 For simplicity, the upload form will be on `index` action and `upload` action will process the uploaded file. This is what our controller now looks like. Please note that we are not using [Controller_Template], just [Controller].
 
 ~~~
-<?php defined('SYSPATH') or die('No direct script access.');
+<?php
 
 class Controller_Avatar extends Controller {
 

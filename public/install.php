@@ -1,6 +1,4 @@
 <?php
-// Sanity check, install should only be checked from index.php
-defined('SYSPATH') or exit('Install tests must be loaded from within index.php!');
 
 //we check first short tags if not we can not even load the installer
 if (! ((bool) ini_get('short_open_tag')) )

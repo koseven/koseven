@@ -1,3 +1,3 @@
-<?php defined('SYSPATH') or die('No direct script access.');
+<?php
 
 abstract class Cache extends Kohana_Cache {}

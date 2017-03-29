@@ -15,7 +15,7 @@ This is a simple example of a single ORM model, that has no relationships, but u
 
 ## Model
 	
-	<?php defined('SYSPATH') or die('No direct access allowed.');
+	<?php
 
 	class Model_Member extends ORM {
 
@@ -56,7 +56,7 @@ This is a simple example of a single ORM model, that has no relationships, but u
 
 ## Controller
 
-	<?php defined('SYSPATH') or die('No direct access allowed.');
+	<?php
 	
 	class Controller_Member extends Controller_Template {
 		

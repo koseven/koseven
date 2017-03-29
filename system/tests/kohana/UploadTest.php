@@ -1,4 +1,4 @@
-<?php defined('SYSPATH') OR die('Kohana bootstrap needs to be included before tests run');
+<?php
 
 /**
  * Tests Kohana upload class
@@ -11,8 +11,8 @@
  * @category   Tests
  * @author     Kohana Team
  * @author     Jeremy Bush <contractfrombelow@gmail.com>
- * @copyright  (c) 2008-2012 Kohana Team
- * @license    http://kohanaframework.org/license
+ * @copyright  (c) Kohana Team
+ * @license    https://koseven.ga/LICENSE.md
  */
 class Kohana_UploadTest extends Unittest_TestCase
 {
@@ -120,6 +120,7 @@ class Kohana_UploadTest extends Unittest_TestCase
 	 */
 	public function provider_valid()
 	{
+        $this->markAsRisky();
 		return array(
 			array(
 				TRUE,

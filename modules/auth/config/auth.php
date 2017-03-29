@@ -1,4 +1,4 @@
-<?php defined('SYSPATH') OR die('No direct access allowed.');
+<?php
 
 return array(
 
@@ -8,6 +8,8 @@ return array(
 	'lifetime'     => 1209600,
 	'session_type' => Session::$default,
 	'session_key'  => 'auth_user',
+	// For Auth_Bcrypt
+	'cost'         => 10,
 
 	// Username/password combinations for the Auth File driver
 	'users' => array(

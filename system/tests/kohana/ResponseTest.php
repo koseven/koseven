@@ -1,4 +1,4 @@
-<?php defined('SYSPATH') OR die('Kohana bootstrap needs to be included before tests run');
+<?php
 
 /**
  * Unit tests for response class
@@ -10,8 +10,8 @@
  * @package    Kohana
  * @category   Tests
  * @author     Kohana Team
- * @copyright  (c) 2008-2012 Kohana Team
- * @license    http://kohanaframework.org/license
+ * @copyright  (c) Kohana Team
+ * @license    https://koseven.ga/LICENSE.md
  */
 class Kohana_ResponseTest extends Unittest_TestCase
 {
@@ -22,7 +22,7 @@ class Kohana_ResponseTest extends Unittest_TestCase
 	 */
 	public function provider_body()
 	{
-		$view = $this->getMock('View');
+		$view = $this->createMock('View');
 		$view->expects($this->any())
 			->method('__toString')
 			->will($this->returnValue('foo'));

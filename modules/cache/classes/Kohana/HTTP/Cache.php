@@ -1,4 +1,4 @@
-<?php defined('SYSPATH') or die('No direct script access.');
+<?php
 /**
  * HTTP Caching adaptor class that provides caching services to the
  * [Request_Client] class, using HTTP cache control logic as defined in
@@ -7,8 +7,8 @@
  * @package    Kohana
  * @category   Base
  * @author     Kohana Team
- * @copyright  (c) 2008-2012 Kohana Team
- * @license    http://kohanaframework.org/license
+ * @copyright  (c) Kohana Team
+ * @license    https://koseven.ga/LICENSE.md
  * @since      3.2.0
  */
 class Kohana_HTTP_Cache {

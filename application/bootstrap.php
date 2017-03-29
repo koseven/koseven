@@ -1,4 +1,4 @@
-<?php defined('SYSPATH') or die('No direct script access.');
+<?php
 
 // -- Environment setup --------------------------------------------------------
 
@@ -127,6 +127,7 @@ Kohana::modules(array(
 	// 'image'      => MODPATH.'image',      // Image manipulation
 	// 'minion'     => MODPATH.'minion',     // CLI Tasks
 	// 'orm'        => MODPATH.'orm',        // Object Relationship Mapping
+	// 'pagination' => MODPATH.'pagination', // Pagination
 	// 'unittest'   => MODPATH.'unittest',   // Unit testing
 	// 'userguide'  => MODPATH.'userguide',  // User guide and API documentation
 	));
@@ -139,6 +140,19 @@ Kohana::modules(array(
  * uncomment the line below and define a preferrably long salt.
  */
 // Cookie::$salt = NULL;
+/**
+ * Cookie HttpOnly directive
+ * If set to true, disallows cookies to be accessed from JavaScript
+ * @see https://en.wikipedia.org/wiki/Session_hijacking
+ */
+// Cookie::$httponly = TRUE;
+/**
+ * If website runs on secure protocol HTTPS, allows cookies only to be transmitted
+ * via HTTPS.
+ * Warning: HSTS must also be enabled in .htaccess, otherwise first request
+ * to http://www.example.com will still reveal this cookie
+ */
+// Cookie::$secure = isset($_SERVER['HTTPS']) AND $_SERVER['HTTPS'] == 'on' ? TRUE : FALSE;
 
 /**
  * Set the routes. Each route must have a minimum of a name, a URI and a set of

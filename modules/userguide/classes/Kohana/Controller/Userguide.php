@@ -1,12 +1,12 @@
-<?php defined('SYSPATH') or die('No direct script access.');
+<?php
 /**
  * Kohana user guide and api browser.
  *
  * @package    Kohana/Userguide
  * @category   Controller
  * @author     Kohana Team
- * @copyright  (c) 2008-2013 Kohana Team
- * @license    http://kohanaframework.org/license
+ * @copyright  (c) Kohana Team
+ * @license    https://koseven.ga/LICENSE.md
  */
 abstract class Kohana_Controller_Userguide extends Controller_Template {
 

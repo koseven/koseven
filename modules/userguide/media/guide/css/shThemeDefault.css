@@ -9,7 +9,7 @@
  * 3.0.83 (July 02 2010)
  * 
  * @copyright
- * Copyright (C) 2004-2010 Alex Gorbatchev.
+ * Copyright (C) 2004-2017 Alex Gorbatchev.
  *
  * @license
  * Dual licensed under the MIT and GPL licenses.

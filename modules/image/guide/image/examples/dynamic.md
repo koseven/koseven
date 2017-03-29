@@ -34,7 +34,7 @@ Our controller simply accepts the request and capture the following parameters a
 Then it finds the image file and when found, render it on the browser. Additional features added are browser caching.
 
 ~~~
-<?php defined('SYSPATH') or die('No direct script access.');
+<?php
 
 class Controller_Imagefly extends Controller {
 

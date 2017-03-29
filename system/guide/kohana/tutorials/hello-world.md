@@ -10,7 +10,7 @@ First off we have to make a controller that Kohana can use to handle a request.
 
 Create the file `application/classes/Controller/Hello.php` in your application folder and fill it out like so:
 
-    <?php defined('SYSPATH') OR die('No Direct Script Access');
+    <?php
 
 	Class Controller_Hello extends Controller
 	{
@@ -22,7 +22,7 @@ Create the file `application/classes/Controller/Hello.php` in your application f
 
 Lets see what's going on here:
 
-`<?php defined('SYSPATH') OR die('No Direct Script Access');`
+`<?php`
 :	You should recognize the first tag as an opening php tag (if you don't you should probably [learn php](http://php.net)).  What follows is a small check that makes sure that this file is being included by Kohana.  It stops people from accessing files directly from the url.
 
 `Class Controller_Hello extends Controller`
@@ -49,7 +49,7 @@ The proper way to code with an MVC framework is to use _views_ to handle the pre
 
 Lets change our original controller slightly:
 
-    <?php defined('SYSPATH') OR die('No Direct Script Access');
+    <?php
 
 	Class Controller_Hello extends Controller_Template
 	{

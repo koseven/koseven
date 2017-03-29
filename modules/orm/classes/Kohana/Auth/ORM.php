@@ -1,11 +1,11 @@
-<?php defined('SYSPATH') OR die('No direct access allowed.');
+<?php
 /**
  * ORM Auth driver.
  *
  * @package    Kohana/Auth
  * @author     Kohana Team
- * @copyright  (c) 2007-2012 Kohana Team
- * @license    http://kohanaframework.org/license
+ * @copyright  (c) Kohana Team
+ * @license    https://koseven.ga/LICENSE.md
  */
 class Kohana_Auth_ORM extends Auth {
 

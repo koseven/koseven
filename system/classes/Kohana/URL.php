@@ -1,4 +1,4 @@
-<?php defined('SYSPATH') OR die('No direct script access.');
+<?php
 /**
  * URL helper class.
  *
@@ -7,8 +7,8 @@
  * @package    Kohana
  * @category   Helpers
  * @author     Kohana Team
- * @copyright  (c) 2007-2012 Kohana Team
- * @license    http://kohanaframework.org/license
+ * @copyright  (c) Kohana Team
+ * @license    https://koseven.ga/LICENSE.md
  */
 class Kohana_URL {
 
@@ -29,13 +29,14 @@ class Kohana_URL {
 	 *     // Absolute URL path with host and protocol from $request
 	 *     echo URL::base($request);
 	 *
-	 * @param   mixed    $protocol Protocol string, [Request], or boolean
-	 * @param   boolean  $index    Add index file to URL?
+	 * @param   mixed    $protocol  Protocol string, [Request], or boolean
+	 * @param   boolean  $index     Add index file to URL?
+	 * @param   string   $subdomain Subdomain string
 	 * @return  string
 	 * @uses    Kohana::$index_file
 	 * @uses    Request::protocol()
 	 */
-	public static function base($protocol = NULL, $index = FALSE)
+	public static function base($protocol = NULL, $index = FALSE, $subdomain = NULL)
 	{
 		// Start with the configured base URL
 		$base_url = Kohana::$base_url;
@@ -89,6 +90,12 @@ class Kohana_URL {
 				// Attempt to use HTTP_HOST and fallback to SERVER_NAME
 				$host = isset($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : $_SERVER['SERVER_NAME'];
 
+				// If subdomain passed, then append to host
+				if( ! is_null($subdomain))
+				{
+					$host = $subdomain.'.'.$host;
+				}
+				
 				// make $host lowercase
 				$host = strtolower($host);
 
@@ -126,10 +133,11 @@ class Kohana_URL {
 	 * @param   string  $uri        Site URI to convert
 	 * @param   mixed   $protocol   Protocol string or [Request] class to use protocol from
 	 * @param   boolean $index		Include the index_page in the URL
+	 * @param   string  $subdomain  Subdomain string
 	 * @return  string
 	 * @uses    URL::base
 	 */
-	public static function site($uri = '', $protocol = NULL, $index = TRUE)
+	public static function site($uri = '', $protocol = NULL, $index = TRUE, $subdomain = NULL)
 	{
 		// Chop off possible scheme, host, port, user and pass parts
 		$path = preg_replace('~^[-a-z0-9+.]++://[^/]++/?~', '', trim($uri, '/'));
@@ -141,7 +149,7 @@ class Kohana_URL {
 		}
 
 		// Concat the URL
-		return URL::base($protocol, $index).$path;
+		return URL::base($protocol, $index, $subdomain).$path;
 	}
 
 	/**

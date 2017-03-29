@@ -1,4 +1,4 @@
-<?php defined('SYSPATH') OR die('Kohana bootstrap needs to be included before tests run');
+<?php
 
 /**
  * Tests the Valid class
@@ -11,8 +11,8 @@
  * @category   Tests
  * @author     Kohana Team
  * @author     BRMatt <matthew@sigswitch.com>
- * @copyright  (c) 2008-2012 Kohana Team
- * @license    http://kohanaframework.org/license
+ * @copyright  (c) Kohana Team
+ * @license    https://koseven.ga/LICENSE.md
  */
 class Kohana_ValidTest extends Unittest_TestCase
 {
@@ -781,7 +781,7 @@ class Kohana_ValidTest extends Unittest_TestCase
 			array('01234456778',      NULL, TRUE),
 			array('+0441234456778',   NULL, FALSE),
 			// Google UK case you're interested
-			array('+44 20-7031-3000', array(12), TRUE),
+			array('+44 20-7031-2017', array(12), TRUE),
 			// BT Corporate
 			array('020 7356 5000',	  NULL, TRUE),
 			// Empty test

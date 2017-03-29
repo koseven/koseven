@@ -1,4 +1,4 @@
-<?php defined('SYSPATH') OR die('Kohana bootstrap needs to be included before tests run');
+<?php
 
 /**
  * Description of RouteTest
@@ -11,8 +11,8 @@
  * @category   Tests
  * @author     Kohana Team
  * @author     BRMatt <matthew@sigswitch.com>
- * @copyright  (c) 2008-2012 Kohana Team
- * @license    http://kohanaframework.org/license
+ * @copyright  (c) Kohana Team
+ * @license    https://koseven.ga/LICENSE.md
  */
 
 include Kohana::find_file('tests', 'test_data/callback_routes');
@@ -175,11 +175,11 @@ class Kohana_RouteTest extends Unittest_TestCase
 	public function test_constructor_returns_if_uri_is_null()
 	{
 		// We use a mock object to make sure that the route wasn't recompiled
-		$route = $this->getMock('Route', array('_compile'), array(), '', FALSE);
+		$route = $this->createMock('Route', array('_compile'), array(), '', FALSE);
 
 		$route
 			->expects($this->never())
-			->method('_compile');
+			->method('compile');
 
 		$route->__construct(NULL,NULL);
 
@@ -636,8 +636,8 @@ class Kohana_RouteTest extends Unittest_TestCase
 	public function test_uri_throws_exception_if_required_params_are_missing($uri, $regex, $uri_array)
 	{
 		$route = new Route($uri, $regex);
-
-		$this->setExpectedException('Kohana_Exception', 'controller');
+        
+        $this->expectException('Kohana_Exception');
 		$route->uri($uri_array);
 	}
 
@@ -939,7 +939,7 @@ class Kohana_RouteTest extends Unittest_TestCase
 	public function get_request_mock($uri)
 	{
 		// Mock a request class with the $uri uri
-		$request = $this->getMock('Request', array('uri', 'method'), array($uri));
+		$request = $this->createMock('Request', array('uri', 'method'), array($uri));
 
 		// mock `uri` method
 		$request->expects($this->any())

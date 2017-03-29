@@ -1,4 +1,4 @@
-<?php defined('SYSPATH') OR die('No direct script access.');
+<?php
 
 return array(
 	// Provide the default driver to use - eg a value of Imagick will use Image_Imagick as the driver class

@@ -1,12 +1,12 @@
-<?php defined('SYSPATH') or die('No direct script access.');
+<?php
 /**
  * Class property documentation generator.
  *
  * @package    Kohana/Userguide
  * @category   Base
  * @author     Kohana Team
- * @copyright  (c) 2008-2013 Kohana Team
- * @license    http://kohanaframework.org/license
+ * @copyright  (c) Kohana Team
+ * @license    https://koseven.ga/LICENSE.md
  */
 class Kohana_Kodoc_Property extends Kodoc {
 

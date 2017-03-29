@@ -132,7 +132,7 @@ failure_callback | __NO__   | (_[callback](http://www.php.net/manual/en/language
 
 The following example demonstrates how to override an existing configuration setting, using the config file in `/application/config/cache.php`.
 
-	<?php defined('SYSPATH') or die('No direct script access.');
+	<?php
 	return array
 	(
 		// Override the default configuration
@@ -158,7 +158,7 @@ The following example demonstrates how to override an existing configuration set
 
 The following example demonstrates how to add a new configuration setting, using the config file in `/application/config/cache.php`.
 
-	<?php defined('SYSPATH') or die('No direct script access.');
+	<?php
 	return array
 	(
 		// Override the default configuration

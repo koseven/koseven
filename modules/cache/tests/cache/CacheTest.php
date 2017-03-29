@@ -1,15 +1,15 @@
 <?php
-
+use PHPUnit\Framework\TestCase;
 /**
  * @package    Kohana/Cache
  * @group      kohana
  * @group      kohana.cache
  * @category   Test
  * @author     Kohana Team
- * @copyright  (c) 2009-2012 Kohana Team
- * @license    http://kohanaphp.com/license
+ * @copyright  (c) Kohana Team
+ * @license    https://koseven.ga/LICENSE.md
  */
-class Kohana_CacheTest extends PHPUnit_Framework_TestCase {
+class Kohana_CacheTest extends TestCase {
 
 	const BAD_GROUP_DEFINITION  = 1010;
 	const EXPECT_SELF           = 1001;
@@ -164,7 +164,7 @@ class Kohana_CacheTest extends PHPUnit_Framework_TestCase {
 	 */
 	public function test_config($key, $value, $expected_result, array $expected_config)
 	{
-		$cache = $this->getMock('Cache_File', NULL, array(), '', FALSE);
+		$cache = $this->createMock('Cache_File', NULL, array(), '', FALSE);
 
 		if ($expected_result === Kohana_CacheTest::EXPECT_SELF)
 		{

@@ -6,8 +6,8 @@
  *
  * @package    Kohana/Userguide
  * @author     Kohana Team
- * @copyright  (c) 2008-2013 Kohana Team
- * @license    http://kohanaframework.org/license
+ * @copyright  (c) Kohana Team
+ * @license    https://koseven.ga/LICENSE.md
  */
 class Kohana_KodocTest extends PHPUnit_Framework_TestCase
 {
@@ -162,11 +162,11 @@ COMMENT
 			array(
 <<<'COMMENT'
 /**
- * @copyright (c) 2008-2013 Kohana Team
+ * @copyright (c) 2008-2017 Kohana Team
  */
 COMMENT
 ,
-				array('', array('copyright' => array('&copy; 2008-2013 Kohana Team'))),
+				array('', array('copyright' => array('&copy; 2008-2017 Kohana Team'))),
 			),
 			array(
 <<<'COMMENT'

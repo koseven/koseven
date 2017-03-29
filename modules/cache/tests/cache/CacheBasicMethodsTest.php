@@ -6,8 +6,8 @@
  * @group      kohana.cache
  * @category   Test
  * @author     Kohana Team
- * @copyright  (c) 2009-2012 Kohana Team
- * @license    http://kohanaphp.com/license
+ * @copyright  (c) Kohana Team
+ * @license    https://koseven.ga/LICENSE.md
  */
 abstract class Kohana_CacheBasicMethodsTest extends PHPUnit_Framework_TestCase {
 

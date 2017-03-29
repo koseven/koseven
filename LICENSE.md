@@ -16,7 +16,7 @@ Redistribution and use in source and binary forms, with or without modification,
 
 This license is a legal agreement between you and the Kohana Team for the use of Kohana Framework (the "Software"). By obtaining the Software you agree to comply with the terms and conditions of this license.
 
-Copyright (c) 2007-2011 Kohana Team  
+Copyright (c) 2007-2017 Kohana Team  
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:

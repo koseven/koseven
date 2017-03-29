@@ -1,10 +1,10 @@
-<?php defined('SYSPATH') OR die('No direct script access.');
+<?php
 /**
  * @package    Kohana
  * @category   Exceptions
  * @author     Kohana Team
- * @copyright  (c) 2009-2012 Kohana Team
- * @license    http://kohanaframework.org/license
+ * @copyright  (c) Kohana Team
+ * @license    https://koseven.ga/LICENSE.md
  */
 class Kohana_Validation_Exception extends Kohana_Exception {
 
