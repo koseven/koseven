@@ -20,11 +20,11 @@ before_install:
 
 # execute any number of scripts before the test run, custom env's are available as variables
 before_script:
-  - sudo chmod -R 755 modules/ application/ system/
+  - sudo chmod -R 755 framework/ framework/modules/ framework/application/ framework/system/
 
 script: 
   # - set -e # don't stop on failure
-  - php $HOME/.phpenv/versions/$TRAVIS_PHP_VERSION/bin/phpunit/phpunit.phar --bootstrap=modules/unittest/bootstrap.php modules/unittest/tests.php
+  - php $HOME/.phpenv/versions/$TRAVIS_PHP_VERSION/bin/phpunit/phpunit.phar --bootstrap=framework/modules/unittest/bootstrap.php framework/modules/unittest/tests.php
 
 # configure notifications (email, IRC, campfire etc)
 notifications:

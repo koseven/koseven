@@ -5,6 +5,7 @@
  * You can modify this path to match your hosting environment
  * make sure the path ends with a trailing slash /
  *
+ * @link http://kohanaframework.org/guide/about.install#framework
  */
 $framework = '../framework/';
 
