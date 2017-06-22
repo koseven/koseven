@@ -100,7 +100,7 @@ class Kohana_Auth_ORM extends Auth {
 
 				// Create a new autologin token
 				$token = ORM::factory('User_Token')
-							->values($data)
+							->values($data, array_keys($data))
 							->create();
 
 				// Set the autologin cookie
