@@ -51,6 +51,9 @@ RewriteBase /
 	Deny From All
 </Files>
 
+# protect framework related files from being viewed directly by denying access to it completely
+RewriteRule ^(?:framework)\b.* index.php/$0 [L]
+
 # Allow any files or directories that exist to be displayed directly
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
