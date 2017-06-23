@@ -1,19 +1,28 @@
 <?php
 
 /**
+ * The directory which contains koseven framework and application
+ * You can modify this path to match your hosting environment
+ * make sure the path ends with a trailing slash /
+ *
+ * @link http://kohanaframework.org/guide/about.install#framework
+ */
+$framework = '../framework/';
+
+/**
  * The directory in which your application specific resources are located.
  * The application directory must contain the bootstrap.php file.
  *
  * @link http://kohanaframework.org/guide/about.install#application
  */
-$application = 'application';
+$application = $framework.'application';
 
 /**
  * The directory in which your modules are located.
  *
  * @link http://kohanaframework.org/guide/about.install#modules
  */
-$modules = 'modules';
+$modules = $framework.'modules';
 
 /**
  * The directory in which the Kohana resources are located. The system
@@ -21,7 +30,7 @@ $modules = 'modules';
  *
  * @link http://kohanaframework.org/guide/about.install#system
  */
-$system = 'system';
+$system = $framework.'system';
 
 /**
  * The default extension of resource files. If you change this, all resources
@@ -74,7 +83,7 @@ define('MODPATH', realpath($modules).DIRECTORY_SEPARATOR);
 define('SYSPATH', realpath($system).DIRECTORY_SEPARATOR);
 
 // Clean up the configuration vars
-unset($application, $modules, $system);
+unset($framework, $application, $modules, $system);
 
 if (file_exists('install'.EXT))
 {
