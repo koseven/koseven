@@ -15,14 +15,14 @@ $framework = '../framework/';
  *
  * @link http://kohanaframework.org/guide/about.install#application
  */
-$application = $framework . 'application';
+$application = $framework.'application';
 
 /**
  * The directory in which your modules are located.
  *
  * @link http://kohanaframework.org/guide/about.install#modules
  */
-$modules = $framework . 'modules';
+$modules = $framework.'modules';
 
 /**
  * The directory in which the Kohana resources are located. The system
@@ -30,7 +30,7 @@ $modules = $framework . 'modules';
  *
  * @link http://kohanaframework.org/guide/about.install#system
  */
-$system = $framework . 'system';
+$system = $framework.'system';
 
 /**
  * The default extension of resource files. If you change this, all resources
