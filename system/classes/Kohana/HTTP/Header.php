@@ -745,6 +745,66 @@ class Kohana_HTTP_Header extends ArrayObject {
 	}
 
 	/**
+	 * Parse and cache the `Accept-Language:` HTTP header.
+	 *
+	 * @since   3.3.8
+	 */
+	protected function _parse_and_cache_language_header()
+	{
+		if ($this->_accept_language === NULL)
+		{
+			if ($this->offsetExists('Accept-Language'))
+			{
+				$language_header = strtolower($this->offsetGet('Accept-Language'));
+			}
+			else
+			{
+				$language_header = NULL;
+			}
+
+			$this->_accept_language = HTTP_Header::parse_language_header($language_header);
+		}
+	}
+ 
+	/**
+	 * Returns the reordered list of supplied `$languages` using the order
+	 * from the `Accept-Language:` HTTP header.
+	 *
+	 * @param   array   $languages  languages to order
+	 * @return  array
+	 * @since   3.3.8
+	 */
+	protected function _order_languages_as_received(array $languages)
+	{
+		$this->_parse_and_cache_language_header();
+
+		$new_order = [];
+
+		foreach ($this->_accept_language as $main_language => $accept_language)
+		{
+			foreach ($accept_language as $language_diversion => $quality)
+			{
+				foreach ($languages as $key => $language)
+				{
+					if ($language == $main_language.($language_diversion != '*' ? '-'.$language_diversion : ''))
+					{
+						$new_order[] = $language;
+
+						unset($languages[$key]);
+					}
+				}
+			}
+		}
+
+		foreach ($languages as $language)
+		{
+			$new_order[] = $language;
+		}
+		
+		return $new_order;
+	}
+ 
+	/**
 	 * Returns the quality of `$language` supplied, optionally ignoring
 	 * wildcards if `$explicit` is set to a non-`FALSE` value. If the quality
 	 * is not found, `0.0` is returned.
@@ -766,19 +826,7 @@ class Kohana_HTTP_Header extends ArrayObject {
 	 */
 	public function accepts_language_at_quality($language, $explicit = FALSE)
 	{
-		if ($this->_accept_language === NULL)
-		{
-			if ($this->offsetExists('Accept-Language'))
-			{
-				$language_header = strtolower($this->offsetGet('Accept-Language'));
-			}
-			else
-			{
-				$language_header = NULL;
-			}
-
-			$this->_accept_language = HTTP_Header::parse_language_header($language_header);
-		}
+		$this->_parse_and_cache_language_header();
 
 		// Normalize the language
 		$language_parts = explode('-', strtolower($language), 2);
@@ -812,7 +860,8 @@ class Kohana_HTTP_Header extends ArrayObject {
 
 	/**
 	 * Returns the preferred language from the supplied array `$languages` based
-	 * on the `Accept-Language` header directive.
+	 * on the `Accept-Language` header directive. Uses the order in the header
+	 * not from the `$languages` array.
 	 *
 	 *      // Accept-Language: en-us, en-gb; q=.7, en; q=.5
 	 *      $lang = $header->preferred_language(array(
@@ -828,6 +877,9 @@ class Kohana_HTTP_Header extends ArrayObject {
 	{
 		$ceiling = 0;
 		$preferred = FALSE;
+
+		// reorder language list using the client's order
+		$languages = $this->_order_languages_as_received($languages);
 
 		foreach ($languages as $language)
 		{
