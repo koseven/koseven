@@ -1640,7 +1640,7 @@ class Kohana_ORM extends Model implements serializable {
 		}
 		else
 		{
-			return $count === ((is_int($far_keys) || is_string($far_keys)) ? 1 : count($far_keys));
+			return $count === ((is_int($far_keys) || is_string($far_keys) || (is_object($far_keys))) ? 1 : count($far_keys));
 		}
 
 	}
