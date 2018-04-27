@@ -173,6 +173,9 @@ class Kohana_Database_MySQLi extends Database {
 				':query' => $sql
 			], $this->_connection->errno);
 		}
+		
+		do {}
+        	while (mysqli_more_results($this->_connection) AND mysqli_next_result($this->_connection));
 
 		if (isset($benchmark))
 		{
