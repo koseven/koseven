@@ -154,6 +154,30 @@ class Kohana_CoreTest extends Unittest_TestCase
 	}
 
 	/**
+	 * Tests Kohana::find_file() cache is saved on shutdown.
+	 * 
+	 * @test
+	 */
+	public function test_find_file_cache_saved()
+	{
+		$old_caching     = Kohana::$caching;
+		$old_errors      = Kohana::$errors;
+		Kohana::$caching = TRUE;
+		Kohana::$errors  = FALSE;
+
+		// trigger find_file() so Kohana::$_files_changed is set to TRUE
+		Kohana::find_file('abc', 'def');
+
+		// trigger shutdown so kohana write to file cache
+		Kohana::shutdown_handler();
+
+		$this->assertInternalType('array', Kohana::file_cache('Kohana::find_file()'));	    
+
+		Kohana::$caching = $old_caching;
+		Kohana::$errors  = $old_errors;
+	}
+
+	/**
 	 * Provides test data for test_message()
 	 *
 	 * @return array
