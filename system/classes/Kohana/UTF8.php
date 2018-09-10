@@ -34,6 +34,15 @@ class Kohana_UTF8 {
 	public static $called = [];
 
 	/**
+	 * @var  array  List of lower accents for [UTF8::transliterate_to_ascii].
+	 */
+	public static $lower_accents;
+	/**
+	 * @var  array  List of upper accents for [UTF8::transliterate_to_ascii].
+	 */
+	public static $upper_accents;
+
+	/**
 	 * Recursively cleans arrays, objects, and strings. Removes ASCII control
 	 * codes and converts to the requested charset while silently discarding
 	 * incompatible characters.
@@ -138,11 +147,13 @@ class Kohana_UTF8 {
 	 *     $ascii = UTF8::transliterate_to_ascii($utf8);
 	 *
 	 * @author  Andreas Gohr <andi@splitbrain.org>
-	 * @param   string  $str    string to transliterate
-	 * @param   integer $case   -1 lowercase only, +1 uppercase only, 0 both cases
+	 * @param   string  $str           string to transliterate
+	 * @param   integer $case          -1 lowercase only, +1 uppercase only, 0 both cases
+	 * @param   array   $lower_accents lower accents
+	 * @param   array   $upper_accents upper accents
 	 * @return  string
 	 */
-	public static function transliterate_to_ascii($str, $case = 0)
+	public static function transliterate_to_ascii($str, $case = 0, array $lower_accents = NULL, array $upper_accents = NULL): string
 	{
 		if ( ! isset(UTF8::$called[__FUNCTION__]))
 		{
@@ -152,7 +163,15 @@ class Kohana_UTF8 {
 			UTF8::$called[__FUNCTION__] = TRUE;
 		}
 
-		return _transliterate_to_ascii($str, $case);
+		if ($lower_accents === NULL AND $case <= 0)
+		{
+			$lower_accents = UTF8::$lower_accents;
+		}
+		if ($upper_accents === NULL AND $case >= 0)
+		{
+			$upper_accents = UTF8::$upper_accents;
+		}
+		return _transliterate_to_ascii($str, $case, $lower_accents, $upper_accents);
 	}
 
 	/**
@@ -762,8 +781,8 @@ class Kohana_UTF8 {
 
 }
 
-if (Kohana_UTF8::$server_utf8 === NULL)
+if (UTF8::$server_utf8 === NULL)
 {
 	// Determine if this server supports UTF-8 natively
-	Kohana_UTF8::$server_utf8 = extension_loaded('mbstring');
+	UTF8::$server_utf8 = extension_loaded('mbstring');
 }

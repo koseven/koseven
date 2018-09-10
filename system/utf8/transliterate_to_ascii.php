@@ -8,16 +8,13 @@
  * @copyright  (c) 2005 Harry Fuecks
  * @license    http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt
  */
-function _transliterate_to_ascii($str, $case = 0)
+function _transliterate_to_ascii($str, $case = 0, array $lower_accents = NULL, array $upper_accents = NULL)
 {
-	static $utf8_lower_accents = NULL;
-	static $utf8_upper_accents = NULL;
-
 	if ($case <= 0)
 	{
-		if ($utf8_lower_accents === NULL)
+		if ($lower_accents === NULL)
 		{
-			$utf8_lower_accents = [
+			$lower_accents = [
 				'à' => 'a',  'ô' => 'o',  'ď' => 'd',  'ḟ' => 'f',  'ë' => 'e',  'š' => 's',  'ơ' => 'o',
 				'ß' => 'ss', 'ă' => 'a',  'ř' => 'r',  'ț' => 't',  'ň' => 'n',  'ā' => 'a',  'ķ' => 'k',
 				'ŝ' => 's',  'ỳ' => 'y',  'ņ' => 'n',  'ĺ' => 'l',  'ħ' => 'h',  'ṗ' => 'p',  'ó' => 'o',
@@ -36,18 +33,14 @@ function _transliterate_to_ascii($str, $case = 0)
 			];
 		}
 
-		$str = str_replace(
-			array_keys($utf8_lower_accents),
-			array_values($utf8_lower_accents),
-			$str
-		);
+		$str = strtr($str, $lower_accents);
 	}
 
 	if ($case >= 0)
 	{
-		if ($utf8_upper_accents === NULL)
+		if ($upper_accents === NULL)
 		{
-			$utf8_upper_accents = [
+			$upper_accents = [
 				'À' => 'A',  'Ô' => 'O',  'Ď' => 'D',  'Ḟ' => 'F',  'Ë' => 'E',  'Š' => 'S',  'Ơ' => 'O',
 				'Ă' => 'A',  'Ř' => 'R',  'Ț' => 'T',  'Ň' => 'N',  'Ā' => 'A',  'Ķ' => 'K',  'Ĕ' => 'E',
 				'Ŝ' => 'S',  'Ỳ' => 'Y',  'Ņ' => 'N',  'Ĺ' => 'L',  'Ħ' => 'H',  'Ṗ' => 'P',  'Ó' => 'O',
@@ -66,11 +59,7 @@ function _transliterate_to_ascii($str, $case = 0)
 			];
 		}
 
-		$str = str_replace(
-			array_keys($utf8_upper_accents),
-			array_values($utf8_upper_accents),
-			$str
-		);
+		$str = strtr($str, $upper_accents);
 	}
 
 	return $str;
