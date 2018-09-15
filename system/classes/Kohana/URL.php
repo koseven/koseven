@@ -88,6 +88,11 @@ class Kohana_URL {
 			{
 				// Remove everything but the path from the URL
 				$base_url = parse_url($base_url, PHP_URL_PATH);
+				// If subdomain passed, then append to host
+				if( ! is_null($subdomain))
+				{
+					$host = $subdomain . '.' . $host;
+				}
 			}
 			else
 			{
