@@ -47,37 +47,22 @@ class Kohana_Security {
 
 		if ($new === TRUE OR ! $token)
 		{
-			$token = NULL;
-
-			try
+			if (function_exists('random_bytes'))
 			{
-				if (function_exists('random_bytes'))
+				try
 				{
 					$token = bin2hex(random_bytes(24));
 				}
-			}
-			catch(Exception $e)
-			{
-				// Random bytes function is available but no sources of randomness are available
-				// so rather than allowing the exception to be thrown - fall back to other methods.
-				// @see http://php.net/manual/en/function.random-bytes.php
-			}
-			finally
-			{
-				if ( ! $token)
+				catch(Exception $e)
 				{
-					if (function_exists('openssl_random_pseudo_bytes'))
-					{
-						// Generate a random pseudo bytes token if openssl_random_pseudo_bytes is available
-						// This is more secure than uniqid, because uniqid relies on microtime, which is predictable
-						$token = base64_encode(openssl_random_pseudo_bytes(32));
-					}
-					else
-					{
-						// Otherwise, fall back to a hashed uniqid
-						$token = sha1(uniqid(NULL, TRUE));
-					}
+					// Random bytes function is available but no sources of randomness are available
+					// so rather than allowing the exception to be thrown - fall back to other methods.
+					// @see http://php.net/manual/en/function.random-bytes.php
+					$token = generate_backwards_compatible_token();
 				}
+			}
+			else {
+				$token = generate_backwards_compatible_token();
 			}
 
 			// Store the new token
@@ -85,6 +70,26 @@ class Kohana_Security {
 		}
 
 		return $token;
+	}
+
+	/**
+	 * Generate a unique token using backwards compatible methods.
+	 *
+	 * @return  string
+	 */
+	private static function generate_backwards_compatible_token()
+	{
+		if (function_exists('openssl_random_pseudo_bytes'))
+		{
+			// Generate a random pseudo bytes token if openssl_random_pseudo_bytes is available
+			// This is more secure than uniqid, because uniqid relies on microtime, which is predictable
+			return base64_encode(openssl_random_pseudo_bytes(32));
+		}
+		else
+		{
+			// Otherwise, fall back to a hashed uniqid
+			return sha1(uniqid(NULL, TRUE));
+		}
 	}
 
 	/**
