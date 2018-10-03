@@ -61,7 +61,10 @@ class Bench_AutoLinkEmails extends Codebench {
 	{
 		return preg_replace_callback(
 			'~\b(?<!href="mailto:|">|58;)(?!\.)[-+_a-z0-9.]++(?<!\.)@(?![-.])[-a-z0-9.]+(?<!\.)\.[a-z]{2,6}\b~i',
-			create_function('$matches', 'return HTML::mailto($matches[0]);'), // Yuck!
+			function($matches)
+			{
+				return HTML::mailto($matches[0]);
+			}, // Yuck!
 			$subject
 		);
 	}

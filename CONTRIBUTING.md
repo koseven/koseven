@@ -54,7 +54,7 @@ Notes:
 ## Keep sync with original repo
 First time, add a remote with the upstream
 ```
-git remote add upstream git@github.com:yclas/yclas.git
+git remote add upstream https://github.com/koseven/koseven.git
 ```
 
 Everytime you want to sync just
@@ -84,10 +84,8 @@ Koseven currently uses PHPUnit for unit testing. This is installed with composer
 
 ## How to run the tests
 
- * Install [Phing](http://phing.info)
- * Make sure you have the unittes module enabled.
  * Install [Composer](http://getcomposer.org)
  * Run `php composer.phar install` from the root of this repository
- * Finally, run `phing test`
+ * Finally, run `vendor/bin/phpunit --bootstrap=modules/unittest/bootstrap.php modules/unittest/tests.php`
 
-This will run the unit tests for core and all the modules and tell you if anything failed. If you haven't changed anything and you get failures, please create a new issue on  and paste the output (including the error) in the issue.  
+This will run the unit tests for core and all the modules and tell you if anything failed. If you haven't changed anything and you get failures, please create a new issue on  and paste the output (including the error) in the issue. Please note that a few tests only pass on linux systems.

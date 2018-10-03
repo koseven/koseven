@@ -1,10 +1,5 @@
 # Kohana-PHPUnit integration
 
-| ver   | Stable                                                                                                                               | Develop                                                                                                                                |
-|-------|--------------------------------------------------------------------------------------------------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------|
-| 3.3.x | [![Build Status - 3.3/master](https://travis-ci.org/kohana/unittest.svg?branch=3.3%2Fmaster)](https://travis-ci.org/kohana/unittest) | [![Build Status - 3.3/develop](https://travis-ci.org/kohana/unittest.svg?branch=3.3%2Fdevelop)](https://travis-ci.org/kohana/unittest) |
-| 3.4.x | [![Build Status - 3.4/master](https://travis-ci.org/kohana/unittest.svg?branch=3.4%2Fmaster)](https://travis-ci.org/kohana/unittest) | [![Build Status - 3.4/develop](https://travis-ci.org/kohana/unittest.svg?branch=3.4%2Fdevelop)](https://travis-ci.org/kohana/unittest) |
-
 This module integrates PHPUnit with Kohana and is used to run all the core Kohana tests. In most cases you will not
 need to use this module for testing your own projects. If there are particular helpers provided here that you rely on,
 that may be a sign that your own code is too closely coupled to the behaviour of the Kohana core classes.

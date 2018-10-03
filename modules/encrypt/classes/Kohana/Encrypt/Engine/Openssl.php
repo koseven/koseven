@@ -176,7 +176,8 @@ class Kohana_Encrypt_Engine_Openssl extends Kohana_Encrypt_Engine {
 	protected function valid_payload($payload)
 	{
 		return is_array($payload) AND
-					 isset($payload['iv'], $payload['value'], $payload['mac']);
+				isset($payload['iv'], $payload['value'], $payload['mac']) AND
+				strlen(base64_decode($payload['iv'], TRUE)) === $this->_iv_size;
 	}
 
 	/**
@@ -205,7 +206,7 @@ class Kohana_Encrypt_Engine_Openssl extends Kohana_Encrypt_Engine {
 			return random_bytes($this->_iv_size);
 		}
 
-		if ((PHP_VERSION_ID >= 50307) AND (function_exists('mcrypt_create_iv')))
+		if (function_exists('mcrypt_create_iv'))
 		{
 			$key = mcrypt_create_iv($this->_iv_size, MCRYPT_DEV_URANDOM);
 			if (mb_strlen($key, '8bit') === $this->_iv_size)

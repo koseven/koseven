@@ -28,7 +28,7 @@ If you want database access, have your model extend the Model_Database class:
 		public function get_stuff()
 		{
 			// Get stuff from the database:
-			return $this->db->query(...);
+			return $this->_db->query(...);
 		}
 	}
 

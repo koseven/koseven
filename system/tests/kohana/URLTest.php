@@ -25,7 +25,10 @@ class Kohana_URLTest extends Unittest_TestCase
 	// @codingStandardsIgnoreEnd
 	{
 		parent::setUp();
-		Kohana::$config->load('url')->set('trusted_hosts', ['example\.com', 'example\.org']);
+		Kohana::$config->load('url')->set(
+			'trusted_hosts',
+			['www\.example\.com', 'sub\.example\.com', 'example\.com', 'example\.org']
+		);
 	}
 
 	/**
@@ -49,34 +52,43 @@ class Kohana_URLTest extends Unittest_TestCase
 	public function provider_base()
 	{
 		return [
-			// $protocol, $index, $expected, $enviroment
+			// $protocol, $index, $subdomain, $expected, $enviroment
 
 			// Test with different combinations of parameters for max code coverage
-			[NULL,    FALSE, '/kohana/'],
-			['http',  FALSE, 'http://example.com/kohana/'],
-			[NULL,    TRUE,  '/kohana/index.php/'],
-			[NULL,    TRUE,  '/kohana/index.php/'],
-			['http',  TRUE,  'http://example.com/kohana/index.php/'],
-			['https', TRUE,  'https://example.com/kohana/index.php/'],
-			['ftp',   TRUE,  'ftp://example.com/kohana/index.php/'],
+			[NULL,    FALSE, NULL,  NULL, ['Kohana::$base_url' => NULL]],
+			[NULL,    FALSE, NULL,  '/', ['Kohana::$base_url' => '/']],
+			[NULL,    FALSE, NULL,  '/kohana/'],
+			['http',  FALSE, NULL,  'http://example.com/kohana/'],
+			['http',  FALSE, 'sub', 'http://sub.example.com/kohana/'],
+			['http',  FALSE, 'sub', 'http://sub.example.com/kohana/', ['HTTP_HOST' => 'sub.example.com']],
+			['http',  FALSE, 'sub', 'http://sub.example.com/kohana/', ['HTTP_HOST' => 'invalid.example.com']],
+			[NULL,    TRUE,  NULL,  '/kohana/index.php/'],
+			['http',  TRUE,  NULL,  'http://example.com/kohana/index.php/'],
+			['http',  TRUE,  'sub', 'http://sub.example.com/kohana/index.php/'],
+			['https', TRUE,  NULL,  'https://example.com/kohana/index.php/'],
+			['https', TRUE,  'sub', 'https://sub.example.com/kohana/index.php/'],
+			['ftp',   TRUE,  NULL,  'ftp://example.com/kohana/index.php/'],
+			['ftp',   TRUE,  'sub', 'ftp://sub.example.com/kohana/index.php/'],
 
 			// Test for automatic protocol detection, protocol = TRUE
-			[TRUE,    TRUE,  'cli://example.com/kohana/index.php/', ['HTTPS' => FALSE, 'Request::$initial' => Request::factory('/')->protocol('cli')]],
+			[TRUE, TRUE, NULL, 'cli://example.com/kohana/index.php/', ['HTTPS' => FALSE, 'Request::$initial' => Request::factory('/')->protocol('cli')]],
 
 			// Change base url'
-			['https', FALSE, 'https://example.com/kohana/', ['Kohana::$base_url' => 'omglol://example.com/kohana/']],
+			['https', FALSE, NULL, 'https://example.com/kohana/', ['Kohana::$base_url' => 'omglol://example.com/kohana/']],
 
 			// Use port in base url, issue #3307
-			['http', FALSE, 'http://example.com:8080/', ['Kohana::$base_url' => 'example.com:8080/']],
+			['http', FALSE, NULL, 'http://example.com:8080/', ['Kohana::$base_url' => 'example.com:8080/']],
 
 			// Use protocol from base url if none specified
-			[NULL,  FALSE, 'http://www.example.com/', ['Kohana::$base_url' => 'http://www.example.com/']],
+			[NULL, FALSE, NULL, 'http://www.example.com/', ['Kohana::$base_url' => 'http://www.example.com/']],
+
+			[NULL, FALSE, 'sub', 'http://sub.example.com/', ['Kohana::$base_url' => 'http://www.example.com/']],
 
 			// Use HTTP_HOST before SERVER_NAME
-			['http', FALSE, 'http://example.com/kohana/', ['HTTP_HOST' => 'example.com', 'SERVER_NAME' => 'example.org']],
+			['http', FALSE, NULL, 'http://example.com/kohana/', ['HTTP_HOST' => 'example.com', 'SERVER_NAME' => 'example.org']],
 
 			// Use SERVER_NAME if HTTP_HOST DNX
-			['http',  FALSE, 'http://example.org/kohana/', ['HTTP_HOST' => NULL, 'SERVER_NAME' => 'example.org']],
+			['http', FALSE, NULL, 'http://example.org/kohana/', ['HTTP_HOST' => NULL, 'SERVER_NAME' => 'example.org']],
 		];
 	}
 
@@ -85,18 +97,19 @@ class Kohana_URLTest extends Unittest_TestCase
 	 *
 	 * @test
 	 * @dataProvider provider_base
-	 * @param boolean $protocol    Parameter for Url::base()
+	 * @param mixed   $protocol    Parameter for Url::base()
 	 * @param boolean $index       Parameter for Url::base()
+	 * @param string  $subdomain   Parameter for Url::base()
 	 * @param string  $expected    Expected url
 	 * @param array   $enviroment  Array of enviroment vars to change @see Kohana_URLTest::setEnvironment()
 	 */
-	public function test_base($protocol, $index, $expected, array $enviroment = [])
+	public function test_base($protocol, $index, $subdomain, $expected, array $enviroment = [])
 	{
 		$this->setEnvironment($enviroment);
 
 		$this->assertSame(
 			$expected,
-			URL::base($protocol, $index)
+			URL::base($protocol, $index, $subdomain)
 		);
 	}
 

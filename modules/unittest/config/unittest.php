@@ -22,13 +22,4 @@ return [
 		// then set this to FALSE
 		'system' => TRUE,
 	],
-
-	// Does what it says on the tin
-	// Blacklisted files won't be included in code coverage reports
-	// If you use a whitelist then the blacklist will be ignored
-	'use_blacklist' => FALSE,
-
-	// List of individual files/folders to blacklist
-	'blacklist' => [
-	],
 ];

@@ -16,6 +16,7 @@ interface Kohana_HTTP_Request extends HTTP_Message {
 	// HTTP Methods
 	const GET       = 'GET';
 	const POST      = 'POST';
+	const PATCH     = 'PATCH';
 	const PUT       = 'PUT';
 	const DELETE    = 'DELETE';
 	const HEAD      = 'HEAD';

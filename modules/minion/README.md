@@ -1,10 +1,5 @@
 # Minion
 
-| ver   | Stable                                                                                                                           | Develop                                                                                                                            |
-|-------|----------------------------------------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------|
-| 3.3.x | [![Build Status - 3.3/master](https://travis-ci.org/kohana/minion.svg?branch=3.3%2Fmaster)](https://travis-ci.org/kohana/minion) | [![Build Status - 3.3/develop](https://travis-ci.org/kohana/minion.svg?branch=3.3%2Fdevelop)](https://travis-ci.org/kohana/minion) |
-| 3.4.x | [![Build Status - 3.4/master](https://travis-ci.org/kohana/minion.svg?branch=3.4%2Fmaster)](https://travis-ci.org/kohana/minion) | [![Build Status - 3.4/develop](https://travis-ci.org/kohana/minion.svg?branch=3.4%2Fdevelop)](https://travis-ci.org/kohana/minion) |
-
 Minion is a framework for running tasks via the CLI.
 
 The system is inspired by ruckusing, which had a nice system for defining tasks but lacked the desired flexibility for kohana integration.

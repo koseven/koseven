@@ -278,6 +278,11 @@ class Kohana_HTTP_Header extends ArrayObject {
 	protected $_accept_language;
 
 	/**
+	 * @var     array    Accept-Language: language list of parsed header
+	 */
+	protected $_accept_language_list;
+
+	/**
 	 * Constructor method for [Kohana_HTTP_Header]. Uses the standard constructor
 	 * of the parent `ArrayObject` class.
 	 *
@@ -811,6 +816,81 @@ class Kohana_HTTP_Header extends ArrayObject {
 	}
 
 	/**
+	 * Parses the `Accept-Language:` HTTP header and returns an array containing
+	 * the language names.
+	 *
+	 * @param   string  $language   charset string to parse
+	 * @return  array
+	 * @since   3.3.8
+	 */
+	protected static function _parse_language_header_as_list($language = NULL)
+	{
+		$languages = [];
+		$language  = explode(',', strtolower($language));
+
+		foreach ($language as $lang)
+		{
+			$matches = [];
+
+			if (preg_match('/([\w-]+)\s*(;.*q.*)?/', $lang, $matches))
+			{
+				$languages[] = $matches[1];
+			}
+		}
+
+		return $languages;
+	}
+
+	/**
+	 * Returns the reordered list of supplied `$languages` using the order
+	 * from the `Accept-Language:` HTTP header.
+	 *
+	 * @param   array   $languages  languages to order
+	 * @param   boolean $explicit
+	 * @return  array
+	 * @since   3.3.8
+	 */
+	protected function _order_languages_as_received(array $languages, $explicit = FALSE)
+	{
+		if ($this->_accept_language_list === NULL)
+		{
+			if ($this->offsetExists('Accept-Language'))
+			{
+				$language_header = strtolower($this->offsetGet('Accept-Language'));
+			}
+			else
+			{
+				$language_header = NULL;
+			}
+
+			$this->_accept_language_list = HTTP_Header::_parse_language_header_as_list($language_header);
+		}
+
+		$new_order = [];
+
+		foreach ($this->_accept_language_list as $accept_language)
+		{
+			foreach ($languages as $key => $language)
+			{
+				if (($explicit AND $accept_language == $language) OR
+					( ! $explicit AND substr($accept_language, 0, 2) == substr($language, 0, 2)))
+				{
+					$new_order[] = $language;
+
+					unset($languages[$key]);
+				}
+			}
+		}
+
+		foreach ($languages as $language)
+		{
+			$new_order[] = $language;
+		}
+
+		return $new_order;
+	}
+
+	/**
 	 * Returns the preferred language from the supplied array `$languages` based
 	 * on the `Accept-Language` header directive.
 	 *
@@ -826,8 +906,9 @@ class Kohana_HTTP_Header extends ArrayObject {
 	 */
 	public function preferred_language(array $languages, $explicit = FALSE)
 	{
-		$ceiling = 0;
+		$ceiling   = 0;
 		$preferred = FALSE;
+		$languages = $this->_order_languages_as_received($languages, $explicit);
 
 		foreach ($languages as $language)
 		{

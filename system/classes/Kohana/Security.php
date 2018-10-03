@@ -47,24 +47,47 @@ class Kohana_Security {
 
 		if ($new === TRUE OR ! $token)
 		{
-			// Generate a new unique token
-			if (function_exists('openssl_random_pseudo_bytes'))
-			{
-				// Generate a random pseudo bytes token if openssl_random_pseudo_bytes is available
-				// This is more secure than uniqid, because uniqid relies on microtime, which is predictable
-				$token = base64_encode(openssl_random_pseudo_bytes(32));
-			}
-			else
-			{
-				// Otherwise, fall back to a hashed uniqid
-				$token = sha1(uniqid(NULL, TRUE));
-			}
+			$token = Security::_generate_token();
 
 			// Store the new token
 			$session->set(Security::$token_name, $token);
 		}
 
 		return $token;
+	}
+
+	/**
+	 * Generate a unique token.
+	 *
+	 * @return  string
+	 */
+	protected static function _generate_token()
+	{
+		if (function_exists('random_bytes'))
+		{
+			try
+			{
+				return bin2hex(random_bytes(24));
+			}
+			catch (Exception $e)
+			{
+				// Random bytes function is available but no sources of randomness are available
+				// so rather than allowing the exception to be thrown - fall back to other methods.
+				// @see http://php.net/manual/en/function.random-bytes.php
+			}
+		}
+
+		if (function_exists('openssl_random_pseudo_bytes'))
+		{
+			// Generate a random pseudo bytes token if openssl_random_pseudo_bytes is available
+			// This is more secure than uniqid, because uniqid relies on microtime, which is predictable
+			return base64_encode(openssl_random_pseudo_bytes(32));
+		}
+		else
+		{
+			// Otherwise, fall back to a hashed uniqid
+			return sha1(uniqid(NULL, TRUE));
+		}
 	}
 
 	/**
@@ -83,27 +106,24 @@ class Kohana_Security {
 	{
 		return Security::slow_equals(Security::token(), $token);
 	}
-	
-	
-	
+
 	/**
 	 * Compare two hashes in a time-invariant manner.
 	 * Prevents cryptographic side-channel attacks (timing attacks, specifically)
-	 * 
+	 *
 	 * @param string $a cryptographic hash
 	 * @param string $b cryptographic hash
 	 * @return boolean
 	 */
-	public static function slow_equals($a, $b) 
+	public static function slow_equals($a, $b)
 	{
 		$diff = strlen($a) ^ strlen($b);
 		for($i = 0; $i < strlen($a) AND $i < strlen($b); $i++)
 		{
 			$diff |= ord($a[$i]) ^ ord($b[$i]);
 		}
-		return $diff === 0; 
+		return $diff === 0;
 	}
-
 
 	/**
 	 * Deprecated for security reasons.

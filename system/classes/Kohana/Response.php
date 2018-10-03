@@ -36,6 +36,7 @@ class Kohana_Response implements HTTP_Response {
 		// Informational 1xx
 		100 => 'Continue',
 		101 => 'Switching Protocols',
+		102 => 'Processing',
 
 		// Success 2xx
 		200 => 'OK',
@@ -45,6 +46,8 @@ class Kohana_Response implements HTTP_Response {
 		204 => 'No Content',
 		205 => 'Reset Content',
 		206 => 'Partial Content',
+		207 => 'Multi-Status',
+		208 => 'Already Reported',
 
 		// Redirection 3xx
 		300 => 'Multiple Choices',
@@ -75,6 +78,10 @@ class Kohana_Response implements HTTP_Response {
 		415 => 'Unsupported Media Type',
 		416 => 'Requested Range Not Satisfiable',
 		417 => 'Expectation Failed',
+		422 => 'Unprocessable Entity',
+		423 => 'Locked',
+		424 => 'Failed Dependency',
+		429 => 'Too Many Requests',
 
 		// Server Error 5xx
 		500 => 'Internal Server Error',
@@ -83,6 +90,8 @@ class Kohana_Response implements HTTP_Response {
 		503 => 'Service Unavailable',
 		504 => 'Gateway Timeout',
 		505 => 'HTTP Version Not Supported',
+		507 => 'Insufficient Storage',
+		508 => 'Loop Detected',
 		509 => 'Bandwidth Limit Exceeded'
 	];
 
@@ -374,6 +383,12 @@ class Kohana_Response implements HTTP_Response {
 	 *
 	 *     $request->send_file('media/packages/kohana.zip');
 	 *
+	 * Download a generated file:
+	 *
+	 *     $csv = tmpfile();
+	 *     fputcsv($csv, ['label1', 'label2']);
+	 *     $request->send_file($csv, $filename);
+	 *
 	 * Download generated content as a file:
 	 *
 	 *     $request->response($content);
@@ -381,7 +396,7 @@ class Kohana_Response implements HTTP_Response {
 	 *
 	 * [!!] No further processing can be done after this method is called!
 	 *
-	 * @param   string  $filename   filename with path, or TRUE for the current response
+	 * @param   string|resource|bool $filename filename with path, file stream, or TRUE for the current response
 	 * @param   string  $download   downloaded file name
 	 * @param   array   $options    additional options
 	 * @return  void
@@ -428,6 +443,24 @@ class Kohana_Response implements HTTP_Response {
 
 			// File data is no longer needed
 			unset($file_data);
+		}
+		else if (is_resource($filename) && get_resource_type($filename) === 'stream')
+		{
+			if (empty($download))
+			{
+				throw new Kohana_Exception('Download name must be provided for streaming files');
+			}
+
+			// Make sure this is a file handle
+			$file_meta = stream_get_meta_data($filename);
+			if ($file_meta['seekable'] === FALSE)
+			{
+				throw new Kohana_Exception('Resource must be a file handle');
+			}
+
+			// Handle file streams passed in as resources
+			$file = $filename;
+			$size = fstat($file)['size'];
 		}
 		else
 		{
@@ -511,12 +544,6 @@ class Kohana_Response implements HTTP_Response {
 
 		// Manually stop execution
 		ignore_user_abort(TRUE);
-
-		if ( ! Kohana::$safe_mode)
-		{
-			// Keep the script running forever
-			set_time_limit(0);
-		}
 
 		// Send data in 16kb blocks
 		$block = 1024 * 16;

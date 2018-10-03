@@ -37,5 +37,3 @@ In the above example we're using a phpunit.xml config file to specify all the un
 ## Continuous Integration (CI)
 
 Continuous integration is a team based tool which enables developers to keep tabs on whether changes committed to a project break the application. If a commit causes a test to fail then the build is classed as "broken" and the CI server then alerts developers by email, RSS, IM or glowing (bears|lava lamps) to the fact that someone has broken the build and that all hell's broken lose.
-
-The two more popular CI servers are [Hudson](https://hudson.dev.java.net/) and [phpUnderControl](http://www.phpundercontrol.org/about.html), both of which use [Phing](http://phing.info/) to run the build tasks for your application.

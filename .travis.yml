@@ -1,31 +1,19 @@
 dist: trusty
 language: php
 
-# list any PHP version you want to test against
 php:
-  # aliased to a recent 5.6.x version
-  # - 5.6   PHPUnit 6.0 is supported on PHP 7.0 and PHP 7.1.
-  # aliased to a recent 7.0 version
   - 7.0
-  # # aliased to a recent 7.1 version
   - 7.1
+  - 7.2
 
-before_install:
-  # Update phpunit
-  - sudo rm -r $HOME/.phpenv/versions/$TRAVIS_PHP_VERSION/bin/phpunit
-  - wget https://phar.phpunit.de/phpunit.phar
-  - sudo mkdir $HOME/.phpenv/versions/$TRAVIS_PHP_VERSION/bin/phpunit
-  - sudo mv phpunit.phar $HOME/.phpenv/versions/$TRAVIS_PHP_VERSION/bin/phpunit
-  - sudo chmod +x $HOME/.phpenv/versions/$TRAVIS_PHP_VERSION/bin/phpunit
+before_script: 
+  - composer install
 
-# execute any number of scripts before the test run, custom env's are available as variables
-before_script:
-  - sudo chmod -R 755 modules/ application/ system/
+script:
+  - vendor/bin/phpunit
 
-script: 
-  # - set -e # don't stop on failure
-  - php $HOME/.phpenv/versions/$TRAVIS_PHP_VERSION/bin/phpunit/phpunit.phar --bootstrap=modules/unittest/bootstrap.php modules/unittest/tests.php
+after_success:
+  - travis_retry vendor/bin/php-coveralls
 
-# configure notifications (email, IRC, campfire etc)
 notifications:
   email: false

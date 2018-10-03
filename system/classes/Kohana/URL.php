@@ -26,6 +26,10 @@ class Kohana_URL {
 	 *     // Absolute URL path with host, https protocol and index.php if set
 	 *     echo URL::base('https', TRUE);
 	 *
+	 *     // Absolute URL path with host, https protocol and subdomain part
+	 *     // prepended or replaced with given value
+	 *     echo URL::base('https', FALSE, 'subdomain');
+	 * 
 	 *     // Absolute URL path with host and protocol from $request
 	 *     echo URL::base($request);
 	 *
@@ -89,40 +93,41 @@ class Kohana_URL {
 			{
 				// Attempt to use HTTP_HOST and fallback to SERVER_NAME
 				$host = isset($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : $_SERVER['SERVER_NAME'];
+			}
 
-				// If subdomain passed, then append to host
-				if( ! is_null($subdomain))
+			// If subdomain passed, then prepend to host or replace existing subdomain
+			if (NULL !== $subdomain)
+			{
+				if (FALSE === strstr($host, '.'))
 				{
-					if(strstr($host, '.') === false)
-					{
-						$host = $subdomain . '.' . $host;
-					}
-					else
-					{
-						$host = $subdomain . '.' . substr($host, strpos($host, '.') + 1);
-					}
+					$host = $subdomain.'.'.$host;
 				}
-				
-				// make $host lowercase
-				$host = strtolower($host);
-
-				// check that host does not contain forbidden characters (see RFC 952 and RFC 2181)
-				// use preg_replace() instead of preg_match() to prevent DoS attacks with long host names
-				if ($host && '' !== preg_replace('/(?:^\[)?[a-zA-Z0-9-:\]_]+\.?/', '', $host)) {
-					throw new Kohana_Exception(
-						'Invalid host :host',
-						[':host' => $host]
-					);
-				}
-
-				// Validate $host, see if it matches trusted hosts
-				if ( ! static::is_trusted_host($host))
+				else
 				{
-					throw new Kohana_Exception(
-						'Untrusted host :host. If you trust :host, add it to the trusted hosts in the `url` config file.',
-						[':host' => $host]
-					);
+					// Get the domain part of host eg. example.com, then prepend subdomain
+					$host = $subdomain.'.'.implode('.', array_slice(explode('.', $host), -2));
 				}
+			}
+
+			// make $host lowercase
+			$host = strtolower($host);
+
+			// check that host does not contain forbidden characters (see RFC 952 and RFC 2181)
+			// use preg_replace() instead of preg_match() to prevent DoS attacks with long host names
+			if ($host && '' !== preg_replace('/(?:^\[)?[a-zA-Z0-9-:\]_]+\.?/', '', $host)) {
+				throw new Kohana_Exception(
+					'Invalid host :host',
+					[':host' => $host]
+				);
+			}
+
+			// Validate $host, see if it matches trusted hosts
+			if ( ! static::is_trusted_host($host))
+			{
+				throw new Kohana_Exception(
+					'Untrusted host :host. If you trust :host, add it to the trusted hosts in the `url` config file.',
+					[':host' => $host]
+				);
 			}
 
 			// Add the protocol and domain to the base URL
@@ -229,10 +234,17 @@ class Kohana_URL {
 	 */
 	public static function title($title, $separator = '-', $ascii_only = FALSE)
 	{
-		if ($ascii_only === TRUE)
+		if ($ascii_only)
 		{
 			// Transliterate non-ASCII characters
-			$title = UTF8::transliterate_to_ascii($title);
+			if (extension_loaded('intl'))
+			{
+				$title = transliterator_transliterate('Any-Latin;Latin-ASCII', $title);
+			} 
+			else
+			{
+				$title = UTF8::transliterate_to_ascii($title);
+			}
 
 			// Remove all characters that are not the separator, a-z, 0-9, or whitespace
 			$title = preg_replace('![^'.preg_quote($separator).'a-z0-9\s]+!', '', strtolower($title));

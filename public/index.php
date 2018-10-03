@@ -36,15 +36,15 @@ define('EXT', '.php');
  * @link http://www.php.net/manual/errorfunc.configuration#ini.error-reporting
  *
  * When developing your application, it is highly recommended to enable notices
- * and strict warnings. Enable them by using: E_ALL | E_STRICT
+ * and warnings. Enable them by using: E_ALL
  *
- * In a production environment, it is safe to ignore notices and strict warnings.
- * Disable them by using: E_ALL ^ E_NOTICE
+ * In a production environment, it is safe to ignore notices. Disable them by
+ * using: E_ALL & ~E_NOTICE
  *
- * When using a legacy application with PHP >= 5.3, it is recommended to disable
- * deprecated notices. Disable with: E_ALL & ~E_DEPRECATED
+ * When using a legacy application, it is recommended to disable deprecated
+ * notices. Disable with: E_ALL & ~E_DEPRECATED
  */
-error_reporting(E_ALL | E_STRICT);
+error_reporting(E_ALL);
 
 /**
  * End of standard configuration! Changing any of the code below should only be
@@ -54,7 +54,7 @@ error_reporting(E_ALL | E_STRICT);
  */
 
 // Set the full path to the docroot
-define('DOCROOT', realpath('../').DIRECTORY_SEPARATOR);
+define('DOCROOT', realpath(__DIR__.'/../').DIRECTORY_SEPARATOR);
 
 // Make the application relative to the docroot, for symlink'd index.php
 if ( ! is_dir($application) AND is_dir(DOCROOT.$application))

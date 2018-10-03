@@ -133,7 +133,7 @@ class Kohana_Num {
 	 */
 	public static function round($value, $precision = 0, $mode = self::ROUND_HALF_UP, $native = TRUE)
 	{
-		if (version_compare(PHP_VERSION, '5.3', '>=') AND $native)
+		if ($native)
 		{
 			return round($value, $precision, $mode);
 		}

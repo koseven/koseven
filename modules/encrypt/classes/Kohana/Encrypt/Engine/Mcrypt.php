@@ -69,7 +69,7 @@ class Kohana_Encrypt_Engine_Mcrypt extends Kohana_Encrypt_Engine {
 			// Shorten the key to the maximum size
 			$this->_key = substr($this->_key, 0, $size);
 		}
-		else if (version_compare(PHP_VERSION, '5.6.0', '>='))
+		else
 		{
 			$this->_key = $this->_normalize_key($this->_key, $this->_cipher, $this->_mode);
 		}

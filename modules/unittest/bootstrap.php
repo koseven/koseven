@@ -38,20 +38,20 @@ define('EXT', '.php');
  * this bootstrap file somewhere else then you'll need to modify this value to 
  * compensate.
  */
-define('DOCROOT', realpath(dirname(__FILE__).'/../../').DIRECTORY_SEPARATOR);
+define('DOCROOT', realpath(__DIR__.'/../../').DIRECTORY_SEPARATOR);
 
 /**
  * Set the PHP error reporting level. If you set this in php.ini, you remove this.
  * @link http://www.php.net/manual/errorfunc.configuration#ini.error-reporting
  *
  * When developing your application, it is highly recommended to enable notices
- * and strict warnings. Enable them by using: E_ALL | E_STRICT
+ * and warnings. Enable them by using: E_ALL
  *
- * In a production environment, it is safe to ignore notices and strict warnings.
- * Disable them by using: E_ALL ^ E_NOTICE
+ * In a production environment, it is safe to ignore notices. Disable them by
+ * using: E_ALL & ~E_NOTICE
  *
- * When using a legacy application with PHP >= 5.3, it is recommended to disable
- * deprecated notices. Disable with: E_ALL & ~E_DEPRECATED
+ * When using a legacy application, it is recommended to disable deprecated
+ * notices. Disable with: E_ALL & ~E_DEPRECATED
  */
 error_reporting(E_ALL & ~E_DEPRECATED);
 
@@ -121,17 +121,19 @@ if (($ob_len = ob_get_length()) !== FALSE)
 	}
 }
 
-// Enable the unittest module if it is not already loaded - use the absolute path
-$modules = Kohana::modules();
-$unittest_path = realpath(__DIR__).DIRECTORY_SEPARATOR;
-if ( ! in_array($unittest_path, $modules)) {
-	$modules['unittest'] = $unittest_path;
-	Kohana::modules($modules);
+// Enable all modules we can find
+$modules_iterator = new DirectoryIterator(MODPATH);
+
+$modules = [];
+
+foreach ($modules_iterator as $module)
+{
+	if ($module->isDir() AND ! $module->isDot())
+	{
+		$modules[$module->getFilename()] = MODPATH.$module->getFilename();
+	}
 }
 
-// Encryption is supported by a module, add it to the module list
-$encrypt_path = MODPATH.'encrypt';
-if ( ! in_array($encrypt_path, $modules)) {
-	$modules['encrypt'] = $encrypt_path;
-	Kohana::modules($modules);
-}
+Kohana::modules($modules);
+
+unset($modules_iterator, $modules, $module);

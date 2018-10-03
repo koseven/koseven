@@ -2,22 +2,21 @@
 use PHPUnit\Framework\TestSuite;
 use PHPUnit\Framework\TestResult;
 /**
- * A version of the stock PHPUnit testsuite that supports whitelisting and 
- * blacklisting for code coverage filter
+ * A version of the stock PHPUnit testsuite that supports whitelisting
+ * for code coverage filter
  */
 abstract class Kohana_Unittest_TestSuite extends TestSuite 
 {
 	/**
-	 * Holds the details of files that should be white and blacklisted for
+	 * Holds the details of files that should be whitelisted for
 	 * code coverage
 	 * 
 	 * @var array
 	 */
 	protected $_filter_calls = [
-		'addFileToBlacklist' => [],
-		'addDirectoryToBlacklist' => [],
-		'addFileToWhitelist' => []];
-	
+		'addFileToWhitelist' => []
+	];
+
 	/**
      * Runs the tests and collects their result in a TestResult.
      *
@@ -29,9 +28,8 @@ abstract class Kohana_Unittest_TestSuite extends TestSuite
      * @return PHPUnit_Framework_TestResult
      * @throws InvalidArgumentException
      */
-    public function run(TestResult $result = NULL)
+    public function run(TestResult $result = NULL): TestResult
     {
-		
 		// Get the code coverage filter from the suite's result object
 		$coverage = $result->getCodeCoverage();
 		
@@ -51,25 +49,7 @@ abstract class Kohana_Unittest_TestSuite extends TestSuite
 		
 		return parent::run($result);
 	}
-	
-	/**
-	 * Queues a file to be added to the code coverage blacklist when the suite runs
-	 * @param string $file 
-	 */
-	public function addFileToBlacklist($file)
-	{
-		$this->_filter_calls['addFileToBlacklist'][] = $file;
-	}
 
-	/**
-	 * Queues a directory to be added to the code coverage blacklist when the suite runs
-	 * @param string $dir
-	 */
-	public function addDirectoryToBlacklist($dir)
-	{
-		$this->_filter_calls['addDirectoryToBlacklist'][] = $dir;
-	}
-	
 	/**
 	 * Queues a file to be added to the code coverage whitelist when the suite runs
 	 * @param string $file 

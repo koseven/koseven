@@ -40,6 +40,7 @@
    - [Deploying](security/deploying)
 - Tutorials
    - [Hello World](tutorials/hello-world)
+   - [Base controller for application](tutorials/basic-controller)
    - [Simple MVC](tutorials/simple-mvc)
    - [Custom Error Pages](tutorials/error-pages)
    - [Clean URLs](tutorials/clean-urls)

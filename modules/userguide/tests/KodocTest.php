@@ -1,5 +1,4 @@
 <?php
-
 /**
  * @group kohana
  * @group kohana.userguide
@@ -9,7 +8,7 @@
  * @copyright  (c) Kohana Team
  * @license    https://koseven.ga/LICENSE.md
  */
-class Kohana_KodocTest extends PHPUnit_Framework_TestCase
+class Kohana_KodocTest extends Unittest_TestCase
 {
 	public function provider_parse_basic()
 	{

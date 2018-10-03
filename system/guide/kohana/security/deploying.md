@@ -1,10 +1,5 @@
 Changes that should happen when you deploy. (Production)
 
-Security settings from: <http://kohanaframework.org/guide/using.configuration>
-
-<http://kerkness.ca/wiki/doku.php?id=setting_up_production_environment>
-
-
 ## Setting up a production environment
 
 There are a few things you'll want to do with your application before moving into production.

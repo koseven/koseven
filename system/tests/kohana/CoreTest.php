@@ -57,7 +57,6 @@ class Kohana_CoreTest extends Unittest_TestCase
 			['foo', 'foo'],
 			["foo\r\nbar", "foo\nbar"],
 			["foo\rbar", "foo\nbar"],
-			["Is your name O\'reilly?", "Is your name O'reilly?"]
 		];
 	}
 
@@ -72,8 +71,6 @@ class Kohana_CoreTest extends Unittest_TestCase
 	 */
 	public function test_sanitize($value, $result)
 	{
-		$this->setEnvironment(['Kohana::$magic_quotes' => TRUE]);
-
 		$this->assertSame($result, Kohana::sanitize($value));
 	}
 
@@ -126,25 +123,6 @@ class Kohana_CoreTest extends Unittest_TestCase
 	}
 
 	/**
-	 * Tests Kohana::globals()
-	 *
-	 * @test
-	 * @covers Kohana::globals
-	 */
-	public function test_globals_removes_user_def_globals()
-	{
-		$GLOBALS['hackers'] = 'foobar';
-		$GLOBALS['name'] = ['','',''];
-		$GLOBALS['_POST'] = [];
-
-		Kohana::globals();
-
-		$this->assertFalse(isset($GLOBALS['hackers']));
-		$this->assertFalse(isset($GLOBALS['name']));
-		$this->assertTrue(isset($GLOBALS['_POST']));
-	}
-
-	/**
 	 * Provides test data for testCache()
 	 *
 	 * @return array
@@ -173,6 +151,30 @@ class Kohana_CoreTest extends Unittest_TestCase
 	{
 		Kohana::cache($key, $value, $lifetime);
 		$this->assertEquals($value, Kohana::cache($key));
+	}
+
+	/**
+	 * Tests Kohana::find_file() cache is saved on shutdown.
+	 * 
+	 * @test
+	 */
+	public function test_find_file_cache_saved()
+	{
+		$old_caching     = Kohana::$caching;
+		$old_errors      = Kohana::$errors;
+		Kohana::$caching = TRUE;
+		Kohana::$errors  = FALSE;
+
+		// trigger find_file() so Kohana::$_files_changed is set to TRUE
+		Kohana::find_file('abc', 'def');
+
+		// trigger shutdown so kohana write to file cache
+		Kohana::shutdown_handler();
+
+		$this->assertInternalType('array', Kohana::file_cache('Kohana::find_file()'));	    
+
+		Kohana::$caching = $old_caching;
+		Kohana::$errors  = $old_errors;
 	}
 
 	/**

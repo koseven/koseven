@@ -61,28 +61,23 @@ class Kohana_Cache_File extends Cache implements Cache_GarbageCollect {
 	protected $_cache_dir;
 
 	/**
-	 * Constructs the file cache driver. This method cannot be invoked externally. The file cache driver must
-	 * be instantiated using the `Cache::instance()` method.
+	 * @var  boolean  does the cache directory exists and writeable
+	 */
+	protected $_cache_dir_usable = FALSE;
+
+	/**
+	 * Check that the cache directory exists and writeable. Attempts to create
+	 * it if not exists.
 	 *
-	 * @param   array  $config  config
 	 * @throws  Cache_Exception
 	 */
-	protected function __construct(array $config)
+	protected function _check_cache_dir()
 	{
-		// Setup parent
-		parent::__construct($config);
-
 		try
 		{
 			$directory = Arr::get($this->_config, 'cache_dir', Kohana::$cache_dir);
 			$this->_cache_dir = new SplFileInfo($directory);
 		}
-		// PHP < 5.3 exception handle
-		catch (ErrorException $e)
-		{
-			$this->_cache_dir = $this->_make_directory($directory, 0777, TRUE);
-		}
-		// PHP >= 5.3 exception handle
 		catch (UnexpectedValueException $e)
 		{
 			$this->_cache_dir = $this->_make_directory($directory, 0777, TRUE);
@@ -105,6 +100,8 @@ class Kohana_Cache_File extends Cache implements Cache_GarbageCollect {
 		{
 			throw new Cache_Exception('Unable to write to the cache directory :resource', [':resource' => $this->_cache_dir->getRealPath()]);
 		}
+
+		$this->_cache_dir_usable = TRUE;
 	}
 
 	/**
@@ -123,6 +120,8 @@ class Kohana_Cache_File extends Cache implements Cache_GarbageCollect {
 	 */
 	public function get($id, $default = NULL)
 	{
+		$this->_cache_dir_usable or $this->_check_cache_dir();
+
 		$filename = Cache_File::filename($this->_sanitize_id($id));
 		$directory = $this->_resolve_directory($filename);
 
@@ -197,6 +196,8 @@ class Kohana_Cache_File extends Cache implements Cache_GarbageCollect {
 	 */
 	public function set($id, $data, $lifetime = NULL)
 	{
+		$this->_cache_dir_usable or $this->_check_cache_dir();
+
 		$filename = Cache_File::filename($this->_sanitize_id($id));
 		$directory = $this->_resolve_directory($filename);
 
@@ -251,6 +252,8 @@ class Kohana_Cache_File extends Cache implements Cache_GarbageCollect {
 	 */
 	public function delete($id)
 	{
+		$this->_cache_dir_usable or $this->_check_cache_dir();
+
 		$filename = Cache_File::filename($this->_sanitize_id($id));
 		$directory = $this->_resolve_directory($filename);
 
@@ -271,6 +274,8 @@ class Kohana_Cache_File extends Cache implements Cache_GarbageCollect {
 	 */
 	public function delete_all()
 	{
+		$this->_cache_dir_usable or $this->_check_cache_dir();
+
 		return $this->_delete_file($this->_cache_dir, TRUE);
 	}
 
@@ -282,6 +287,8 @@ class Kohana_Cache_File extends Cache implements Cache_GarbageCollect {
 	 */
 	public function garbage_collect()
 	{
+		$this->_cache_dir_usable or $this->_check_cache_dir();
+
 		$this->_delete_file($this->_cache_dir, TRUE, FALSE, TRUE);
 		return;
 	}

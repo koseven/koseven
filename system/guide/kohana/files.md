@@ -67,6 +67,7 @@ If the file doesn't have a `.php` extension, pass the extension as the third par
 	// If $name is "2000-01-01-first-post" this would look for "posts/2000-01-01-first-post.textile"
 	$path = Kohana::find_file('posts', $name, '.textile');
 
+**Note:** If caching is enabled than Kohana::find_file() saves results for one minute (defined in Kohana::$cache_life). During cache lifetime no new file will be found in the cascading file system and deleted files will still be returned.
 
 ## Vendor Extensions
 

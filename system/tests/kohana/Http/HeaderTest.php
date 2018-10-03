@@ -1364,7 +1364,51 @@ class Kohana_HTTP_HeaderTest extends Unittest_TestCase {
 				],
 				TRUE,
 				'en-us'
-			],			
+			],
+			[
+				[
+					'accept-language'  => 'fr,en-US,en'
+				],
+				[
+					'en-us',
+					'fr-fr'
+				],
+				FALSE,
+				'fr-fr'
+			],
+			[
+				[
+					'accept-language'  => 'fr,en-US,en'
+				],
+				[
+					'fr-fr',
+					'en-us'
+				],
+				FALSE,
+				'fr-fr'
+			],
+			[
+				[
+					'accept-language'  => 'fr,en,en-US'
+				],
+				[
+					'en-us',
+					'fr-fr'
+				],
+				TRUE,
+				'en-us'
+			],
+			[
+				[
+					'accept-language'  => 'fr,en,en-US'
+				],
+				[
+					'fr-fr',
+					'en-us'
+				],
+				TRUE,
+				'en-us'
+			],
 		];
 	}
 

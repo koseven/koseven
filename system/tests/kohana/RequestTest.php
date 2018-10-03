@@ -75,6 +75,61 @@ class Kohana_RequestTest extends Unittest_TestCase
 	}
 
 	/**
+	 * Tests client IP detection
+	 *
+	 * @return null
+	 */
+	public function test_client_ips()
+	{
+		// testing X-Forwarded-For
+		$server = [
+			'HTTPS' => NULL,
+			'PATH_INFO' => '/',
+			'REMOTE_ADDR' => '255.255.255.1',
+			'HTTP_X_FORWARDED_FOR' => '127.0.0.2, 255.255.255.1, 255.255.255.2',
+		];
+
+		$this->setEnvironment([
+			'Request::$initial' => NULL,
+			'Request::$client_ip' => NULL,
+			'Request::$trusted_proxies' => ['255.255.255.1'],
+			'_SERVER' => $server,
+		]);
+
+		$request = Request::factory();
+
+		$this->assertEquals(Request::$client_ip, '127.0.0.2', 'Header "HTTP_X_FORWARDED_FOR" handled incorrectly');
+
+		// testing Client-IP
+		$server['HTTP_CLIENT_IP'] = '127.0.0.3';
+		unset($server['HTTP_X_FORWARDED_FOR']);
+
+		$this->setEnvironment([
+			'Request::$initial' => NULL,
+			'Request::$client_ip' => NULL,
+			'_SERVER' => $server,
+		]);
+
+		$request = Request::factory();
+
+		$this->assertEquals(Request::$client_ip, '127.0.0.3', 'Header "HTTP_CLIENT_IP" handled incorrectly');
+
+		// testing Cloudflare
+		$server['HTTP_CF_CONNECTING_IP'] = '127.0.0.4';
+
+		$this->setEnvironment([
+			'Request::$initial' => NULL,
+			'Request::$client_ip' => NULL,
+			'_SERVER' => $server,
+		]);
+
+		$request = Request::factory();
+
+		$this->assertEquals(Request::$client_ip, '127.0.0.4', 'Cloudflare header "HTTP_CF_CONNECTING_IP" handled incorrectly');
+
+	}
+
+	/**
 	 * Tests that the allow_external flag prevents an external request.
 	 *
 	 * @return null

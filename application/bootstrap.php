@@ -59,7 +59,10 @@ ini_set('unserialize_callback_func', 'spl_autoload_call');
 /**
  * Enable composer autoload libraries
  */
-// require DOCROOT . '/vendor/autoload.php';
+if (is_file(DOCROOT.'/vendor/autoload.php'))
+{
+	require DOCROOT.'/vendor/autoload.php';
+}
 
 /**
  * Set the mb_substitute_character to "none"

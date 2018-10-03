@@ -1,10 +1,5 @@
 # Kohana - userguide module
 
-| ver   | Stable                                                                                                                                 | Develop                                                                                                                                  |
-|-------|----------------------------------------------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------|
-| 3.3.x | [![Build Status - 3.3/master](https://travis-ci.org/kohana/userguide.svg?branch=3.3%2Fmaster)](https://travis-ci.org/kohana/userguide) | [![Build Status - 3.3/develop](https://travis-ci.org/kohana/userguide.svg?branch=3.3%2Fdevelop)](https://travis-ci.org/kohana/userguide) |
-| 3.4.x | [![Build Status - 3.4/master](https://travis-ci.org/kohana/userguide.svg?branch=3.4%2Fmaster)](https://travis-ci.org/kohana/userguide) | [![Build Status - 3.4/develop](https://travis-ci.org/kohana/userguide.svg?branch=3.4%2Fdevelop)](https://travis-ci.org/kohana/userguide) |
-
 ## What needs to be done?
 
 Most articles are stubs, with a couple links to pages to be used as a reference when writing the page.  The idea is to use the information on those links to help write the new ones.  Some of the old userguide pages can probably be mostly copied, with a few improvements, others will be better to be completely rewritten.  If you ever have questions, please feel free to jump in the kohana irc channel.

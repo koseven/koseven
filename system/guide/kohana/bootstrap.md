@@ -57,8 +57,8 @@ if (strpos($_SERVER['HTTP_HOST'], 'kohanaframework.org') !== FALSE)
 	// We are live!
 	Kohana::$environment = Kohana::PRODUCTION;
 
-	// Turn off notices and strict errors
-	error_reporting(E_ALL ^ E_NOTICE ^ E_STRICT);
+	// Turn off notices
+	error_reporting(E_ALL & ~E_NOTICE);
 }
 
 /**
