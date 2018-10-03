@@ -848,11 +848,11 @@ class Kohana_Core {
         if (class_exists('Kohana_Cache'))
         {
             //deletes the cache
-            if ($lifetime===0)
+            if ($lifetime === 0)
                 return Cache::instance()->delete($name);
 
             //no data provided we read
-            if ($data===NULL)
+            if ($data === NULL)
                 return Cache::instance()->get($name);
             //saves data
             else
