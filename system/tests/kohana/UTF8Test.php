@@ -119,12 +119,15 @@ class Kohana_UTF8Test extends Unittest_TestCase
 	public function provider_transliterate_to_ascii()
 	{
 		return [
-			['Cocoñùт', -1, 'Coconuт'],
-			['COCOÑÙТ', -1, 'COCOÑÙТ'],
-			['Cocoñùт', 0, 'Coconuт'],
-			['COCOÑÙТ', 0, 'COCONUТ'],
-			['Cocoñùт', 1, 'Cocoñùт'],
-			['COCOÑÙТ', 1, 'COCONUТ'],
+			['Cocoñùт', -1, 'Coconuт', NULL, NULL],
+			['COCOÑÙТ', -1, 'COCOÑÙТ', NULL, NULL],
+			['Cocoñùт', 0, 'Coconuт', NULL, NULL],
+			['COCOÑÙТ', 0, 'COCONUТ', NULL, NULL],
+			['Cocoñùт', 1, 'Cocoñùт', NULL, NULL],
+			['COCOÑÙТ', 1, 'COCONUТ', NULL, NULL],
+			['cгущёнка', -1, 'cgyshenka', ['с' => 'c', 'г' => 'g', 'у' => 'y', 'щ' => 'sh', 'ё' => 'e', 'н' => 'n', 'к' => 'k', 'а' => 'a'], []],
+			['Сгущёнка', 0, 'Cgyshenka', ['С' => 'C', 'г' => 'g', 'у' => 'y', 'щ' => 'sh', 'ё' => 'e', 'н' => 'n', 'к' => 'k', 'а' => 'a'], []],
+			['CГУЩЁНКА', 1, 'CGYSHENKA', [], ['С' => 'C', 'Г' => 'G', 'У' => 'Y', 'Щ' => 'SH', 'Ё' => 'E', 'Н' => 'N', 'К' => 'K', 'А' => 'A']],
 		];
 	}
 
@@ -134,9 +137,9 @@ class Kohana_UTF8Test extends Unittest_TestCase
 	 * @test
 	 * @dataProvider provider_transliterate_to_ascii
 	 */
-	public function test_transliterate_to_ascii($input, $case, $expected)
+	public function test_transliterate_to_ascii($input, $case, $lower_accents, $upper_accents, $expected)
 	{
-		$this->assertSame($expected, UTF8::transliterate_to_ascii($input, $case));
+		$this->assertSame($expected, UTF8::transliterate_to_ascii($input, $case, $lower_accents, $upper_accents));
 	}
 
 	/**
