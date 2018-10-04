@@ -717,7 +717,7 @@ class Kohana_Core {
 							}
 						}
 					}
-					else
+					elseif ( ! isset($found[$key]))
 					{
 						// Add new files to the list
 						$found[$key] = realpath($file->getPathname());
