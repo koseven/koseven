@@ -233,7 +233,7 @@ class Kohana_Core {
 					// Set permissions (must be manually set to fix umask issues)
 					chmod($settings['cache_dir'], 0755);
 				}
-				catch (Exception $e)
+				catch (Throwable $e)
 				{
 					throw new Kohana_Exception('Could not create cache directory :dir',
 						[':dir' => Debug::path($settings['cache_dir'])]);
@@ -719,11 +719,8 @@ class Kohana_Core {
 					}
 					else
 					{
-						if ( ! isset($found[$key]))
-						{
-							// Add new files to the list
-							$found[$key] = realpath($file->getPathName());
-						}
+						// Add new files to the list
+						$found[$key] = realpath($file->getPathname());
 					}
 				}
 			}
@@ -781,7 +778,7 @@ class Kohana_Core {
                 return Cache::instance()->set($name,$data, $lifetime);
         }
         else
-            return self::file_cache($name, $data, $lifetime);
+            return Kohana::file_cache($name, $data, $lifetime);
     }
 
     /**
@@ -833,7 +830,7 @@ class Kohana_Core {
                     {
                         return unserialize(file_get_contents($dir.$file));
                     }
-                    catch (Exception $e)
+                    catch (Trowable $e)
                     {
                         // Cache is corrupt, let return happen normally.
                     }
@@ -845,7 +842,7 @@ class Kohana_Core {
                         // Cache has expired
                         unlink($dir.$file);
                     }
-                    catch (Exception $e)
+                    catch (Throwable $e)
                     {
                         // Cache has mostly likely already been deleted,
                         // let return happen normally.
@@ -874,7 +871,7 @@ class Kohana_Core {
             // Write the cache
             return (bool) file_put_contents($dir.$file, $data, LOCK_EX);
         }
-        catch (Exception $e)
+        catch (Throwable $e)
         {
             // Failed to write cache
             return FALSE;
@@ -942,7 +939,7 @@ class Kohana_Core {
 		{
 			// This error is not suppressed by current error reporting settings
 			// Convert the error into an ErrorException
-			throw new ErrorException($error, $code, 0, $file, $line);
+			throw new ErrorException($error, $code, $code, $file, $line);
 		}
 
 		// Do not execute the PHP error handler
@@ -971,7 +968,7 @@ class Kohana_Core {
 				Kohana::file_cache('Kohana::find_file()', Kohana::$_files);
 			}
 		}
-		catch (Exception $e)
+		catch (Throwable $e)
 		{
 			// Pass the exception to the handler
 			Kohana_Exception::handler($e);
@@ -983,7 +980,7 @@ class Kohana_Core {
 			ob_get_level() AND ob_clean();
 
 			// Fake an exception for nice debugging
-			Kohana_Exception::handler(new ErrorException($error['message'], $error['type'], 0, $error['file'], $error['line']));
+			Kohana_Exception::handler(new ErrorException($error['message'], $error['type'], $error['type'], $error['file'], $error['line']));
 
 			// Shutdown now to avoid a "death loop"
 			exit(1);
