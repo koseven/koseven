@@ -1,3 +1,3 @@
 <?php
 
-class Validation extends Kohana_Validation {}
+class Validation extends Koseven_Validation {}

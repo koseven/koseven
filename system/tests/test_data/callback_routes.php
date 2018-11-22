@@ -2,11 +2,11 @@
 /**
  * A holding class for route callback tests
  *
- * @group kohana
+ * @group koseven
  *
  * @package    Unittest
- * @author     Kohana Team
- * @copyright  (c) Kohana Team
+ * @copyright  (c) 2007-2014  Kohana Team
+ * @copyright  (c) 2014-2018  Koseven Team
  * @license    https://koseven.ga/LICENSE.md
  */
 class Route_Holder

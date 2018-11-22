@@ -1,3 +1,3 @@
 <?php
 
-class Request_Exception extends Kohana_Request_Exception {}
+class Request_Exception extends Koseven_Request_Exception {}

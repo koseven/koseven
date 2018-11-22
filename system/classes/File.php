@@ -1,3 +1,3 @@
 <?php
 
-class File extends Kohana_File {}
+class File extends Koseven_File {}

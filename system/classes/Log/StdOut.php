@@ -1,3 +1,3 @@
 <?php
 
-class Log_StdOut extends Kohana_Log_StdOut {}
+class Log_StdOut extends Koseven_Log_StdOut {}

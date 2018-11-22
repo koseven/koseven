@@ -1,5 +1,5 @@
 <style type="text/css">
-<?php include Kohana::find_file('views', 'profiler/style', 'css') ?>
+<?php include Koseven::find_file('views', 'profiler/style', 'css') ?>
 </style>
 
 <?php
@@ -8,7 +8,7 @@ $group_cols       = ['min', 'max', 'average', 'total'];
 $application_cols = ['min', 'max', 'average', 'current'];
 ?>
 
-<div class="kohana">
+<div class="koseven">
 	<?php foreach (Profiler::groups() as $group => $benchmarks): ?>
 	<table class="profiler">
 		<tr class="group">

@@ -1,3 +1,3 @@
 <?php
 
-class HTTP_Exception_304 extends Kohana_HTTP_Exception_304 {}
+class HTTP_Exception_304 extends Koseven_HTTP_Exception_304 {}

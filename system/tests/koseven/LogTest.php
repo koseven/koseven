@@ -1,0 +1,111 @@
+<?php
+
+/**
+ * Tests Koseven Logging API
+ *
+ * @group koseven
+ * @group koseven.core
+ * @group koseven.core.logging
+ *
+ * @package    Koseven
+ * @category   Tests
+ * @author     Matt Button <matthew@sigswitch.com>
+ * @copyright  (c) 2007-2014  Kohana Team
+ * @copyright  (c) 2014-2018  Koseven Team
+ * @license    https://koseven.ga/LICENSE.md
+ */
+class Koseven_LogTest extends Unittest_TestCase
+{
+
+	/**
+	 * Tests that when a new logger is created the list of messages is initially
+	 * empty
+	 *
+	 * @test
+	 * @covers Log
+	 */
+	public function test_messages_is_initially_empty()
+	{
+		$logger = new Log;
+
+		$this->assertAttributeSame([], '_messages', $logger);
+	}
+
+	/**
+	 * Tests that when a new logger is created the list of writers is initially
+	 * empty
+	 *
+	 * @test
+	 * @covers Log
+	 */
+	public function test_writers_is_initially_empty()
+	{
+		$logger = new Log;
+
+		$this->assertAttributeSame([], '_writers', $logger);
+	}
+
+	/**
+	 * Test that attaching a log writer using an array of levels adds it to the array of log writers
+	 *
+	 * @TODO Is this test too specific?
+	 *
+	 * @test
+	 * @covers Log::attach
+	 */
+	public function test_attach_attaches_log_writer_and_returns_this()
+	{
+		$logger = new Log;
+		$writer = $this->getMockForAbstractClass('Log_Writer');
+
+		$this->assertSame($logger, $logger->attach($writer));
+
+		$this->assertAttributeSame(
+			[spl_object_hash($writer) => ['object' => $writer, 'levels' => []]],
+			'_writers',
+			$logger
+		);
+	}
+
+	/**
+	 * Test that attaching a log writer using a min/max level adds it to the array of log writers
+	 *
+	 * @TODO Is this test too specific?
+	 *
+	 * @test
+	 * @covers Log::attach
+	 */
+	public function test_attach_attaches_log_writer_min_max_and_returns_this()
+	{
+		$logger = new Log;
+		$writer = $this->getMockForAbstractClass('Log_Writer');
+
+		$this->assertSame($logger, $logger->attach($writer, Log::NOTICE, Log::CRITICAL));
+
+		$this->assertAttributeSame(
+			[spl_object_hash($writer) => ['object' => $writer, 'levels' => [Log::CRITICAL, Log::ERROR, Log::WARNING, Log::NOTICE]]],
+			'_writers',
+			$logger
+		);
+	}
+
+	/**
+	 * When we call detach() we expect the specified log writer to be removed
+	 *
+	 * @test
+	 * @covers Log::detach
+	 */
+	public function test_detach_removes_log_writer_and_returns_this()
+	{
+		$logger = new Log;
+		$writer = $this->getMockForAbstractClass('Log_Writer');
+
+		$logger->attach($writer);
+
+		$this->assertSame($logger, $logger->detach($writer));
+
+		$this->assertAttributeSame([], '_writers', $logger);
+	}
+
+
+}

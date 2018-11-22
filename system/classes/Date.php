@@ -1,3 +1,3 @@
 <?php
 
-class Date extends Kohana_Date {}
+class Date extends Koseven_Date {}

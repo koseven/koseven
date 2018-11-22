@@ -1,3 +1,3 @@
 <?php
 
-interface HTTP_Request extends Kohana_HTTP_Request {}
+interface HTTP_Request extends Koseven_HTTP_Request {}

@@ -124,7 +124,7 @@
 
         <h1>Environment Tests</h1>
         <p>
-            The following tests have been run to determine if Koseven will work in your environment. If any of the tests have failed, consult the <a href="https://docs.koseven.ga/guide/kohana/install" target="_blank">documentation</a> for more information on how to correct the problem.
+            The following tests have been run to determine if Koseven will work in your environment. If any of the tests have failed, consult the <a href="https://docs.koseven.ga/guide/koseven/install" target="_blank">documentation</a> for more information on how to correct the problem.
         </p>
 
         <?php $failed = FALSE ?>
@@ -144,7 +144,7 @@
                 </tr>
                 <tr>
                     <th>System Directory</th>
-                    <?php if (is_dir(SYSPATH) AND is_file(SYSPATH.'classes/Kohana'.EXT)): ?>
+                    <?php if (is_dir(SYSPATH) AND is_file(SYSPATH.'classes/Koseven'.EXT)): ?>
                     <td class="pass">
                         <?php echo SYSPATH ?>
                     </td>

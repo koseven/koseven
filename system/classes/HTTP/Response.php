@@ -1,3 +1,3 @@
 <?php
 
-interface HTTP_Response extends Kohana_HTTP_Response {}
+interface HTTP_Response extends Koseven_HTTP_Response {}

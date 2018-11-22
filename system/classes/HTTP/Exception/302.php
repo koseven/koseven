@@ -1,3 +1,3 @@
 <?php
 
-class HTTP_Exception_302 extends Kohana_HTTP_Exception_302 {}
+class HTTP_Exception_302 extends Koseven_HTTP_Exception_302 {}

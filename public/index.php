@@ -16,8 +16,8 @@ $application = 'application';
 $modules = 'modules';
 
 /**
- * The directory in which the Kohana resources are located. The system
- * directory must contain the classes/kohana.php file.
+ * The directory in which the Koseven resources are located. The system
+ * directory must contain the classes/koseven.php file.
  *
  * @link http://kohanaframework.org/guide/about.install#system
  */
@@ -48,7 +48,7 @@ error_reporting(E_ALL);
 
 /**
  * End of standard configuration! Changing any of the code below should only be
- * attempted by those with a working knowledge of Kohana internals.
+ * attempted by those with a working knowledge of Koseven internals.
  *
  * @link http://kohanaframework.org/guide/using.configuration
  */
@@ -85,17 +85,17 @@ if (file_exists('install'.EXT))
 /**
  * Define the start time of the application, used for profiling.
  */
-if ( ! defined('KOHANA_START_TIME'))
+if ( ! defined('KOSEVEN_START_TIME'))
 {
-	define('KOHANA_START_TIME', microtime(TRUE));
+    define('KOSEVEN_START_TIME', microtime(TRUE));
 }
 
 /**
  * Define the memory usage at the start of the application, used for profiling.
  */
-if ( ! defined('KOHANA_START_MEMORY'))
+if ( ! defined('KOSEVEN_START_MEMORY'))
 {
-	define('KOHANA_START_MEMORY', memory_get_usage());
+	define('KOSEVEN_START_MEMORY', memory_get_usage());
 }
 
 // Bootstrap the application

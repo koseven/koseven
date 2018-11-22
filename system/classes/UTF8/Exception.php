@@ -1,3 +1,3 @@
 <?php
 
-class UTF8_Exception extends Kohana_UTF8_Exception {}
+class UTF8_Exception extends Koseven_UTF8_Exception {}

@@ -1,3 +1,3 @@
 <?php
 
-class Validation_Exception extends Kohana_Validation_Exception {}
+class Validation_Exception extends Koseven_Validation_Exception {}

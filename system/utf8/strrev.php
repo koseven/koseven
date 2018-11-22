@@ -2,10 +2,10 @@
 /**
  * UTF8::strrev
  *
- * @package    Kohana
- * @author     Kohana Team
- * @copyright  (c) Kohana Team
+ * @package    Koseven
  * @copyright  (c) 2005 Harry Fuecks
+ * @copyright  (c) 2007-2014  Kohana Team
+ * @copyright  (c) 2014-2018  Koseven Team
  * @license    http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt
  */
 function _strrev($str)

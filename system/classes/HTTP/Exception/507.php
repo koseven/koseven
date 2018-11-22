@@ -1,3 +1,3 @@
 <?php
 
-class HTTP_Exception_507 extends Kohana_HTTP_Exception_507 {}
+class HTTP_Exception_507 extends Koseven_HTTP_Exception_507 {}

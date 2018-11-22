@@ -1,3 +1,3 @@
 <?php
 
-class Log_StdErr extends Kohana_Log_StdErr {}
+class Log_StdErr extends Koseven_Log_StdErr {}

@@ -3,17 +3,17 @@
 // -- Environment setup --------------------------------------------------------
 
 // Load the core Kohana class
-require SYSPATH.'classes/Kohana/Core'.EXT;
+require SYSPATH.'classes/Koseven/Core'.EXT;
 
-if (is_file(APPPATH.'classes/Kohana'.EXT))
+if (is_file(APPPATH.'classes/Koseven'.EXT))
 {
 	// Application extends the core
-	require APPPATH.'classes/Kohana'.EXT;
+	require APPPATH.'classes/Koseven'.EXT;
 }
 else
 {
 	// Load empty core extension
-	require SYSPATH.'classes/Kohana'.EXT;
+	require SYSPATH.'classes/Koseven'.EXT;
 }
 
 /**
@@ -38,7 +38,7 @@ setlocale(LC_ALL, 'en_US.utf-8');
  * @link http://kohanaframework.org/guide/using.autoloading
  * @link http://www.php.net/manual/function.spl-autoload-register
  */
-spl_autoload_register(['Kohana', 'auto_load']);
+spl_autoload_register(['Koseven', 'auto_load']);
 
 /**
  * Optionally, you can enable a compatibility auto-loader for use with
@@ -85,15 +85,15 @@ if (isset($_SERVER['SERVER_PROTOCOL']))
 }
 
 /**
- * Set Kohana::$environment if a 'KOHANA_ENV' environment variable has been supplied.
+ * Set Koseven::$environment if a 'KOSEVEN_ENV/KOHANA_ENV' environment variable has been supplied.
  *
  * Note: If you supply an invalid environment name, a PHP warning will be thrown
- * saying "Couldn't find constant Kohana::<INVALID_ENV_NAME>"
+ * saying "Couldn't find constant Koseven::<INVALID_ENV_NAME>"
  */
 if (isset($_SERVER['KOHANA_ENV']))
-{
-	Kohana::$environment = constant('Kohana::'.strtoupper($_SERVER['KOHANA_ENV']));
-}
+	Koseven::$environment = constant('Koseven::'.strtoupper($_SERVER['KOHANA_ENV']));
+elseif(isset($_SERVER['KOSEVEN_ENV']))
+    Koseven::$environment = constant('Koseven::'.strtoupper($_SERVER['KOSEVEN_ENV']));
 
 /**
  * Initialize Kohana, setting the default options.
@@ -110,24 +110,25 @@ if (isset($_SERVER['KOHANA_ENV']))
  * - boolean  caching     enable or disable internal caching                 FALSE
  * - boolean  expose      set the X-Powered-By header                        FALSE
  */
-Kohana::init([
+Koseven::init([
 	'base_url'   => '/',
 ]);
 
 /**
  * Attach the file write to logging. Multiple writers are supported.
  */
-Kohana::$log->attach(new Log_File(APPPATH.'logs'));
+Koseven::$log->attach(new Log_File(APPPATH.'logs'));
 
 /**
  * Attach a file reader to config. Multiple readers are supported.
  */
-Kohana::$config->attach(new Config_File);
+Koseven::$config->attach(new Config_File);
 
 /**
  * Enable modules. Modules are referenced by a relative or absolute path.
  */
-Kohana::modules([
+Koseven::modules([
+    'kohana'        => MODPATH.'kohana',     // Legacy Module for Kohana Support (Only disable if you know what you do)
 	// 'encrypt'    => MODPATH.'encrypt',    // Encryption supprt
 	// 'auth'       => MODPATH.'auth',       // Basic authentication
 	// 'cache'      => MODPATH.'cache',      // Caching with multiple backends

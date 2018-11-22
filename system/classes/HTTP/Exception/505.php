@@ -1,3 +1,3 @@
 <?php
 
-class HTTP_Exception_505 extends Kohana_HTTP_Exception_505 {}
+class HTTP_Exception_505 extends Koseven_HTTP_Exception_505 {}

@@ -1,3 +1,3 @@
 <?php
 
-class HTTP_Exception_404 extends Kohana_HTTP_Exception_404 {}
+class HTTP_Exception_404 extends Koseven_HTTP_Exception_404 {}

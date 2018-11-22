@@ -1,3 +1,3 @@
 <?php
 
-class I18n extends Kohana_I18n {}
+class I18n extends Koseven_I18n {}
