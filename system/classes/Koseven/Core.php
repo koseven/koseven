@@ -113,6 +113,11 @@ class Koseven_Core {
 	 */
 	public static $config;
 
+    /**
+     * @var boolean  Backward Compatibility with Kohana Classes
+     */
+    public static $compatibility = TRUE;
+
 	/**
 	 * @var  boolean  Has [Koseven::init] been called?
 	 */
@@ -620,17 +625,33 @@ class Koseven_Core {
 			// The file has not been found yet
 			$found = FALSE;
 
-			foreach (Koseven::$_paths as $dir)
-			{
-				if (is_file($dir.$path))
-				{
-					// A path has been found
-					$found = $dir.$path;
+            /**
+             *  NOTE: This check is only needed if we are PRE-Initialization and in Compatibility mode
+             *  Only performing before Initialization makes sure that no `strpos, etc. operations get called
+             *  without being necessary
+             */
+            if (!Koseven::$_init AND Koseven::$compatibility AND strpos($path, 'kohana') !== FALSE)
+            {
+                $found = MODPATH.'kohana'.DIRECTORY_SEPARATOR.$path;
+                if (!is_file($found))
+                    $found = FALSE;
+            }
 
-					// Stop searching
-					break;
-				}
-			}
+            // If still not found. Search through $_paths
+            if (! $found)
+            {
+                foreach (Koseven::$_paths as $dir)
+                {
+                    if (is_file($dir.$path))
+                    {
+                        // A path has been found
+                        $found = $dir.$path;
+
+                        // Stop searching
+                        break;
+                    }
+                }
+            }
 		}
 
 		if (Koseven::$caching === TRUE)

@@ -2,7 +2,7 @@
 
 // -- Environment setup --------------------------------------------------------
 
-// Load the core Kohana class
+// Load the core Koseven class
 require SYSPATH.'classes/Koseven/Core'.EXT;
 
 if (is_file(APPPATH.'classes/Koseven'.EXT))
@@ -33,7 +33,7 @@ date_default_timezone_set('America/Chicago');
 setlocale(LC_ALL, 'en_US.utf-8');
 
 /**
- * Enable the Kohana auto-loader.
+ * Enable the Koseven auto-loader.
  *
  * @link http://kohanaframework.org/guide/using.autoloading
  * @link http://www.php.net/manual/function.spl-autoload-register
@@ -46,15 +46,24 @@ spl_autoload_register(['Koseven', 'auto_load']);
  *
  * It is recommended to not enable this unless absolutely necessary.
  */
-//spl_autoload_register(array('Kohana', 'auto_load_lowercase'));
+//spl_autoload_register(array('Koseven', 'auto_load_lowercase'));
 
 /**
- * Enable the Kohana auto-loader for unserialization.
+ * Enable the Koseven auto-loader for unserialization.
  *
  * @link http://www.php.net/manual/function.spl-autoload-call
  * @link http://www.php.net/manual/var.configuration#unserialize-callback-func
  */
 ini_set('unserialize_callback_func', 'spl_autoload_call');
+
+/**
+ * Enable Custom Kohana Classes for Backwards Compatibility
+ */
+if (Koseven::$compatibility AND is_file(APPPATH.'classes/Kohana'.EXT))
+{
+    // Application extends the core
+    require APPPATH.'classes/Koseven'.EXT;
+}
 
 /**
  * Enable composer autoload libraries
@@ -96,7 +105,7 @@ elseif(isset($_SERVER['KOSEVEN_ENV']))
     Koseven::$environment = constant('Koseven::'.strtoupper($_SERVER['KOSEVEN_ENV']));
 
 /**
- * Initialize Kohana, setting the default options.
+ * Initialize Koseven, setting the default options.
  *
  * The following options are available:
  *
@@ -125,22 +134,33 @@ Koseven::$log->attach(new Log_File(APPPATH.'logs'));
 Koseven::$config->attach(new Config_File);
 
 /**
- * Enable modules. Modules are referenced by a relative or absolute path.
+ * Modules to enable. Modules are referenced by a relative or absolute path.
  */
-Koseven::modules([
-    'kohana'        => MODPATH.'kohana',     // Legacy Module for Kohana Support (Only disable if you know what you do)
-	// 'encrypt'    => MODPATH.'encrypt',    // Encryption supprt
-	// 'auth'       => MODPATH.'auth',       // Basic authentication
-	// 'cache'      => MODPATH.'cache',      // Caching with multiple backends
-	// 'codebench'  => MODPATH.'codebench',  // Benchmarking tool
-	// 'database'   => MODPATH.'database',   // Database access
-	// 'image'      => MODPATH.'image',      // Image manipulation
-	// 'minion'     => MODPATH.'minion',     // CLI Tasks
-	// 'orm'        => MODPATH.'orm',        // Object Relationship Mapping
-	// 'pagination' => MODPATH.'pagination', // Pagination
-	// 'unittest'   => MODPATH.'unittest',   // Unit testing
-	// 'userguide'  => MODPATH.'userguide',  // User guide and API documentation
-	]);
+$modules = array(
+    // 'encrypt'    => MODPATH.'encrypt',    // Encryption supprt
+    // 'auth'       => MODPATH.'auth',       // Basic authentication
+    // 'cache'      => MODPATH.'cache',      // Caching with multiple backends
+    // 'codebench'  => MODPATH.'codebench',  // Benchmarking tool
+    // 'database'   => MODPATH.'database',   // Database access
+    // 'image'      => MODPATH.'image',      // Image manipulation
+    // 'minion'     => MODPATH.'minion',     // CLI Tasks
+    // 'orm'        => MODPATH.'orm',        // Object Relationship Mapping
+    // 'pagination' => MODPATH.'pagination', // Pagination
+    // 'unittest'   => MODPATH.'unittest',   // Unit testing
+    // 'userguide'  => MODPATH.'userguide',  // User guide and API documentation
+);
+
+/**
+ * Load legacy Module for Kohana Support
+ */
+if (Koseven::$compatibility) {
+    $modules = ['kohana' => MODPATH.'kohana'] + $modules;
+}
+
+/**
+ * Initialize Modules
+ */
+Koseven::modules($modules);
 
 /**
  * Cookie Salt
