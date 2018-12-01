@@ -1,7 +1,6 @@
 <?php
-
 /**
- * Tests Kohana i18n class
+ * Tests Kohana i18n class.
  *
  * @group kohana
  * @group kohana.core
@@ -34,9 +33,10 @@ class Kohana_I18nTest extends Unittest_TestCase {
 	public function provider_lang()
 	{
 		return [
-			// $input, $expected_result
+			// $input, $result
 			[NULL, 'en-us'],
 			['es-es', 'es-es'],
+			['en_US', 'en-us'],
 		];
 	}
 
@@ -62,10 +62,12 @@ class Kohana_I18nTest extends Unittest_TestCase {
 	public function provider_get()
 	{
 		return [
-			// $value, $result
+			// $lang, $input, $result
 			['en-us', 'Hello, world!', 'Hello, world!'],
 			['es-es', 'Hello, world!', '¡Hola, mundo!'],
 			['fr-fr', 'Hello, world!', 'Bonjour, monde!'],
+			['en-us', ['Hello, :name!', [':name' => 'world']], 'Hello, world!'],
+			['ru-ru', ['Привет, :name!', [':name' => 'мир']], 'Привет, мир!'],
 		];
 	}
 
@@ -86,5 +88,4 @@ class Kohana_I18nTest extends Unittest_TestCase {
 		I18n::lang('en-us');
 		$this->assertSame($expected, I18n::get($input, $lang));
 	}
-
 }
