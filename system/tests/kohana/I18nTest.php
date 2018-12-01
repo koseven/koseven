@@ -33,7 +33,7 @@ class Kohana_I18nTest extends Unittest_TestCase {
 	public function provider_lang()
 	{
 		return [
-			// $input, $result
+			// $input, $expected
 			[NULL, 'en-us'],
 			['es-es', 'es-es'],
 			['en_US', 'en-us'],
@@ -48,10 +48,10 @@ class Kohana_I18nTest extends Unittest_TestCase {
 	 * @param  boolean  $input     Input for I18n::lang
 	 * @param  boolean  $expected  Output for I18n::lang
 	 */
-	public function test_lang($input, $expected_result)
+	public function test_lang($input, $expected)
 	{
-		$this->assertSame($expected_result, I18n::lang($input));
-		$this->assertSame($expected_result, I18n::lang());
+		$this->assertSame($expected, I18n::lang($input));
+		$this->assertSame($expected, I18n::lang());
 	}
 
 	/**
@@ -62,7 +62,7 @@ class Kohana_I18nTest extends Unittest_TestCase {
 	public function provider_get()
 	{
 		return [
-			// $lang, $input, $result
+			// $lang, $input, $expected
 			['en-us', 'Hello, world!', 'Hello, world!'],
 			['es-es', 'Hello, world!', '¡Hola, mundo!'],
 			['fr-fr', 'Hello, world!', 'Bonjour, monde!'],
@@ -76,8 +76,8 @@ class Kohana_I18nTest extends Unittest_TestCase {
 	 *
 	 * @test
 	 * @dataProvider provider_get
-	 * @param boolean $input  Input for File::mime
-	 * @param boolean $expected Output for File::mime
+	 * @param boolean $input  Input for I18n::get
+	 * @param boolean $expected Output for I18n::get
 	 */
 	public function test_get($lang, $input, $expected)
 	{
