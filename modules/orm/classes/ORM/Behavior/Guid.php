@@ -31,7 +31,7 @@ class ORM_Behavior_Guid extends ORM_Behavior {
         return sprintf(
             '%04x%04x-%04x-%04x-%04x-%04x%04x%04x',
             // 32 bits for "time_low"
-            mt_rand(0, 0xffff), 
+            mt_rand(0, 0xffff),
             mt_rand(0, 0xffff),
             // 16 bits for "time_mid"
             mt_rand(0, 0xffff),
@@ -43,7 +43,7 @@ class ORM_Behavior_Guid extends ORM_Behavior {
             // two most significant bits holds zero and one for variant DCE1.1
             mt_rand(0, 0x3fff) | 0x8000,
             // 48 bits for "node"
-            mt_rand(0, 0xffff), 
+            mt_rand(0, 0xffff),
             mt_rand(0, 0xffff), 
             mt_rand(0, 0xffff)
         );
@@ -58,7 +58,7 @@ class ORM_Behavior_Guid extends ORM_Behavior {
     {
         if ($id AND is_string($id))
         {
-            return (bool) preg_match('/^[\d\w]{8}-[\d\w]{4}-[\d\w]{4}-[\d\w]{4}-[\d\w]{12}$/m', $id);
+            return (bool) preg_match('/^[\d\w]{8}-[\d\w]{4}-[\d\w]{4}-[\d\w]{4}-[\d\w]{12}$/', $id);
         }
         
         return FALSE;
