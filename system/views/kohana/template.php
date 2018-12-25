@@ -1,0 +1,1 @@
+Default Template View! <?php if(isset($data) && is_string($data)) { echo $data; } ?>
