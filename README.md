@@ -40,7 +40,7 @@ So far is mostly as the last stable version of Kohana 3.3.6 released on Jul 25, 
 
 Our focus is to keep the framework compatible with new releases of PHP, fix bugs and try to improve the speed. New features can be added using modules.
 
-There is a dedicated [versions and roadmap](https://koseven.ga/roadmap.html) page for the supported versions and plans.
+There is a dedicated [versions and roadmap](https://github.com/koseven/koseven/blob/devel/ROADMAP.md) page for the supported versions and plans.
 
 ## Are modules of the original Kohana compatible?
 
