@@ -21,6 +21,9 @@
 			<directory suffix=".php">./application/classes</directory>
 			<directory suffix=".php">./modules/*/classes</directory>
 			<directory suffix=".php">./system/classes</directory>
+			<exclude>
+				<directory suffix=".php">./modules/unittest</directory>
+			</exclude>
 		</whitelist>
 	</filter>
 </phpunit>
