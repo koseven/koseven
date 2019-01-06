@@ -56,27 +56,6 @@ class Kohana_TextTest extends Unittest_TestCase
 	}
 
 	/**
-	 * This test makes sure that auto_p doesn't enclose HTML tags
-	 * in paragraphs
-	 *
-	 * @test
-	 * @covers Text::auto_p
-	 * @dataProvider provider_auto_para_does_not_enclose_html_tags_in_paragraphs
-	 */
-	function test_auto_para_does_not_enclose_html_tags_in_paragraphs(array $tags, $text)
-	{
-		$output = Text::auto_p($text);
-
-		foreach ($tags as $tag)
-		{
-			$this->assertNotTag(
-				['tag' => $tag, 'ancestor' => ['tag' => 'p']],
-				$output
-			);
-		}
-	}
-
-	/**
 	 * This test makes sure that auto_p surrounds a single line of text
 	 * with paragraph tags
 	 *
@@ -206,7 +185,7 @@ class Kohana_TextTest extends Unittest_TestCase
 			['Բարեւ|Ձեզ', 'բարեւ|ձեզ', '|'],
 		];
 	}
-	
+
 	/**
 	 * Covers Text::ucfirst()
 	 *

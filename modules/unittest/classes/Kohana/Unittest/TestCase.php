@@ -7,25 +7,25 @@ use PHPUnit\Framework\TestCase;
  * and default settings
  *
  * @package    Kohana/UnitTest
- * @author     Kohana Team
+ *
+ * @author     Koseven Team
  * @copyright  (c) 2007-2012 Kohana Team
  * @copyright  (c) 2016-2018 Koseven Team
  * @license    https://koseven.ga/LICENSE.md
  */
 abstract class Kohana_Unittest_TestCase extends TestCase {
-	
+
 	/**
-	 * Make sure PHPUnit backs up globals
+	 * Make sure PHPUnit does not back up globals
 	 * @var boolean
 	 */
 	protected $backupGlobals = FALSE;
 
 	/**
-	 * A set of unittest helpers that are shared between normal / database
-	 * testcases
+	 * A set of Unittest helpers that are shared between normal / database testcases
 	 * @var Kohana_Unittest_Helpers
 	 */
-	protected $_helpers = NULL;
+	protected $_helpers;
 
 	/**
 	 * A default set of environment to be applied before each test
@@ -38,27 +38,32 @@ abstract class Kohana_Unittest_TestCase extends TestCase {
 	 *
 	 * Extending classes that have their own setUp() should call
 	 * parent::setUp()
-	 * 
-	 * @codeCoverageIgnore
+	 *
+	 * @throws Kohana_Exception
+	 * @throws ReflectionException
 	 */
 	public function setUp()
 	{
 		$this->_helpers = new Unittest_Helpers;
 
 		$this->setEnvironment($this->environmentDefault);
+
+		parent::setUp();
 	}
 
 	/**
-	 * Restores the original environment overriden with setEnvironment()
+	 * Restores the original environment overridden with setEnvironment()
 	 *
 	 * Extending classes that have their own tearDown()
 	 * should call parent::tearDown()
-	 * 
-	 * @codeCoverageIgnore
+	 * @throws Kohana_Exception
+	 * @throws ReflectionException
 	 */
 	public function tearDown()
 	{
 		$this->_helpers->restore_environment();
+
+		parent::tearDown();
 	}
 
 	/**
@@ -66,44 +71,44 @@ abstract class Kohana_Unittest_TestCase extends TestCase {
 	 */
 	public function cleanCacheDir()
 	{
-		return Unittest_Helpers::clean_cache_dir();
+		Unittest_Helpers::clean_cache_dir();
 	}
 
 	/**
-	 * Helper function that replaces all occurences of '/' with
+	 * Helper function that replaces all occurrences of '/' with
 	 * the OS-specific directory separator
 	 *
-	 * @param string $path The path to act on
+	 * @param  string $path The path to act on
 	 * @return string
 	 */
-	public function dirSeparator($path)
-	{
+	public function dirSeparator(string $path) : string {
 		return Unittest_Helpers::dir_separator($path);
 	}
 
 	/**
-	 * Allows easy setting & backing up of enviroment config
+	 * Allows easy setting & backing up of Environment config
 	 *
 	 * Option types are checked in the following order:
 	 *
-	 * * Server Var
-	 * * Static Variable
-	 * * Config option
+	 * - Server Var
+	 * - Static Variable
+	 * - Config option
 	 *
-	 * @codeCoverageIgnore
-	 * @param array $environment List of environment to set
+	 * @param  array $environment List of environment to set
+	 * @return bool
+	 * @throws Kohana_Exception
+	 * @throws ReflectionException
 	 */
-	public function setEnvironment(array $environment)
+	public function setEnvironment(array $environment) : bool
 	{
 		return $this->_helpers->set_environment($environment);
 	}
 
 	/**
 	 * Check for internet connectivity
-	 *
 	 * @return boolean Whether an internet connection is available
 	 */
-	public function hasInternet()
+	public function hasInternet() : bool
 	{
 		return Unittest_Helpers::has_internet();
 	}
@@ -111,75 +116,34 @@ abstract class Kohana_Unittest_TestCase extends TestCase {
 	/**
 	 * Evaluate an HTML or XML string and assert its structure and/or contents.
 	 *
-	 * NOTE:
-	 * Overriding this method to remove the deprecation error
-	 * when tested with PHPUnit 4.2.0+
-	 *
-	 * TODO:
-	 * this should be removed when phpunit-dom-assertions gets released
-	 * https://github.com/phpunit/phpunit-dom-assertions
-	 *
-	 * @param array $matcher
+	 * @param array  $matcher
 	 * @param string $actual
 	 * @param string $message
-	 * @param bool $isHtml
-	 * @uses Unittest_TestCase::tag_match
+	 * @param bool   $isHtml
+	 *
+	 * @deprecated since 4.0
 	 */
-	public static function assertTag($matcher, $actual, $message = '', $isHtml = true)
+	public static function assertTag(array $matcher, string $actual, $message = NULL, $isHtml = NULL)
 	{
-		//trigger_error(__METHOD__ . ' is deprecated', E_USER_DEPRECATED);
-
-		$matched = static::tag_match($matcher, $actual, $message, $isHtml);
-		static::assertTrue($matched, $message);
-	}
-
-	/**
-	 * This assertion is the exact opposite of assertTag
-	 *
-	 * Rather than asserting that $matcher results in a match, it asserts that
-	 * $matcher does not match
-	 *
-	 * NOTE:
-	 * Overriding this method to remove the deprecation error
-	 * when tested with PHPUnit 4.2.0+
-	 *
-	 * TODO:
-	 * this should be removed when phpunit-dom-assertions gets released
-	 * https://github.com/phpunit/phpunit-dom-assertions
-	 *
-	 * @param array $matcher
-	 * @param string $actual
-	 * @param string $message
-	 * @param bool $isHtml
-	 * @uses Unittest_TestCase::tag_match
-	 */
-	public static function assertNotTag($matcher, $actual, $message = '', $isHtml = true)
-	{
-
-		//trigger_error(__METHOD__ . ' is deprecated', E_USER_DEPRECATED);
-        
-		$matched = static::tag_match($matcher, $actual, $message, $isHtml);
-		static::assertTrue($matched, $message);
+		$matched = static::tag_match($matcher, $actual, $isHtml ?? TRUE);
+		static::assertTrue($matched, $message ?? '');
 	}
 
 	/**
 	 * Helper function to match HTML string tags against certain criteria
 	 *
-	 * TODO:
-	 * this should be removed when phpunit-dom-assertions gets released
-	 * https://github.com/phpunit/phpunit-dom-assertions
-	 *
-	 * @param array $matcher
+	 * @param array  $matcher
 	 * @param string $actual
-	 * @param string $message
-	 * @param bool $isHtml
+	 * @param bool 	 $isHtml
+	 *
 	 * @return bool TRUE if there is a match FALSE otherwise
+	 *
+	 * @deprecated since 4.0
 	 */
-	protected static function tag_match($matcher, $actual, $message = '', $isHtml = true)
+	protected static function tag_match(array $matcher, string $actual, $isHtml = NULL) : bool
 	{
-		$dom = PHPUnit\Util\Xml::load($actual, $isHtml);
-        $tags = $dom->getElementsByTagName($matcher['tag']);
-        
+        $tags = PHPUnit\Util\Xml::load($actual, $isHtml ?? TRUE)->getElementsByTagName($matcher['tag']);
+
 		return count($tags) > 0 && $tags[0] instanceof DOMNode;
 	}
 }
