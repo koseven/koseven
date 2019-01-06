@@ -80,6 +80,8 @@ abstract class Kohana_Unittest_TestCase extends TestCase {
 	 *
 	 * @param  string $path The path to act on
 	 * @return string
+	 *
+	 * @codeCoverageIgnore Gets Tested with Helpers test
 	 */
 	public function dirSeparator(string $path) : string {
 		return Unittest_Helpers::dir_separator($path);
