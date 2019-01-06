@@ -53,34 +53,23 @@ class Kohana_Unittest_Helpers {
 	}
 
 	/**
-	 * Removes all cache files from the kohana cache dir
+	 * Removes all cache files from the kohana cache dir (except .gitignore)
 	 * @return void
 	 */
 	public static function clean_cache_dir()
 	{
-		$cache_dir = opendir(Kohana::$cache_dir);
+		$files = new RecursiveIteratorIterator(
+			new RecursiveDirectoryIterator(Kohana::$cache_dir, RecursiveDirectoryIterator::SKIP_DOTS),
+			RecursiveIteratorIterator::CHILD_FIRST
+		);
 
-		while ($dir = readdir($cache_dir))
-		{
-			// Cache files are split into directories based on first two characters of hash
-			if ($dir[0] !== '.' && strlen($dir) === 2)
-			{
-				$dir = self::dir_separator(Kohana::$cache_dir.'/'.$dir.'/');
-				$cache = opendir($dir);
-
-				while ($file = readdir($cache))
-				{
-					if ($file[0] !== '.')
-					{
-						unlink($dir.$file);
-					}
-				}
-
-				closedir($cache);
-				rmdir($dir);
+		foreach ($files as $file) {
+			if ($file->getExtension() === 'gitignore') {
+				continue;
 			}
+			$todo = ($file->isDir() ? 'rmdir' : 'unlink');
+			$todo($file->getRealPath());
 		}
-		closedir($cache_dir);
 	}
 
 	/**
