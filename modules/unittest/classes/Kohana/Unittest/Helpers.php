@@ -1,27 +1,33 @@
 <?php
-
 /**
+ * Helper Class for Unit Tests.
+ *
  * @package    Kohana/UnitTest
- * @author     Kohana Team
+ *
+ * @author     Koseven Team
  * @copyright  (c) 2007-2012 Kohana Team
  * @copyright  (c) 2016-2018 Koseven Team
  * @license    https://koseven.ga/LICENSE.md
  */
 class Kohana_Unittest_Helpers {
+
 	/**
-	 * Static variable used to work out whether we have an internet 
-	 * connection 
-	 * @see has_internet
+	 * Static variable used to work out whether we have an internet connection
 	 * @var boolean
 	 */
-	static protected $_has_internet = NULL;
+	protected static $_has_internet;
+
+	/**
+	 * Backup of the environment variables
+	 * @var array
+	 */
+	protected $_environment_backup = [];
 
 	/**
 	 * Check for internet connectivity
-	 *
 	 * @return boolean Whether an internet connection is available
 	 */
-	public static function has_internet()
+	public static function has_internet() : bool
 	{
 		if ( ! isset(self::$_has_internet))
 		{
@@ -36,31 +42,30 @@ class Kohana_Unittest_Helpers {
 
 	/**
 	 * Helper function which replaces the "/" to OS-specific delimiter
-	 * 
-	 * @param string $path
+	 *
+	 * @param  string $path
+	 *
 	 * @return string
 	 */
-	static public function dir_separator($path)
+	public static function dir_separator($path) : string
 	{
 		return str_replace('/', DIRECTORY_SEPARATOR, $path);
 	}
 
 	/**
-	 * Removes all cache files from the kohana cache dir 
-	 *
+	 * Removes all cache files from the kohana cache dir
 	 * @return void
 	 */
-	static public function clean_cache_dir()
+	public static function clean_cache_dir()
 	{
 		$cache_dir = opendir(Kohana::$cache_dir);
 
 		while ($dir = readdir($cache_dir))
 		{
 			// Cache files are split into directories based on first two characters of hash
-			if ($dir[0] !== '.' AND strlen($dir) === 2)
+			if ($dir[0] !== '.' && strlen($dir) === 2)
 			{
 				$dir = self::dir_separator(Kohana::$cache_dir.'/'.$dir.'/');
-	
 				$cache = opendir($dir);
 
 				while ($file = readdir($cache))
@@ -72,37 +77,32 @@ class Kohana_Unittest_Helpers {
 				}
 
 				closedir($cache);
-
 				rmdir($dir);
 			}
 		}
-
 		closedir($cache_dir);
 	}
-
-	/**
-	 * Backup of the environment variables
-	 * @see set_environment
-	 * @var array
-	 */
-	protected $_environment_backup = [];
 
 	/**
 	 * Allows easy setting & backing up of enviroment config
 	 *
 	 * Option types are checked in the following order:
 	 *
-	 * * Server Var
-	 * * Static Variable
-	 * * Config option
+	 * - Server Var
+	 * - Static Variable
+	 * - Config option
 	 *
-	 * @codeCoverageIgnore
-	 * @param array $environment List of environment to set
+	 * @param  array $environment List of environment to set
+	 *
+	 * @return bool
+	 * @throws Kohana_Exception
+	 * @throws ReflectionException
 	 */
-	public function set_environment(array $environment)
+	public function set_environment(array $environment) : bool
 	{
-		if ( ! count($environment))
+		if ( ! count($environment)) {
 			return FALSE;
+		}
 
 		foreach ($environment as $option => $value)
 		{
@@ -143,7 +143,7 @@ class Kohana_Unittest_Helpers {
 				{
 					$this->_environment_backup[$option] = isset($_SERVER[$option]) ? $_SERVER[$option] : '';
 				}
-				
+
 				$_SERVER[$option] = $value;
 			}
 			// Else we assume this is a config option
@@ -159,17 +159,18 @@ class Kohana_Unittest_Helpers {
 				Kohana::$config->load($group)->set($var, $value);
 			}
 		}
+		return TRUE;
 	}
 
 	/**
 	 * Restores the environment to the original state
 	 *
-	 * @codeCoverageIgnore
 	 * @chainable
-	 * @return Kohana_Unittest_Helpers $this 
+	 * @throws Kohana_Exception
+	 * @throws ReflectionException
 	 */
 	public function restore_environment()
 	{
-		$this->set_environment($this->_environment_backup);	
+		$this->set_environment($this->_environment_backup);
 	}
 }
