@@ -1,18 +1,19 @@
 <?php
 
 use PHPUnit\DbUnit\TestCase;
+use PHPUnit\DbUnit\Database\DefaultConnection;
 
 /**
  * TestCase for testing a database
  *
  * @package    Kohana/UnitTest
- * @author     Kohana Team
- * @author     BRMatt <matthew@sigswitch.com>
- * @copyright  (c) Kohana Team
+ *
+ * @author     Koseven Team, BRMatt <matthew@sigswitch.com>
+ * @copyright  (c) 2007-2012 Kohana Team
+ * @copyright  (c) 2016-2018 Koseven Team
  * @license    https://koseven.ga/LICENSE.md
  */
-abstract class Kohana_Unittest_Database_TestCase extends TestCase{
-
+abstract class Kohana_Unittest_Database_TestCase extends TestCase {
 
 	/**
 	 * Make sure PHPUnit backs up globals
@@ -21,11 +22,10 @@ abstract class Kohana_Unittest_Database_TestCase extends TestCase{
 	protected $backupGlobals = FALSE;
 
 	/**
-	 * A set of unittest helpers that are shared between normal / database
-	 * testcases
+	 * A set of unittest helpers that are shared between normal / database testcases
 	 * @var Kohana_Unittest_Helpers
 	 */
-	protected $_helpers = NULL;
+	protected $_helpers;
 
 	/**
 	 * A default set of environment to be applied before each test
@@ -44,6 +44,9 @@ abstract class Kohana_Unittest_Database_TestCase extends TestCase{
 	 *
 	 * Extending classes that have their own setUp() should call
 	 * parent::setUp()
+	 *
+	 * @throws Kohana_Exception
+	 * @throws ReflectionException
 	 */
 	public function setUp()
 	{
@@ -51,7 +54,7 @@ abstract class Kohana_Unittest_Database_TestCase extends TestCase{
 
 		$this->setEnvironment($this->environmentDefault);
 
-		return parent::setUp();
+		parent::setUp();
 	}
 
 	/**
@@ -59,20 +62,24 @@ abstract class Kohana_Unittest_Database_TestCase extends TestCase{
 	 *
 	 * Extending classes that have their own tearDown()
 	 * should call parent::tearDown()
+	 *
+	 * @throws Kohana_Exception
+	 * @throws ReflectionException
 	 */
 	public function tearDown()
 	{
 		$this->_helpers->restore_environment();
 
-		return parent::tearDown();
+		parent::tearDown();
 	}
 
 	/**
 	 * Creates a connection to the unittesting database
 	 *
-	 * @return PDO
+	 * @return DefaultConnection
+	 * @throws Kohana_Exception
 	 */
-	public function getConnection()
+	public function getConnection() : DefaultConnection
 	{
 		// Get the unittesting db connection
 		$config = Kohana::$config->load('database.'.$this->_database_connection);
@@ -85,40 +92,30 @@ abstract class Kohana_Unittest_Database_TestCase extends TestCase{
 		}
 
 		$pdo = new PDO(
-			$config['connection']['dsn'], 
-			$config['connection']['username'], 
+			$config['connection']['dsn'],
+			$config['connection']['username'],
 			$config['connection']['password']
 		);
 
 		return $this->createDefaultDBConnection($pdo, $config['connection']['database']);
 	}
 
-    /**
-     * Gets a connection to the unittest database
-     *
-     * @return Kohana_Database The database connection
-     */
-    public function getKohanaConnection()
-    {
-        return Database::instance(Kohana::$config->load('unittest')->db_connection);
-    }
-
 	/**
 	 * Removes all kohana related cache files in the cache directory
 	 */
 	public function cleanCacheDir()
 	{
-		return Kohana_Unittest_Helpers::clean_cache_dir();
+		Kohana_Unittest_Helpers::clean_cache_dir();
 	}
 
 	/**
-	 * Helper function that replaces all occurences of '/' with
+	 * Helper function that replaces all occurrences of '/' with
 	 * the OS-specific directory separator
 	 *
-	 * @param string $path The path to act on
+	 * @param  string $path The path to act on
 	 * @return string
 	 */
-	public function dirSeparator($path)
+	public function dirSeparator(string $path) : string
 	{
 		return Kohana_Unittest_Helpers::dir_separator($path);
 	}
@@ -133,20 +130,22 @@ abstract class Kohana_Unittest_Database_TestCase extends TestCase{
 	 * * Config option
 	 *
 	 * @param array $environment List of environment to set
+	 *
+	 * @return bool
+	 * @throws Kohana_Exception
+	 * @throws ReflectionException
 	 */
-	public function setEnvironment(array $environment)
+	public function setEnvironment(array $environment) : bool
 	{
 		return $this->_helpers->set_environment($environment);
 	}
 
 	/**
 	 * Check for internet connectivity
-	 *
-	 * @return boolean Whether an internet connection is available
+	 * @return bool Whether an internet connection is available
 	 */
-	public function hasInternet()
+	public function hasInternet() : bool
 	{
 		return Kohana_Unittest_Helpers::has_internet();
 	}
-
 }
