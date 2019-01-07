@@ -8,6 +8,8 @@
  * @copyright  (c) 2007-2012 Kohana Team
  * @copyright  (c) 2016-2018 Koseven Team
  * @license    https://koseven.ga/LICENSE.md
+ *
+ * @codeCoverageIgnore Basic Test Suite / PHPUnit Test loader. Individual functions tested by there self.
  */
 class Kohana_Unittest_Tests {
 
@@ -20,6 +22,8 @@ class Kohana_Unittest_Tests {
 	/**
 	 * Loads test files that don't match the naming convention of kohana
 	 * @param string $class
+	 *
+	 * @codeCoverageIgnore Simple Autlo-Loader find_file is tested in system tests, no need to test
 	 */
 	public static function autoload(string $class)
 	{
@@ -55,7 +59,7 @@ class Kohana_Unittest_Tests {
 	public static function suite(): \Unittest_TestSuite
 	{
 
-		Unittest_Tests::configure_environment();
+		self::configure_environment();
 
 		$suite = new Unittest_TestSuite;
 
@@ -64,7 +68,7 @@ class Kohana_Unittest_Tests {
 
 		if ($config->use_whitelist)
 		{
-			Unittest_Tests::whitelist($suite);
+			self::whitelist($suite);
 		}
 
 		// Add tests
@@ -182,7 +186,7 @@ class Kohana_Unittest_Tests {
 	 * @param array $files Array of files to whitelist
 	 * @param Unittest_TestSuite $suite Suite to load the whitelist into
 	 */
-	protected static function set_whitelist($files, Unittest_TestSuite $suite = NULL)
+	protected static function set_whitelist($files, Unittest_TestSuite $suite)
 	{
 		foreach ($files as $file)
 		{
@@ -192,27 +196,16 @@ class Kohana_Unittest_Tests {
 			}
 			else
 			{
-				if ( ! isset(Unittest_tests::$cache[$file]))
+				if ( ! isset(self::$cache[$file]))
 				{
 					$relative_path = substr($file, strrpos($file, 'classes'.DIRECTORY_SEPARATOR) + 8, -strlen(EXT));
 					$cascading_file = Kohana::find_file('classes', $relative_path);
 
 					// The theory is that if this file is the highest one in the cascading filesystem
 					// then it's safe to whitelist
-					Unittest_tests::$cache[$file] =  ($cascading_file === $file);
+					self::$cache[$file] =  ($cascading_file === $file);
 				}
-
-				if (Unittest_tests::$cache[$file])
-				{
-					if (isset($suite))
-					{
-						$suite->addFileToWhitelist($file);
-					}
-					else
-					{
-						PHPUnit_Util_Filter::addFileToWhitelist($file);
-					}
-				}
+				$suite->addFileToWhitelist($file);
 			}
 		}
 	}
