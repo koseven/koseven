@@ -6,10 +6,10 @@ Writing a task in minion is very easy. Simply create a new class called `Task_<T
 
 	class Task_Demo extends Minion_Task
 	{
-		protected $_options = array(
+		protected $_options = [
 			'foo' => 'bar',
 			'bar' => NULL,
-		);
+		];
 
 		/**
 		 * This is a demo task
@@ -26,8 +26,8 @@ Writing a task in minion is very easy. Simply create a new class called `Task_<T
 You'll notice a few things here:
 
  - You need a main `_execute()` method. It should take one array parameter.
-   - This parameter contains any command line options passed to the task.
-   - For example, if you call the task above with `./minion --task=demo --foo=foobar` then `$params` will contain: `array('foo' => 'foobar', 'bar' => NULL)`
+	 - This parameter contains any command line options passed to the task.
+	 - For example, if you call the task above with `./minion --task=demo --foo=foobar` then `$params` will contain: `array('foo' => 'foobar', 'bar' => NULL)`
  - It needs to have a `protected $_options` array. This is a list of parameters you want to accept for this task. Any parameters passed to the task not in this list will be rejected.
 
 ## Namespacing Tasks
@@ -69,3 +69,13 @@ Tasks can have built-in help. Minion will read class docblocks that you specify:
 	class Minion_Task_Demo extends Minion_Task
 
 The `@` tags in the class comments will also be displayed in a human readable format. When writing your task comments, you should specify how to use it, and any parameters it accepts.
+
+# Using links
+
+If the output task contains links which are generated using the build in URL functions you should configure the domain name for the task.
+The `Minion_Task::set_domain_name()` method takes care of this.
+
+There are two options to set the domain:
+
+ - As an argument of the function `Minion_Task::set_domain_name('https://www.example.org')`.
+ - Using the site configuration: add the configuration parameter `minion_domain_name` to the `site.php` config file (`'minion_domain_name' => 'https://www.example.org'`) and call the method in your task without an argument `Minion_Task::set_domain_name()`.

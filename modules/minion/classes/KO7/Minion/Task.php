@@ -362,4 +362,29 @@ abstract class KO7_Minion_Task {
 		return $output;
 	}
 
+	/**
+	 * Sets the domain name for minion tasks
+	 * Minion tasks have no $_SERVER variables; to use the base url functions
+	 * the domain name can be set in the site config file, or as argument.
+	 *
+	 * @param string $domain_name the url of the server: example https://www.example.com
+	 */
+	public static function set_domain_name($domain_name = '')
+	{
+		if (Request::$initial === NULL)
+		{
+			$domain_name = empty($domain_name) ? Arr::get(Kohana::$config->load('site'), 'minion_domain_name', '') : $domain_name;
+
+			// Add trailing slash
+			Kohana::$base_url = preg_replace('~^https?://[^/]+$~', '$0/', $domain_name);
+
+			// Initialize Request Class
+			$request = Request::factory();
+
+			// Set HTTPS for https based urls
+			$request->secure(preg_match_all('#(https)://#i', Kohana::$base_url, $result) === 1);
+
+			Request::$initial =  $request;
+		}
+	}
 }
