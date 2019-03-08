@@ -31,7 +31,7 @@ class Minion_TaskTest extends KO7_Unittest_TestCase
 			'minion_domain_name',
 			'http://www.example2.com'
 		);
-		
+
 		// Keep the old request object
 		self::$initial_request = Request::$initial;
 		Request::$initial = NULL;
@@ -100,7 +100,7 @@ class Minion_TaskTest extends KO7_Unittest_TestCase
 	{
 		$this->assertSame($expected, Minion_Task::convert_class_to_task($class));
 	}
-	
+
 	/**
 	 * Provides test data for test_set_domain_name()
 	 *
@@ -128,7 +128,7 @@ class Minion_TaskTest extends KO7_Unittest_TestCase
 	public function test_set_domain_name($expected, $name, $uri)
 	{
 		Minion_Task::set_domain_name($name);
-		
+
 		$this->assertSame(
 			$expected,
 			URL::site($uri, TRUE, FALSE)
