@@ -373,16 +373,16 @@ abstract class KO7_Minion_Task {
 	{
 		if (Request::$initial === NULL)
 		{
-			$domain_name = empty($domain_name) ? Arr::get(Kohana::$config->load('site'), 'minion_domain_name', '') : $domain_name;
+			$domain_name = empty($domain_name) ? Arr::get(KO7::$config->load('site'), 'minion_domain_name', '') : $domain_name;
 
 			// Add trailing slash
-			Kohana::$base_url = preg_replace('~^https?://[^/]+$~', '$0/', $domain_name);
+			KO7::$base_url = preg_replace('~^https?://[^/]+$~', '$0/', $domain_name);
 
 			// Initialize Request Class
 			$request = Request::factory();
 
 			// Set HTTPS for https based urls
-			$request->secure(preg_match_all('#(https)://#i', Kohana::$base_url, $result) === 1);
+			$request->secure(preg_match_all('#(https)://#i', KO7::$base_url, $result) === 1);
 
 			Request::$initial =  $request;
 		}
