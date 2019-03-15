@@ -17,7 +17,6 @@ cache:
   directories:
     - $HOME/.composer/cache/files
     - $HOME/pecl_cache
-    - $HOME/build/koseven/koseven/ImageMagick-7.0.8-34
 
 # Also Test on Trusty (14.04 LTS)
 matrix:
