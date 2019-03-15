@@ -32,8 +32,20 @@ services:
   - memcached
   - mysql
 
+addons:
+  apt:
+    update: true
+
 # Execute this commands before installing dependencies
 before_install:
+  - sudo apt-get install -y libwebp-dev libde265-dev
+  - wget http://www.imagemagick.org/download/ImageMagick.tar.gz
+  - tar -xvf ImageMagick.tar.gz
+  - cd ImageMagick-*
+  - ./configure --with-webp=yes
+  - make
+  - sudo make install
+  - sudo ldconfig /usr/local/lib
   - composer self-update
   - composer validate
   - mysql -e 'CREATE DATABASE IF NOT EXISTS unittest;'

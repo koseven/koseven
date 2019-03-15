@@ -10,27 +10,65 @@
  */
 class KO7_ImageTest extends Unittest_TestCase {
 
+	/**
+	 * Default values for the environment, see setEnvironment
+	 * @var array
+	 */
+	protected $environmentDefault =	[
+		'image.default_driver' => NULL
+	];
+
 	public function setUp(): void
 	{
-		parent::setUp();
-
-		if ( ! extension_loaded('gd'))
+		if ( ! extension_loaded('gd') || ! extension_loaded('imagick'))
 		{
 			$this->markTestSkipped('The GD extension is not available.');
 		}
+
+		parent::setUp();
 	}
 
 	/**
-	 * Tests the Image::save() method for files that don't have extensions
+	 * Provides test data for test_formats()
 	 *
-	 * @return  void
+	 * @return array
 	 */
-	public function test_save_without_extension()
+	public function provider_formats()
 	{
-		$image = Image::factory(MODPATH.'image/tests/test_data/test_image');
-		$this->assertTrue($image->save(KO7::$cache_dir.'/test_image'));
-
-		unlink(KO7::$cache_dir.'/test_image');
+		return [
+			['test.webp'],
+			['test.webp', 'Imagick'],
+		];
 	}
 
+	/**
+	 * Tests the loading of different supported formats
+	 *
+	 * @dataProvider provider_formats
+	 * @param string image_file Image file
+	 * @param string driver Image driver
+	 */
+	public function test_formats($image_file, $driver = NULL)
+	{
+		KO7::$config->load('image')->set('default_driver', $driver);
+
+		$image = Image::factory(MODPATH.'image/tests/test_data/'.$image_file);
+		$this->assertTrue(TRUE);
+	}
+
+	/**
+	 * Tests the saving of different supported formats
+	 *
+	 * @dataProvider provider_formats
+	 * @param string image_file Image file
+	 * @param string driver Image driver
+	 */
+	public function test_save_types($image_file, $driver = NULL)
+	{
+		KO7::$config->load('image')->set('default_driver', $driver);
+
+		$image = Image::factory(MODPATH.'image/tests/test_data/'.$image_file);
+		$this->assertTrue($image->save(KO7::$cache_dir.'/'.$image_file));
+		unlink(KO7::$cache_dir.'/'.$image_file);
+	}
 }

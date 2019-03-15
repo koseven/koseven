@@ -556,7 +556,7 @@ class KO7_Image_GD extends Image {
 		{
 			// Reset the image type and mime type
 			$this->type = $type;
-			$this->mime = $this->image_type_to_mime_type($type);
+			$this->mime = image_type_to_mime_type($type);
 		}
 
 		return TRUE;
@@ -587,7 +587,7 @@ class KO7_Image_GD extends Image {
 		{
 			// Reset the image type and mime type
 			$this->type = $type;
-			$this->mime = $this->image_type_to_mime_type($type);
+			$this->mime = image_type_to_mime_type($type);
 		}
 
 		return ob_get_clean();
