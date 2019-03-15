@@ -41,15 +41,15 @@ addons:
 before_install:
   - sudo apt-get install -y libwebp-dev
   - if [ ! -d "ImageMagick-7.0.8-34" ]; then
-  - wget http://www.imagemagick.org/download/ImageMagick.tar.gz
-  - tar -xvf ImageMagick.tar.gz
-  - cd ImageMagick-7.0.8-34
-  - ./configure --with-webp=yes
-  - make
-  - fi
+      wget http://www.imagemagick.org/download/ImageMagick.tar.gz;
+      tar -xvf ImageMagick.tar.gz;
+      cd ImageMagick-7.0.8-34;
+      ./configure --with-webp=yes;
+      make;
+    fi
   - if [ -d "ImageMagick-7.0.8-34" ]; then
-  - cd ImageMagick-7.0.8-34
-  - fi
+      cd ImageMagick-7.0.8-34;
+    fi
   - sudo make install
   - sudo ldconfig /usr/local/lib
   - cd $HOME/build/koseven/koseven
