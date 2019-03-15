@@ -17,6 +17,7 @@ cache:
   directories:
     - $HOME/.composer/cache/files
     - $HOME/pecl_cache
+    - $HOME/build/koseven/koseven/ImageMagick-7.0.8-34
 
 # Also Test on Trusty (14.04 LTS)
 matrix:
@@ -38,14 +39,20 @@ addons:
 
 # Execute this commands before installing dependencies
 before_install:
-  - sudo apt-get install -y libwebp-dev libde265-dev
+  - sudo apt-get install -y libwebp-dev
+  - if [ ! -d "ImageMagick-7.0.8-34" ]; then
   - wget http://www.imagemagick.org/download/ImageMagick.tar.gz
   - tar -xvf ImageMagick.tar.gz
-  - cd ImageMagick-*
+  - cd ImageMagick-7.0.8-34
   - ./configure --with-webp=yes
   - make
+  - fi
+  - if [ -d "ImageMagick-7.0.8-34" ]; then
+  - cd ImageMagick-7.0.8-34
+  - fi
   - sudo make install
   - sudo ldconfig /usr/local/lib
+  - cd $HOME/build/koseven/koseven
   - composer self-update
   - composer validate
   - mysql -e 'CREATE DATABASE IF NOT EXISTS unittest;'
