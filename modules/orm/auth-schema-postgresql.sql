@@ -2,7 +2,7 @@ CREATE TABLE roles
 (
   id serial,
   "name" varchar(64) NOT NULL,
-  description text NOT NULL,
+  description varchar(255) NOT NULL,
   CONSTRAINT roles_id_pkey PRIMARY KEY (id),
   CONSTRAINT roles_name_key UNIQUE (name)
 );
