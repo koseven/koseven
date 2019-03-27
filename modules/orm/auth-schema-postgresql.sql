@@ -1,7 +1,7 @@
 CREATE TABLE roles
 (
   id serial,
-  "name" varchar(32) NOT NULL,
+  "name" varchar(64) NOT NULL,
   description text NOT NULL,
   CONSTRAINT roles_id_pkey PRIMARY KEY (id),
   CONSTRAINT roles_name_key UNIQUE (name)
@@ -16,9 +16,9 @@ CREATE TABLE roles_users
 CREATE TABLE users
 (
   id serial,
-  email varchar(254) NOT NULL,
-  username varchar(32) NOT NULL,
-  "password" varchar(64) NOT NULL,
+  email varchar(255) NOT NULL,
+  username varchar(64) NOT NULL,
+  "password" varchar(255) NOT NULL,
   logins integer NOT NULL DEFAULT 0,
   last_login integer,
   CONSTRAINT users_id_pkey PRIMARY KEY (id),
@@ -31,8 +31,8 @@ CREATE TABLE user_tokens
 (
   id serial,
   user_id integer NOT NULL,
-  user_agent varchar(40) NOT NULL,
-  token character varying(32) NOT NULL,
+  user_agent varchar(255) NOT NULL,
+  token character varying(255) NOT NULL,
   created integer NOT NULL,
   expires integer NOT NULL,
   CONSTRAINT user_tokens_id_pkey PRIMARY KEY (id),
