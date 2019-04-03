@@ -1,21 +1,15 @@
 # Project files
-.idea
-nbproject
-*.iml
-out
-gen
+/.idea
+/.vscode
+/nbproject
 
 # Unit tests
-.phpunit.result.cache
-modules/unittest/memory
-
-# Kohana template
-application/cache/*
-application/logs/*
+/.phpunit.result.cache
+/memory
 
 # Composer
-/vendor/
-composer.lock
+/vendor
+/composer.lock
 
 # Coverage reports
-/build/logs/
+/build/logs
