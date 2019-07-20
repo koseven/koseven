@@ -137,8 +137,7 @@ class KO7_ImageTest extends Unittest_TestCase {
 			['test_image.gif'],
 			['test_image.png'],
 			['test_image.jpg'],
-			// Not supported in Travis CI
-			// ['test.webp'],
+			['test.webp'],
 			['test_image.gif', 'Imagick'],
 			['test_image.png', 'Imagick'],
 			['test_image.jpg', 'Imagick'],
