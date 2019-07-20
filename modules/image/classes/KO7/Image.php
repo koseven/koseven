@@ -667,21 +667,6 @@ abstract class KO7_Image {
 	}
 
 	/**
-	 * Returns the image mime type
-	 * Adds support for webp image type, which is not known by php
-	 *
-	 * @param   string    $type     image type: png, jpg, gif, etc
-	 * @return  string
-	 */
-	protected function image_type_to_mime_type($type)
-	{
-		if ($type === IMAGETYPE_WEBP)
-			return 'image/webp';
-
-		return image_type_to_mime_type($type);
-	}
-
-	/**
 	 * Execute a resize.
 	 *
 	 * @param   integer  $width   new width

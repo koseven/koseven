@@ -269,7 +269,7 @@ class KO7_Image_Imagick extends Image {
 		{
 			// Reset the image type and mime type
 			$this->type = $type;
-			$this->mime = $this->image_type_to_mime_type($type);
+			$this->mime = image_type_to_mime_type($type);
 
 			return TRUE;
 		}
@@ -290,7 +290,7 @@ class KO7_Image_Imagick extends Image {
 
 		// Reset the image type and mime type
 		$this->type = $type;
-		$this->mime = $this->image_type_to_mime_type($type);
+		$this->mime = image_type_to_mime_type($type);
 
 		return (string) $this->im;
 	}

@@ -11,6 +11,20 @@ dist: xenial
 php:
   - 7.3
 
+# Required apt_packages
+addons:
+  apt:
+    packages:
+      - libjpeg-dev
+      - libpng-dev
+      - libgif-dev
+
+# Global envs
+env:
+  global:
+    - IMAGEMAGICK_VERSION: '7.0.3-10'
+    - LIBWEBP_VERSION: '0.5.1'
+
 # Cache Composer's cache
 cache:
   directories:
@@ -25,6 +39,37 @@ services:
 
 # Execute this commands before installing dependencies
 before_install:
+  # Update PATH so that travis can find newer imagemagick
+  - export PATH=$HOME/opt/bin:$PATH
+
+  # Checks if Imagemagick is already sufficient version
+  # If not installs it from the sources
+  - convert -version | grep $IMAGEMAGICK_VERSION || {
+    export CORES=$(nproc) &&
+    echo "Using $CORES cores for compiling..." &&
+    cd /tmp &&
+    curl -O https://storage.googleapis.com/downloads.webmproject.org/releases/webp/libwebp-$LIBWEBP_VERSION.tar.gz &&
+    tar xvzf libwebp-$LIBWEBP_VERSION.tar.gz &&
+    cd libwebp-* &&
+    ./configure --prefix=$HOME/opt &&
+    make -j$CORES &&
+    make install -j$CORES &&
+    cd /tmp &&
+    curl -O https://www.imagemagick.org/download/ImageMagick-$IMAGEMAGICK_VERSION.tar.gz &&
+    tar xvzf ImageMagick-$IMAGEMAGICK_VERSION.tar.gz &&
+    cd ImageMagick-* &&
+    ./configure --prefix=$HOME/opt &&
+    make -j$CORES &&
+    make install -j$CORES &&
+    $HOME/opt/bin/magick -version | grep $IMAGEMAGICK_VERSION &&
+    cd $TRAVIS_BUILD_DIR; }
+
+  # Update library paths for programs
+  - export LD_FLAGS=-L$HOME/opt/lib
+  - export LD_LIBRARY_PATH=/lib:/usr/lib:/usr/local/lib:$HOME/opt/lib
+  - export CPATH=$CPATH:$HOME/opt/include
+
+  # Composer update and Database creation
   - composer self-update
   - composer validate
   - mysql -e 'CREATE DATABASE IF NOT EXISTS unittest;'
