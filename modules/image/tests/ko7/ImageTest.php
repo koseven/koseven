@@ -137,7 +137,8 @@ class KO7_ImageTest extends Unittest_TestCase {
 			['test_image.gif'],
 			['test_image.png'],
 			['test_image.jpg'],
-			['test.webp'],
+			// Travis does (yet) not support webp with GD
+			//['test.webp'],
 			['test_image.gif', 'Imagick'],
 			['test_image.png', 'Imagick'],
 			['test_image.jpg', 'Imagick'],
