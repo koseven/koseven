@@ -22,7 +22,7 @@ addons:
 # Global envs
 env:
   global:
-    - IMAGEMAGICK_VERSION: '7.0.3-10'
+    - IMAGEMAGICK_VERSION: '7.0.8-55'
     - LIBWEBP_VERSION: '0.5.1'
 
 # Cache Composer's cache
