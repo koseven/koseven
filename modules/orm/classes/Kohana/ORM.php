@@ -1799,36 +1799,52 @@ class Kohana_ORM extends Model implements serializable {
 	 */
 	public function count_all()
 	{
-		$selects = [];
+		$removed_methods = [];
+		$count_rows = false; 
 
 		foreach ($this->_db_pending as $key => $method)
 		{
-			if ($method['name'] == 'select')
-			{
-				// Ignore any selected columns for now
-				$selects[$key] = $method;
-				unset($this->_db_pending[$key]);
+		    if ($method['name'] == 'select')
+		    {
+			// Ignore any selected columns for now
+			$removed_methods[$key] = $method;
+			unset($this->_db_pending[$key]);
+		    } elseif($method['name'] == 'group_by') {
+			// in instances where a query has to be grouped by the model's primary key
+			// the count(primary_key) inserted by the count all function creates a result for 
+			// every matched row instead of the count in the first result
+			if($method['args'][0] = $this->_object_name.'.'.$this->_primary_key) {
+			    $count_rows = true;
 			}
+		    } elseif($method['name'] == 'order_by') {
+			$removed_methods[$key] = $method;
+			// order by's don't help counting and may rely on created columns in the selects
+			// remove any order bys for the purpose of counting results
+			unset($this->_db_pending[$key]);
+		    }
 		}
 
 		if ( ! empty($this->_load_with))
 		{
-			foreach ($this->_load_with as $alias)
-			{
-				// Bind relationship
-				$this->with($alias);
-			}
+		    foreach ($this->_load_with as $alias)
+		    {
+			// Bind relationship
+			$this->with($alias);
+		    }
 		}
 
 		$this->_build(Database::SELECT);
 
 		$records = $this->_db_builder->from([$this->_table_name, $this->_object_name])
-			->select([DB::expr('COUNT('.$this->_db->quote_column($this->_object_name.'.'.$this->_primary_key).')'), 'records_found'])
-			->execute($this->_db)
-			->get('records_found');
+		    ->select([DB::expr('COUNT('.$this->_db->quote_column($this->_object_name.'.'.$this->_primary_key).')'), 'records_found'])
+		    ->execute($this->_db);
 
-		// Add back in selected columns
-		$this->_db_pending += $selects;
+		// in rare use-cases where queries are grouped by their own model's primary key, 
+		// the correct count if the # of returned rows in the generated total query   
+		$records = $count_rows ? count($records) : $records->get('records_found'); 
+
+		// Add back in the methods removed to facilitate the count
+		$this->_db_pending += $removed_methods;
 
 		$this->reset();
 
