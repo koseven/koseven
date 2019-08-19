@@ -1831,11 +1831,11 @@ class Kohana_ORM extends Model implements serializable {
 		}
 		if ( ! empty($this->_load_with))
 		{
-		    foreach ($this->_load_with as $alias)
-		    {
-			// Bind relationship
-			$this->with($alias);
-		    }
+			foreach ($this->_load_with as $alias)
+			{
+				// Bind relationship
+				$this->with($alias);
+			}
 		}
 
 		$this->_build(Database::SELECT);
