@@ -1829,6 +1829,7 @@ class Kohana_ORM extends Model implements serializable {
 				unset($this->_db_pending[$key]);
 			}
 		}
+
 		if ( ! empty($this->_load_with))
 		{
 			foreach ($this->_load_with as $alias)
@@ -1841,8 +1842,8 @@ class Kohana_ORM extends Model implements serializable {
 		$this->_build(Database::SELECT);
 
 		$records = $this->_db_builder->from([$this->_table_name, $this->_object_name])
-		    ->select([DB::expr('COUNT('.$this->_db->quote_column($this->_object_name.'.'.$this->_primary_key).')'), 'records_found'])
-		    ->execute($this->_db);
+			->select([DB::expr('COUNT('.$this->_db->quote_column($this->_object_name.'.'.$this->_primary_key).')'), 'records_found'])
+			->execute($this->_db);
 
 		// in rare use-cases where queries are grouped by their own model's primary key, 
 		// the correct count if the # of returned rows in the generated total query   
