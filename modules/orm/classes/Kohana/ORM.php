@@ -1804,26 +1804,31 @@ class Kohana_ORM extends Model implements serializable {
 
 		foreach ($this->_db_pending as $key => $method)
 		{
-		    if ($method['name'] == 'select')
-		    {
-			// Ignore any selected columns for now
-			$removed_methods[$key] = $method;
-			unset($this->_db_pending[$key]);
-		    } elseif($method['name'] == 'group_by') {
-			// in instances where a query has to be grouped by the model's primary key
-			// the count(primary_key) inserted by the count all function creates a result for 
-			// every matched row instead of the count in the first result
-			if($method['args'][0] = $this->_object_name.'.'.$this->_primary_key) {
-			    $count_rows = true;
+			if ($method['name'] == 'select')
+			{
+				// Ignore any selected columns for now
+				$removed_methods[$key] = $method;
+				unset($this->_db_pending[$key]);
+		    	} 
+			elseif($method['name'] == 'group_by') 
+			{
+				/** 
+				* In instances where a query has to be grouped by the model's primary key
+				* the count(primary_key) inserted by the count all function creates a result for 
+				* every matched row instead of the count in the first result
+				*/
+				if($method['args'][0] = $this->_object_name.'.'.$this->_primary_key) 
+				{
+					$count_rows = true;
+				}
+			} 
+			elseif($method['name'] == 'order_by') 
+			{
+				// order bys don't help counting and may rely on created columns in the selects
+				$removed_methods[$key] = $method;
+				unset($this->_db_pending[$key]);
 			}
-		    } elseif($method['name'] == 'order_by') {
-			$removed_methods[$key] = $method;
-			// order by's don't help counting and may rely on created columns in the selects
-			// remove any order bys for the purpose of counting results
-			unset($this->_db_pending[$key]);
-		    }
 		}
-
 		if ( ! empty($this->_load_with))
 		{
 		    foreach ($this->_load_with as $alias)
