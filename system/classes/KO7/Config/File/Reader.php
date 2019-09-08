@@ -75,7 +75,7 @@ class KO7_Config_File_Reader implements KO7_Config_Reader {
 			}
 			elseif (file_exists($path = $file.'.json'))
 			{
-				$value = json_decode($this->read_from_ob($path), TRUR);
+				$value = json_decode($this->read_from_ob($path), TRUE);
 			}
 			elseif (file_exists($path = $file.'.yaml'))
 			{
@@ -111,27 +111,20 @@ class KO7_Config_File_Reader implements KO7_Config_Reader {
 	}
 
 	/**
-	 * Read Contents from file with output buffering.
-	 * Used to support `<?php`, `?>` tags and code inside configurations
+	 * Reads contents from file with output buffering.
+	 * Used to support `<?php`, `?>` tags and code inside configurations.
 	 *
-	 * @param  string $path Path to File
+	 * @param  string  $path  Path to File
 	 *
 	 * @return false|string
 	 * @codeCoverageIgnore
 	 */
 	protected function read_from_ob(string $path)
 	{
-		// Start output buffer
 		ob_start();
-
 		KO7::load($path);
-
-		// Get contents of buffer
 		$content = ob_get_contents();
-
-		// Clear Buffer
 		ob_end_clean();
-
 		return $content;
 	}
 }
