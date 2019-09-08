@@ -6,9 +6,9 @@
  * @package    KO7
  * @category   Configuration
  *
- * @copyright  (c) 2007-2016  Kohana Team
- * @copyright  (c) since 2016 Koseven Team
- * @license    https://koseven.ga/LICENSE
+ * @copyright  (c) 2007-2016 Kohana team
+ * @copyright  (c) 2016-2019 Koseven team
+ * @license    https://koseven.ga/LICENSE.MD
  */
 class KO7_Config_File_Reader implements KO7_Config_Reader {
 
@@ -19,74 +19,77 @@ class KO7_Config_File_Reader implements KO7_Config_Reader {
 	protected $_directory = '';
 
 	/**
-	 * Cached Configurations
+	 * Cached сonfigurations
 	 * @var array
 	 */
-	protected static $_cache;
+	protected static $_cache = [];
 
 	/**
 	 * Creates a new file reader using the given directory as a config source
 	 *
-	 * @param string    $directory  Configuration directory to search
+	 * @param  string  $directory  Configuration directory to search
 	 */
 	public function __construct($directory = 'config')
 	{
-		$this->_directory = trim($directory, '/');
+		$this->_directory = trim($directory, '\/');
 	}
 
 	/**
 	 * Load and merge all of the configuration files in this group.
 	 *
-	 *     $config->load($name);
-	 *
 	 * @param   string  $group  configuration group name
 	 *
-	 * @return  array   Configuration
+	 * @return  array  Configuration
 	 * @throws KO7_Exception
 	 */
 	public function load($group) : array
 	{
 		// Check caches and start Profiling
-		if (KO7::$caching && isset(self::$_cache[$group]))
+		if (KO7::$caching AND isset(static::$_cache[$group]))
 		{
 			// This group has been cached
 			// @codeCoverageIgnoreStart
-			return self::$_cache[$group];
+			return static::$_cache[$group];
 			// @codeCoverageIgnoreEnd
 		}
 
-		if (KO7::$profiling && class_exists('Profiler', FALSE))
+		if (KO7::$profiling)
 		{
 			// Start a new benchmark
-			$benchmark = Profiler::start('Config', __FUNCTION__);
+			$benchmark = Profiler::start('Config', __METHOD__);
 		}
 
 		// Init
 		$config = [];
 
 		// Loop through paths. Notice: array_reverse, so system files get overwritten by app files
-		foreach (array_reverse(KO7::include_paths()) as $path) {
-
+		foreach (array_reverse(KO7::include_paths()) as $path)
+		{
 			// Build path
-			$file = $path.'config'. DIRECTORY_SEPARATOR . $group;
-			$value = FALSE;
-
-			// Try .php .json and .yaml extensions and parse contents with PHP support
-			if (file_exists($path = $file.'.php')) {
+			$file = $path.$this->_directory.DIRECTORY_SEPARATOR.$group;
+			$value = [];
+			// Try `.php`, `.json` and `.yaml` extensions and parse contents with PHP support
+			if (file_exists($path = $file.'.php'))
+			{
 				$value = KO7::load($path);
-			} elseif (file_exists($path = $file.'.json')) {
-				$value = json_decode($this->read_from_ob($path), true);
-			} elseif (file_exists($path = $file.'.yaml')) {
-				if ( ! extension_loaded('yaml')) {
+			}
+			elseif (file_exists($path = $file.'.json'))
+			{
+				$value = json_decode($this->read_from_ob($path), TRUR);
+			}
+			elseif (file_exists($path = $file.'.yaml'))
+			{
+				if ( ! function_exists('yaml_parse'))
+				{
 					// @codeCoverageIgnoreStart
-					throw new KO7_Exception('PECL Yaml Extension is required in order to parse YAML Config');
+					throw new KO7_Exception('YAML extension is required in order to parse YAML config');
 					// @codeCoverageIgnoreEnd
 				}
 				$value = yaml_parse($this->read_from_ob($path));
 			}
-
 			// Merge config
-			if ($value !== FALSE) {
+			if ($value)
+			{
 				$config = Arr::merge($config, $value);
 			}
 		}
@@ -94,7 +97,7 @@ class KO7_Config_File_Reader implements KO7_Config_Reader {
 		if (KO7::$caching)
 		{
 			// @codeCoverageIgnoreStart
-			self::$_cache[$group] = $config;
+			static::$_cache[$group] = $config;
 			// @codeCoverageIgnoreEnd
 		}
 
@@ -109,14 +112,14 @@ class KO7_Config_File_Reader implements KO7_Config_Reader {
 
 	/**
 	 * Read Contents from file with output buffering.
-	 * Used to support <?php ?> tags and code inside Configurations
+	 * Used to support `<?php`, `?>` tags and code inside configurations
 	 *
 	 * @param  string $path Path to File
 	 *
 	 * @return false|string
 	 * @codeCoverageIgnore
 	 */
-	protected function read_from_ob($path)
+	protected function read_from_ob(string $path)
 	{
 		// Start output buffer
 		ob_start();
