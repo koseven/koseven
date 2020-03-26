@@ -38,10 +38,7 @@ class KO7_KO7_Exception extends Exception {
 
     /**
      * Creates a new translated exception.
-     *
-     *     throw new KO7_Exception('Something went terrible wrong, :user',
-     *         array(':user' => $user));
-     *
+     * 
      * @param   string          $message    error message
      * @param   array           $variables  translation variables
      * @param   integer|string  $code       the exception code
@@ -55,9 +52,8 @@ class KO7_KO7_Exception extends Exception {
 
         // Pass the message and integer code to the parent
         parent::__construct($message, (int) $code, $previous);
-
-        // Save the unmodified code
-        // @link http://bugs.php.net/39615
+        
+        // @link http://bugs.php.net/39615 Save the unmodified code
         $this->code = $code;
     }
 
@@ -179,12 +175,8 @@ class KO7_KO7_Exception extends Exception {
         try
         {
             // Get the exception information
-            $class   = get_class($t);
-            $code    = $t->getCode();
-            $message = $t->getMessage();
-            $file    = $t->getFile();
-            $line    = $t->getLine();
-            $trace   = $t->getTrace();
+            $code = $t->getCode();
+            $trace = $t->getTrace();
 
             /**
              * HTTP_Exceptions are constructed in the HTTP_Exception::factory()
@@ -289,5 +281,4 @@ class KO7_KO7_Exception extends Exception {
 
         return $response;
     }
-
 }
