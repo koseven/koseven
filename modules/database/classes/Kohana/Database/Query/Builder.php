@@ -110,7 +110,7 @@ abstract class Kohana_Database_Query_Builder extends Database_Query {
 						// Quote the min and max value
 						$value = $min.' AND '.$max;
 					}
-					elseif ($op === 'IN' AND is_array($value) AND count($value) === 0)
+					elseif (($op === 'IN' || $op === 'NOT IN') AND is_array($value) AND count($value) === 0)
 					{
 						$value = '(NULL)';
 					}
