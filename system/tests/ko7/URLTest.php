@@ -331,7 +331,7 @@ class KO7_URLTest extends Unittest_TestCase
 			[
 				'www.koseven.dev',
 				[
-					'.*\.koseven\.ga',
+					'.+\.koseven\.dev',
 				],
 				TRUE
 			],
@@ -339,7 +339,7 @@ class KO7_URLTest extends Unittest_TestCase
 			[
 				'koseven.dev',
 				[
-					'.*\.koseven\.ga',
+					'.+\.koseven\.dev',
 				],
 				FALSE // because we are requesting a subdomain
 			],
