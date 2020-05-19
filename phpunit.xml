@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <phpunit bootstrap="modules/unittest/bootstrap.php"
 		backupGlobals="true"
-	 	colors="true"
+	 	backupStaticAttributes="false"
 		beStrictAboutOutputDuringTests="true"
-		beStrictAboutTodoAnnotatedTests="true">
+		beStrictAboutTodoAnnotatedTests="true"
+	 	enforceTimeLimit="true">
 	<testsuite name="default">
 		<directory suffix="tests.php">./modules/unittest</directory>
 	</testsuite>
@@ -18,4 +19,8 @@
 		<log type="coverage-clover" target="build/logs/clover.xml"/>
 		<log type="coverage-html" target="build/logs/"/>
 	</logging>
+    	<php>
+		<ini name="zend.enable_gc" value="0"/>
+		<ini name="memory_limit" value="512M"/>
+    	</php>
 </phpunit>
