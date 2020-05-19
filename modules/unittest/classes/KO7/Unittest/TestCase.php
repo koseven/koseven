@@ -3,48 +3,39 @@
 use PHPUnit\Framework\TestCase;
 
 /**
- * A version of the stock PHPUnit testcase that includes some extra helpers
- * and default settings
- *
+ * A version of the stock PHPUnit testcase that includes some extra helpers and default settings.
+ * 
  * @package    KO7/UnitTest
  *
- * 
  * @copyright  (c) 2007-2012 Kohana Team
- * @copyright  (c) 2016-2018 Koseven Team
+ * @copyright  (c) 2016-2020 Koseven Team
  * @license    https://koseven.dev/LICENSE
  */
-abstract class KO7_Unittest_TestCase extends TestCase {
-
+abstract class KO7_Unittest_TestCase extends TestCase
+{
 	/**
-	 * A set of Unittest helpers that are shared between normal / database testcases
-	 * @var Kohana_Unittest_Helpers
+	 * @var Kohana_Unittest_Helpers A set of Unittest helpers that are shared between normal / database testcases
 	 */
 	protected $_helpers;
 
 	/**
-	 * A default set of environment to be applied before each test
-	 * @var array
+	 * @var array A default set of environment to be applied before each test
 	 */
 	protected $environmentDefault = [];
 
 	/**
 	 * Creates a predefined environment using the default environment
 	 *
-	 * Extending classes that have their own setUp() should call
-	 * parent::setUp()
+	 * Extending classes that have their own setUp() should call parent::setUp()
 	 *
 	 * @throws KO7_Exception
 	 * @throws ReflectionException
 	 */
 	public function setUp() : void
 	{
-		$this->_helpers = new Unittest_Helpers;
-
-		// Make sure PHPUnit does not backup globals
-		$this->setBackupGlobals(FALSE);
-
+		$this->_helpers = new Unittest_Helpers();
 		$this->setEnvironment($this->environmentDefault);
-
+		
 		parent::setUp();
 	}
 
