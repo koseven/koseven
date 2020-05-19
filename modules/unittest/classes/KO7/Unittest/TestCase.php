@@ -7,14 +7,13 @@ use PHPUnit\Framework\TestCase;
  * and default settings
  *
  * @package    KO7/UnitTest
- *
  * 
  * @copyright  (c) 2007-2012 Kohana Team
- * @copyright  (c) 2016-2018 Koseven Team
+ * @copyright  (c) 2016-2020 Koseven Team
  * @license    https://koseven.dev/LICENSE
  */
-abstract class KO7_Unittest_TestCase extends TestCase {
-
+abstract class KO7_Unittest_TestCase extends TestCase
+{
 	/**
 	 * A set of Unittest helpers that are shared between normal / database testcases
 	 * @var Kohana_Unittest_Helpers
@@ -38,10 +37,10 @@ abstract class KO7_Unittest_TestCase extends TestCase {
 	 */
 	public function setUp() : void
 	{
-		$this->_helpers = new Unittest_Helpers;
+		$this->_helpers = new Unittest_Helpers();
 
-		// Make sure PHPUnit does not backup globals
-		$this->setBackupGlobals(FALSE);
+		// Make sure PHPUnit backup globals
+		$this->setBackupGlobals(true);
 
 		$this->setEnvironment($this->environmentDefault);
 
