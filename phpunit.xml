@@ -1,25 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<phpunit
-		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-		xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/8.0/phpunit.xsd"
-		bootstrap="modules/unittest/bootstrap.php"
-		cacheTokens="true"
+<phpunit bootstrap="modules/unittest/bootstrap.php"
+		backupGlobals="true"
+	 	colors="true"
 		beStrictAboutOutputDuringTests="true"
 		beStrictAboutTodoAnnotatedTests="true">
-
-	<!-- Koseven Test Suite -->
 	<testsuite name="default">
-		<directory suffix="tests.php">modules/unittest/</directory>
 		<directory suffix="tests.php">./modules/unittest</directory>
 	</testsuite>
-
-	<!-- Path to store coverage reports -->
-	<logging>
-		<log type="coverage-clover" target="build/logs/clover.xml"/>
-		<log type="coverage-html" target="build/logs/"/>
-	</logging>
-
-	<!-- Whitelist for Coverage Support -->
 	<filter>
 		<whitelist processUncoveredFilesFromWhitelist="true">
 			<directory suffix=".php">./application/classes</directory>
@@ -27,4 +14,8 @@
 			<directory suffix=".php">./system/classes</directory>
 		</whitelist>
 	</filter>
+	<logging>
+		<log type="coverage-clover" target="build/logs/clover.xml"/>
+		<log type="coverage-html" target="build/logs/"/>
+	</logging>
 </phpunit>
