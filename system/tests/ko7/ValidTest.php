@@ -51,10 +51,7 @@ class KO7_ValidTest extends Unittest_TestCase
 	 */
 	public function test_alpha($string, $expected, $utf8 = FALSE)
 	{
-		$this->assertSame(
-			$expected,
-			Valid::alpha($string, $utf8)
-		);
+		$this->assertSame($expected, Valid::alpha($string, $utf8));
 	}
 
 	/*
@@ -94,14 +91,11 @@ class KO7_ValidTest extends Unittest_TestCase
 	 */
 	public function test_alpha_numeric($input, $expected, $utf8 = FALSE)
 	{
-		$this->assertSame(
-			$expected,
-			Valid::alpha_numeric($input, $utf8)
-		);
+		$this->assertSame($expected, Valid::alpha_numeric($input, $utf8));
 	}
 
 	/**
-	 * Provides test data for test_alpha_dash.
+	 * Provides test data for test_alpha_dash().
 	 * 
 	 * @return array
 	 */
@@ -135,20 +129,14 @@ class KO7_ValidTest extends Unittest_TestCase
 	{
 		if ( ! $contains_utf8)
 		{
-			$this->assertSame(
-				$expected,
-				Valid::alpha_dash($input)
-			);
+			$this->assertSame($expected, Valid::alpha_dash($input));
 		}
 
-		$this->assertSame(
-			$expected,
-			Valid::alpha_dash($input, TRUE)
-		);
+		$this->assertSame($expected, Valid::alpha_dash($input, TRUE));
 	}
 
 	/**
-	 * DataProvider for the valid::date() test
+	 * DataProvider for the Valid::date() test
 	 *
 	 * @return array
 	 */
@@ -177,19 +165,16 @@ class KO7_ValidTest extends Unittest_TestCase
 	 *
 	 * @test
 	 * @dataProvider provider_date
-	 * @param string  $date  The date to validate
+	 * @param string  $date The date to validate
 	 * @param bool $expected
 	 */
 	public function test_date($date, $expected)
 	{
-		$this->assertSame(
-			$expected,
-			Valid::date($date)
-		);
+		$this->assertSame($expected, Valid::date($date));
 	}
 
 	/**
-	 * DataProvider for the valid::decimal() test
+	 * DataProvider for the Valid::decimal() test
 	 *
 	 * @return array
 	 */
@@ -215,7 +200,7 @@ class KO7_ValidTest extends Unittest_TestCase
 	 * @test
 	 * @dataProvider provider_decimal
 	 * @param string $decimal The decimal to validate
-	 * @param intr $places The number of places to check to
+	 * @param int $places The number of places to check to
 	 * @param int $digits The number of digits preceding the point to check
 	 * @param bool $expected Whether $decimal conforms to $places AND $digits
 	 */
@@ -262,17 +247,9 @@ class KO7_ValidTest extends Unittest_TestCase
 	{
 		if ( ! $contains_utf8)
 		{
-			$this->assertSame(
-				$expected,
-				Valid::digit($input)
-			);
+			$this->assertSame($expected, Valid::digit($input));
 		}
-
-		$this->assertSame(
-			$expected,
-			Valid::digit($input, TRUE)
-		);
-
+		$this->assertSame($expected, Valid::digit($input, TRUE));
 	}
 
 	/**
@@ -326,7 +303,7 @@ class KO7_ValidTest extends Unittest_TestCase
 	{
 		return [
 			['4222222222222', 'visa', TRUE],
-			['4012888888881881', 'visa' TRUE],
+			['4012888888881881', 'visa', TRUE],
 			['4012888888881881', NULL, TRUE],
 			['4012888888881881', ['mastercard', 'visa'], TRUE],
 			['4012888888881881', ['discover', 'mastercard'], FALSE],
@@ -353,10 +330,7 @@ class KO7_ValidTest extends Unittest_TestCase
 	 */
 	public function test_credit_card($number, $type, $expected)
 	{
-		$this->assertSame(
-			$expected,
-			Valid::credit_card($number, $type)
-		);
+		$this->assertSame($expected, Valid::credit_card($number, $type));
 	}
 
 	/**
@@ -393,10 +367,7 @@ class KO7_ValidTest extends Unittest_TestCase
 	 */
 	public function test_luhn($number, $expected)
 	{
-		$this->assertSame(
-			$expected,
-			Valid::luhn($number)
-		);
+		$this->assertSame($expected, Valid::luhn($number));
 	}
 
 	/**
@@ -411,7 +382,7 @@ class KO7_ValidTest extends Unittest_TestCase
 			['foo', FALSE, FALSE],
 			['foo@bar', TRUE, FALSE],
 			// RFC is less strict than the normal regex, presumably to allow
-			//  admin@localhost, therefore we IGNORE IT!!!
+			// admin@localhost, therefore we IGNORE IT!!!
 			['foo@bar', FALSE, FALSE],
 			['foo@bar.com', FALSE, TRUE],
 			['foo@barcom:80', FALSE, FALSE],
@@ -437,10 +408,7 @@ class KO7_ValidTest extends Unittest_TestCase
 	 */
 	public function test_email($email, $strict, $correct)
 	{
-		$this->assertSame(
-			$correct,
-			Valid::email($email, $strict)
-		);
+		$this->assertSame($correct, Valid::email($email, $strict));
 	}
 
 	/**
@@ -452,6 +420,7 @@ class KO7_ValidTest extends Unittest_TestCase
 	{
 		return [
 			['google.com', TRUE],
+			['loco-roco.com', TRUE],
 			// Don't anybody dare register this...
 			['DAWOMAWIDAIWNDAIWNHDAWIHDAIWHDAIWOHDAIOHDAIWHD.com', FALSE],
 			// Empty test
@@ -473,7 +442,7 @@ class KO7_ValidTest extends Unittest_TestCase
 	 * @dataProvider provider_email_domain
 	 * @covers Valid::email_domain
 	 * @param string  $email   Email domain to check
-	 * @param boolean $correct Is it correct?
+	 * @param bool $correct Is it correct?
 	 */
 	public function test_email_domain($email, $correct)
 	{
@@ -482,10 +451,7 @@ class KO7_ValidTest extends Unittest_TestCase
 			$this->markTestSkipped('An internet connection is required for this test');
 		}
 
-		$this->assertSame(
-			$correct,
-			Valid::email_domain($email)
-		);
+		$this->assertSame($correct, Valid::email_domain($email));
 	}
 
 	/**
@@ -518,7 +484,7 @@ class KO7_ValidTest extends Unittest_TestCase
 	 * @test
 	 * @dataProvider provider_exact_length
 	 * @param string  $string  The string to length check
-	 * @param int $length  The length of the string
+	 * @param int $length The length of the string
 	 * @param bool $correct Is $length the actual length of the string?
 	 * @return bool
 	 */
@@ -595,16 +561,13 @@ class KO7_ValidTest extends Unittest_TestCase
 	 *
 	 * @test
 	 * @dataProvider provider_ip
-	 * @param string $input_ip
+	 * @param string $ip
 	 * @param bool $allow_private
 	 * @param bool $expected_result
 	 */
-	public function test_ip($input_ip, $allow_private, $expected_result)
+	public function test_ip($ip, $allow_private, $expected)
 	{
-		$this->assertEquals(
-			$expected_result,
-			Valid::ip($input_ip, $allow_private)
-		);
+		$this->assertEquals($expected, Valid::ip($p, $allow_private));
 	}
 
 	/**
@@ -620,7 +583,7 @@ class KO7_ValidTest extends Unittest_TestCase
 			// Exceeds
 			['KO7RULLLES', 2, FALSE],
 			// Under
-			['CakeSucks', 10, TRUE],
+			['123456789', 10, TRUE],
 			// Empty test
 			['', -10, FALSE],
 			[NULL, -10, FALSE],
@@ -635,16 +598,13 @@ class KO7_ValidTest extends Unittest_TestCase
 	 *
 	 * @test
 	 * @dataProvider provider_max_length
-	 * @param string  $string String to test
-	 * @param int $maxlength Max length for this string
+	 * @param string $string String to test
+	 * @param int $max_length Max length for this string
 	 * @param bool $correct Is $string <= $maxlength
 	 */
-	public function test_max_length($string, $maxlength, $correct)
+	public function test_max_length($string, $max_length, $correct)
 	{
-	     $this->assertSame(
-			$correct,
-			Valid::max_length($string, $maxlength)
-		);
+	     $this->assertSame($correct, Valid::max_length($string, $max_length));
 	}
 
 	/**
@@ -672,16 +632,13 @@ class KO7_ValidTest extends Unittest_TestCase
 	 *
 	 * @test
 	 * @dataProvider provider_min_length
-	 * @param string  $string     String to compare
-	 * @param integer $minlength  The minimum allowed length
-	 * @param boolean $correct	Is $string 's length >= $minlength
+	 * @param string  $string String to compare
+	 * @param int $min_length The minimum allowed length
+	 * @param bool $correct	Is $string 's length >= $minlength
 	 */
-	public function test_min_length($string, $minlength, $correct)
+	public function test_min_length($string, $min_length, $correct)
 	{
-		$this->assertSame(
-			$correct,
-			Valid::min_length($string, $minlength)
-		);
+		$this->assertSame($correct, Valid::min_length($string, $min_length));
 	}
 
 	/**
@@ -691,23 +648,22 @@ class KO7_ValidTest extends Unittest_TestCase
 	 */
 	public function provider_not_empty()
 	{
-		// Create a blank arrayObject
-		$ao = new ArrayObject;
-
-		// arrayObject with value
-		$ao1 = new ArrayObject;
-		$ao1['test'] = 'value';
-
+		// Create a blank ArrayObject
+		$ao = new ArrayObject();
+		// ArrayObject with value
+		$ao2 = new ArrayObject(['test' => 'value']);
 		return [
-			[[],      FALSE],
-			[NULL,	     FALSE],
-			['',	       FALSE],
-			[$ao,	      FALSE],
-			[$ao1,	     TRUE],
+			[[], FALSE],
+			[NULL,  FALSE],
+			[FALSE,  FALSE],
+			['', FALSE],
+			[$ao, FALSE],
+			[$ao2, TRUE],
+			[TRUE, TRUE],
 			[[NULL],  TRUE],
-			[0,			TRUE],
-			['0',	      TRUE],
-			['Something',  TRUE],
+			[0, TRUE],
+			['0', TRUE],
+			['Something', TRUE],
 		];
 	}
 
@@ -719,14 +675,11 @@ class KO7_ValidTest extends Unittest_TestCase
 	 * @test
 	 * @dataProvider provider_not_empty
 	 * @param mixed   $value  Value to check
-	 * @param boolean $empty  Is the value really empty?
+	 * @param bool $empty  Is the value really empty?
 	 */
 	public function test_not_empty($value, $empty)
 	{
-		return $this->assertSame(
-			$empty,
-			Valid::not_empty($value)
-		);
+		$this->assertSame($empty, Valid::not_empty($value));
 	}
 
 	/**
@@ -764,34 +717,32 @@ class KO7_ValidTest extends Unittest_TestCase
 	 *
 	 * @test
 	 * @dataProvider provider_numeric
-	 * @param string  $input     Input to test
-	 * @param boolean $expected  Whether or not $input is numeric
+	 * @param string $input Input to test
+	 * @param bool $expected Whether or not $input is numeric
 	 */
 	public function test_numeric($input, $expected)
 	{
-		$this->assertSame(
-			$expected,
-			Valid::numeric($input)
-		);
+		$this->assertSame($expected, Valid::numeric($input));
 	}
 
 	/**
 	 * Provides test data for test_phone()
+	 * 
 	 * @return array
 	 */
 	public function provider_phone()
 	{
 		return [
-			['0163634840',       NULL, TRUE],
-			['+27173634840',     NULL, TRUE],
-			['123578',	       NULL, FALSE],
+			['0163634840', NULL, TRUE],
+			['+27173634840', NULL, TRUE],
+			['123578', NULL, FALSE],
 			// Some uk numbers
-			['01234456778',      NULL, TRUE],
-			['+0441234456778',   NULL, FALSE],
+			['01234456778', NULL, TRUE],
+			['+0441234456778',  NULL, FALSE],
 			// Google UK case you're interested
 			['+44 20-7031-2017', [12], TRUE],
 			// BT Corporate
-			['020 7356 5000',      NULL, TRUE],
+			['020 7356 5000',  NULL, TRUE],
 			// Empty test
 			['', NULL, FALSE],
 			[NULL, NULL, FALSE],
@@ -804,19 +755,19 @@ class KO7_ValidTest extends Unittest_TestCase
 	 *
 	 * @test
 	 * @dataProvider  provider_phone
-	 * @param string  $phone     Phone number to test
-	 * @param boolean $expected  Is $phone valid
+	 * @param string $phone Phone number to test
+	 * @param array|int $lengths
+	 * @param bool $expected Is $phone valid
 	 */
 	public function test_phone($phone, $lengths, $expected)
 	{
-		$this->assertSame(
-			$expected,
-			Valid::phone($phone, $lengths)
-		);
+		$this->assertSame($expected, Valid::phone($phone, $lengths));
 	}
 
 	/**
 	 * DataProvider for the valid::regex() test
+	 *
+	 * @return array
 	 */
 	public function provider_regex()
 	{
@@ -833,7 +784,7 @@ class KO7_ValidTest extends Unittest_TestCase
 	}
 
 	/**
-	 * Tests Valid::range()
+	 * Tests Valid::regex()
 	 *
 	 * Tests if a number is within a range.
 	 *
@@ -845,14 +796,13 @@ class KO7_ValidTest extends Unittest_TestCase
 	 */
 	public function test_regex($value, $regex, $expected)
 	{
-		$this->AssertSame(
-			$expected,
-			Valid::regex($value, $regex)
-		);
+		$this->AssertSame($expected, Valid::regex($value, $regex));
 	}
 
 	/**
 	 * DataProvider for the valid::range() test
+	 *
+	 * @return array
 	 */
 	public function provider_range()
 	{
@@ -889,10 +839,10 @@ class KO7_ValidTest extends Unittest_TestCase
 	 *
 	 * @test
 	 * @dataProvider provider_range
-	 * @param integer $number	Number to test
-	 * @param integer $min       Lower bound
-	 * @param integer $max       Upper bound
-	 * @param boolean $expected  Is Number within the bounds of $min && $max
+	 * @param int $number	Number to test
+	 * @param int $min       Lower bound
+	 * @param int $max       Upper bound
+	 * @param bool $expected  Is Number within the bounds of $min && $max
 	 */
 	public function test_range($number, $min, $max, $step, $expected)
 	{
@@ -925,7 +875,6 @@ class KO7_ValidTest extends Unittest_TestCase
 			['http://user:pass@127.0.0.1', TRUE],
 			['ftp://my.server.com', TRUE],
 			['rss+xml://rss.example.com', TRUE],
-
 			['http://google.2com', FALSE],
 			['http://google.com?q=abc', FALSE],
 			['http://google.com#hash', FALSE],
@@ -953,19 +902,18 @@ class KO7_ValidTest extends Unittest_TestCase
 	 *
 	 * @test
 	 * @dataProvider provider_url
-	 * @param string  $url       The url to test
-	 * @param boolean $expected  Is it valid?
+	 * @param string  $url The url to test
+	 * @param bool $expected  Is it valid?
 	 */
 	public function test_url($url, $expected)
 	{
-		$this->assertSame(
-			$expected,
-			Valid::url($url)
-		);
+		$this->assertSame($expected, Valid::url($url));
 	}
 
 	/**
-	 * DataProvider for the valid::matches() test
+	 * DataProvider for the Valid::matches() test
+	 *
+	 * @return array
 	 */
 	public function provider_matches()
 	{
@@ -987,17 +935,14 @@ class KO7_ValidTest extends Unittest_TestCase
 	 *
 	 * @test
 	 * @dataProvider provider_matches
-	 * @param array   $data      Array of fields
-	 * @param integer $field     First field name
-	 * @param integer $match     Field name that must match $field in $data
-	 * @param boolean $expected  Do the two fields match?
+	 * @param array $data Array of fields
+	 * @param int $field First field name
+	 * @param int $match Field name that must match $field in $data
+	 * @param bool $expected  Do the two fields match?
 	 */
 	public function test_matches($data, $field, $match, $expected)
 	{
-		$this->AssertSame(
-			$expected,
-			Valid::matches($data, $field, $match)
-		);
+		$this->assertSame($expected, Valid::matches($data, $field, $match));
 	}
 
 	/**
@@ -1031,14 +976,11 @@ class KO7_ValidTest extends Unittest_TestCase
 	 */
 	public function test_type($value, $types, $correct)
 	{
-		$this->assertSame(
-			$correct,
-			Valid::type($string, ...$types)
-		);
+		$this->assertSame($correct, Valid::type($string, ...$types));
 	}
 
 	/**
-	 * Returns test data for test_more()
+	 * Returns test data for test_more() and test_less()
 	 *
 	 * @return array
 	 */
@@ -1068,11 +1010,25 @@ class KO7_ValidTest extends Unittest_TestCase
 	 */
 	public function test_more($value, $min, $correct)
 	{
-		$this->assertSame(
-			$correct,
-			Valid::more($value, $min)
-		);
+		$this->assertSame($correct, Valid::more($value, $min));
 	}
+	
+	/**
+	 * Tests Valid::less()
+	 *
+	 * Tests if a field value less than maximum.
+	 *
+	 * @test
+	 * @dataProvider provider_less
+	 * @param float|int $value Field value.
+	 * @param float|int $max Maximum value.
+	 * @param bool $correct	Is $value less than $max.
+	 */
+	public function test_less($value, $max, $correct)
+	{
+		$this->assertSame(! $correct, Valid::less($value, $max));
+	}
+	
 	/**
 	 * Returns test data for test_more_or_equal()
 	 *
@@ -1088,6 +1044,7 @@ class KO7_ValidTest extends Unittest_TestCase
 			[3.2, 3.3, FALSE],
 			[3, 3, TRUE],
 			[3.1, 3.1, TRUE],
+			['3.2', 3.2, TRUE],
 		];
 	}
 
@@ -1104,9 +1061,41 @@ class KO7_ValidTest extends Unittest_TestCase
 	 */
 	public function test_more_or_equal($value, $min, $correct)
 	{
-		$this->assertSame(
-			$correct,
-			Valid::more_or_equal($value, $min)
-		);
+		$this->assertSame($correct, Valid::more_or_equal($value, $min));
+	}
+	
+	/**
+	 * Returns test data for test_less_or_equal()
+	 *
+	 * @return array
+	 */
+	public function provider_less_or_equal()
+	{
+		return [
+			[1, 2, TRUE],
+			[2, 1, FALSE],
+			[2, 1.9, FALSE],
+			[2.1, 3, TRUE],
+			[3.2, 3.3, TRUE],
+			[3, 3, TRUE],
+			[3.1, 3.1, TRUE],
+			['3.2', 3.2, TRUE],
+		];
+	}
+	
+	/**
+	 * Tests Valid::less_or_equal()
+	 *
+	 * Tests if a field value less or equal than maximum.
+	 *
+	 * @test
+	 * @dataProvider provider_less_or_equal
+	 * @param float|int $value Field value.
+	 * @param float|int $max Maximum value.
+	 * @param bool $correct	Is $value less or equal than $max.
+	 */
+	public function test_less_or_equal($value, $max, $correct)
+	{
+		$this->assertSame($correct, Valid::less_or_equal($value, $max));
 	}
 }
