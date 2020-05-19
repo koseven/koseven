@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Tests the Valid class
  *
@@ -7,18 +6,19 @@
  * @group ko7.core
  * @group ko7.core.valid
  *
- * @package	KO7
+ * @package    KO7
  * @category   Tests
  *
  * @author     BRMatt <matthew@sigswitch.com>
- * @copyright  (c) Koseven Team
- * @license	https://koseven.dev/LICENSE
+ * @copyright  (c) 2007-2016  Kohana Team
+ * @copyright  (c) 2016-2020 Koseven Team
+ * @license    https://koseven.dev/LICENSE
  */
 class KO7_ValidTest extends Unittest_TestCase
 {
-
 	/**
 	 * Provides test data for test_alpha()
+	 * 
 	 * @return array
 	 */
 	public function provider_alpha()
@@ -46,7 +46,8 @@ class KO7_ValidTest extends Unittest_TestCase
 	 * @test
 	 * @dataProvider provider_alpha
 	 * @param string  $string
-	 * @param boolean $expected
+	 * @param bool $expected
+	 * @param bool $utf8
 	 */
 	public function test_alpha($string, $expected, $utf8 = FALSE)
 	{
@@ -57,7 +58,9 @@ class KO7_ValidTest extends Unittest_TestCase
 	}
 
 	/*
-	 * Provides test data for test_alpha_numeric
+	 * Provides test data for test_alpha_numeric.
+	 * 
+	 * @return array
 	 */
 	public function provide_alpha_numeric()
 	{
@@ -85,7 +88,9 @@ class KO7_ValidTest extends Unittest_TestCase
 	 * @test
 	 * @dataProvider provide_alpha_numeric
 	 * @param string  $input     The string to test
-	 * @param boolean $expected  Is $input valid
+	 * @param bool $expected  Is $input valid
+	 * @param bool $utf8
+	 * @return bool
 	 */
 	public function test_alpha_numeric($input, $expected, $utf8 = FALSE)
 	{
@@ -96,7 +101,9 @@ class KO7_ValidTest extends Unittest_TestCase
 	}
 
 	/**
-	 * Provides test data for test_alpha_dash
+	 * Provides test data for test_alpha_dash.
+	 * 
+	 * @return array
 	 */
 	public function provider_alpha_dash()
 	{
@@ -120,9 +127,9 @@ class KO7_ValidTest extends Unittest_TestCase
 	 *
 	 * @test
 	 * @dataProvider provider_alpha_dash
-	 * @param string  $input	      The string to test
-	 * @param boolean $contains_utf8  Does the string contain utf8 specific characters
-	 * @param boolean $expected       Is $input valid?
+	 * @param string $input The string to test
+	 * @param bool $expected Is `$input` valid?
+	 * @param bool $contains_utf8 Does the string contain utf8 specific characters
 	 */
 	public function test_alpha_dash($input, $expected, $contains_utf8 = FALSE)
 	{
@@ -142,21 +149,22 @@ class KO7_ValidTest extends Unittest_TestCase
 
 	/**
 	 * DataProvider for the valid::date() test
+	 *
+	 * @return array
 	 */
 	public function provider_date()
 	{
 		return [
-			['now',TRUE],
-			['10 September 2010',TRUE],
-			['+1 day',TRUE],
-			['+1 week',TRUE],
-			['+1 week 2 days 4 hours 2 seconds',TRUE],
-			['next Thursday',TRUE],
-			['last Monday',TRUE],
-
-			['blarg',FALSE],
-			['in the year 2000',FALSE],
-			['324824',FALSE],
+			['now', TRUE],
+			['10 September 2010', TRUE],
+			['+1 day', TRUE],
+			['+1 week', TRUE],
+			['+1 week 2 days 4 hours 2 seconds', TRUE],
+			['next Thursday', TRUE],
+			['last Monday', TRUE],
+			['blarg', FALSE],
+			['in the year 2000', FALSE],
+			['324824', FALSE],
 			// Empty test
 			['', FALSE],
 			[NULL, FALSE],
@@ -170,18 +178,20 @@ class KO7_ValidTest extends Unittest_TestCase
 	 * @test
 	 * @dataProvider provider_date
 	 * @param string  $date  The date to validate
-	 * @param integer $expected
+	 * @param bool $expected
 	 */
 	public function test_date($date, $expected)
 	{
 		$this->assertSame(
 			$expected,
-			Valid::date($date, $expected)
+			Valid::date($date)
 		);
 	}
 
 	/**
 	 * DataProvider for the valid::decimal() test
+	 *
+	 * @return array
 	 */
 	public function provider_decimal()
 	{
@@ -204,10 +214,10 @@ class KO7_ValidTest extends Unittest_TestCase
 	 *
 	 * @test
 	 * @dataProvider provider_decimal
-	 * @param string  $decimal  The decimal to validate
-	 * @param integer $places   The number of places to check to
-	 * @param integer $digits   The number of digits preceding the point to check
-	 * @param boolean $expected Whether $decimal conforms to $places AND $digits
+	 * @param string $decimal The decimal to validate
+	 * @param intr $places The number of places to check to
+	 * @param int $digits The number of digits preceding the point to check
+	 * @param bool $expected Whether $decimal conforms to $places AND $digits
 	 */
 	public function test_decimal($decimal, $places, $digits, $expected)
 	{
@@ -220,21 +230,22 @@ class KO7_ValidTest extends Unittest_TestCase
 
 	/**
 	 * Provides test data for test_digit
+	 * 
 	 * @return array
 	 */
 	public function provider_digit()
 	{
 		return [
-			['12345',	TRUE],
-			['10.5',     FALSE],
-			['abcde',	FALSE],
+			['12345', TRUE, TRUE],
+			['10.5', FALSE, TRUE],
+			['abcde', FALSE],
 			['abcd1234', FALSE],
-			['-5',       FALSE],
-			[-5,	     FALSE],
+			['-5', FALSE],
+			[-5, FALSE],
 			// Empty test
-			['',	     FALSE],
-			[NULL,       FALSE],
-			[FALSE,      FALSE],
+			['', FALSE],
+			[NULL, FALSE],
+			[FALSE, FALSE],
 		];
 	}
 
@@ -243,8 +254,9 @@ class KO7_ValidTest extends Unittest_TestCase
 	 *
 	 * @test
 	 * @dataProvider provider_digit
-	 * @param mixed   $input     Input to validate
-	 * @param boolean $expected  Is $input valid
+	 * @param mixed $input Input to validate
+	 * @param bool $expected Is `$input` valid
+	 * @param bool $contains_utf8
 	 */
 	public function test_digit($input, $expected, $contains_utf8 = FALSE)
 	{
@@ -264,7 +276,9 @@ class KO7_ValidTest extends Unittest_TestCase
 	}
 
 	/**
-	 * DataProvider for the valid::color() test
+	 * DataProvider for the Valid::color() test
+	 * 
+	 * @return array
 	 */
 	public function provider_color()
 	{
@@ -292,8 +306,8 @@ class KO7_ValidTest extends Unittest_TestCase
 	 *
 	 * @test
 	 * @dataProvider provider_color
-	 * @param string  $color     The color to test
-	 * @param boolean $expected  Is $color valid
+	 * @param string  $color  The color to test
+	 * @param bool $expected  Is $color valid
 	 */
 	public function test_color($color, $expected)
 	{
@@ -305,19 +319,21 @@ class KO7_ValidTest extends Unittest_TestCase
 
 	/**
 	 * Provides test data for test_credit_card()
+	 *
+	 * @arrray
 	 */
 	public function provider_credit_card()
 	{
 		return [
-			['4222222222222',	'visa',       TRUE],
-			['4012888888881881', 'visa',       TRUE],
-			['4012888888881881', NULL,	     TRUE],
+			['4222222222222', 'visa', TRUE],
+			['4012888888881881', 'visa' TRUE],
+			['4012888888881881', NULL, TRUE],
 			['4012888888881881', ['mastercard', 'visa'], TRUE],
 			['4012888888881881', ['discover', 'mastercard'], FALSE],
 			['4012888888881881', 'mastercard', FALSE],
 			['5105105105105100', 'mastercard', TRUE],
-			['6011111111111117', 'discover',   TRUE],
-			['6011111111111117', 'visa',       FALSE],
+			['6011111111111117', 'discover', TRUE],
+			['6011111111111117', 'visa', FALSE],
 			// Empty test
 			['', NULL, FALSE],
 			[NULL, NULL, FALSE],
@@ -330,10 +346,10 @@ class KO7_ValidTest extends Unittest_TestCase
 	 *
 	 * @test
 	 * @covers Valid::credit_card
-	 * @dataProvider  provider_credit_card()
-	 * @param string  $number   Credit card number
-	 * @param string  $type		Credit card type
-	 * @param boolean $expected
+	 * @dataProvider provider_credit_card
+	 * @param string $number Credit card number
+	 * @param string $type	Credit card type
+	 * @param bool $expected
 	 */
 	public function test_credit_card($number, $type, $expected)
 	{
@@ -345,6 +361,8 @@ class KO7_ValidTest extends Unittest_TestCase
 
 	/**
 	 * Provides test data for test_credit_card()
+	 *
+	 * @return array
 	 */
 	public function provider_luhn()
 	{
@@ -369,9 +387,9 @@ class KO7_ValidTest extends Unittest_TestCase
 	 *
 	 * @test
 	 * @covers Valid::luhn
-	 * @dataProvider  provider_luhn()
-	 * @param string  $number   Credit card number
-	 * @param boolean $expected
+	 * @dataProvider provider_luhn
+	 * @param string $number   Credit card number
+	 * @param bool $expected
 	 */
 	public function test_luhn($number, $expected)
 	{
@@ -391,7 +409,6 @@ class KO7_ValidTest extends Unittest_TestCase
 		return [
 			['foo', TRUE,  FALSE],
 			['foo', FALSE, FALSE],
-
 			['foo@bar', TRUE, FALSE],
 			// RFC is less strict than the normal regex, presumably to allow
 			//  admin@localhost, therefore we IGNORE IT!!!
@@ -413,9 +430,10 @@ class KO7_ValidTest extends Unittest_TestCase
 	 *
 	 * @test
 	 * @dataProvider provider_email
-	 * @param string  $email   Address to check
-	 * @param boolean $strict  Use strict settings
-	 * @param boolean $correct Is $email address valid?
+	 * @covers Valid::email
+	 * @param string $email Address to check
+	 * @param bool $strict Use strict settings
+	 * @param bool $correct Is $email address valid?
 	 */
 	public function test_email($email, $strict, $correct)
 	{
@@ -453,6 +471,7 @@ class KO7_ValidTest extends Unittest_TestCase
 	 *
 	 * @test
 	 * @dataProvider provider_email_domain
+	 * @covers Valid::email_domain
 	 * @param string  $email   Email domain to check
 	 * @param boolean $correct Is it correct?
 	 */
@@ -499,8 +518,8 @@ class KO7_ValidTest extends Unittest_TestCase
 	 * @test
 	 * @dataProvider provider_exact_length
 	 * @param string  $string  The string to length check
-	 * @param integer $length  The length of the string
-	 * @param boolean $correct Is $length the actual length of the string?
+	 * @param int $length  The length of the string
+	 * @param bool $correct Is $length the actual length of the string?
 	 * @return bool
 	 */
 	public function test_exact_length($string, $length, $correct)
@@ -538,8 +557,8 @@ class KO7_ValidTest extends Unittest_TestCase
 	 * @dataProvider provider_equals
 	 * @param   string   $string	value to check
 	 * @param   integer  $required  required value
-	 * @param   boolean  $correct   is $string the same as $required?
-	 * @return  boolean
+	 * @param   bool  $correct   is $string the same as $required?
+	 * @return  bool
 	 */
 	public function test_equals($string, $required, $correct)
 	{
@@ -552,6 +571,7 @@ class KO7_ValidTest extends Unittest_TestCase
 
 	/**
 	 * DataProvider for the valid::ip() test
+	 * 
 	 * @return array
 	 */
 	public function provider_ip()
@@ -574,10 +594,10 @@ class KO7_ValidTest extends Unittest_TestCase
 	 * Tests Valid::ip()
 	 *
 	 * @test
-	 * @dataProvider  provider_ip
-	 * @param string  $input_ip
-	 * @param boolean $allow_private
-	 * @param boolean $expected_result
+	 * @dataProvider provider_ip
+	 * @param string $input_ip
+	 * @param bool $allow_private
+	 * @param bool $expected_result
 	 */
 	public function test_ip($input_ip, $allow_private, $expected_result)
 	{
@@ -615,9 +635,9 @@ class KO7_ValidTest extends Unittest_TestCase
 	 *
 	 * @test
 	 * @dataProvider provider_max_length
-	 * @param string  $string	String to test
-	 * @param integer $maxlength Max length for this string
-	 * @param boolean $correct   Is $string <= $maxlength
+	 * @param string  $string String to test
+	 * @param int $maxlength Max length for this string
+	 * @param bool $correct Is $string <= $maxlength
 	 */
 	public function test_max_length($string, $maxlength, $correct)
 	{
