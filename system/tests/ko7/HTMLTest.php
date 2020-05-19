@@ -11,11 +11,11 @@
  *
  * @author     BRMatt <matthew@sigswitch.com>
  * @copyright  (c) 2007-2016  Kohana Team
- * @copyright  (c) since 2016 Koseven Team
+ * @copyright  (c) 2016-2020 Koseven Team
  * @license    https://koseven.dev/LICENSE
  */
-class KO7_HTMLTest extends Unittest_TestCase {
-
+class KO7_HTMLTest extends Unittest_TestCase
+{
 	/**
 	 * Sets up the environment
 	 */
@@ -24,9 +24,9 @@ class KO7_HTMLTest extends Unittest_TestCase {
 	// @codingStandardsIgnoreEnd
 	{
 		parent::setUp();
-		KO7::$config->load('url')->set('trusted_hosts', ['www\.koseven\.ga']);
+		KO7::$config->load('url')->set('trusted_hosts', ['www\.koseven\.dev']);
 	}
-
+	
 	/**
 	 * Defaults for this test
 	 * @var array
@@ -35,8 +35,8 @@ class KO7_HTMLTest extends Unittest_TestCase {
 	protected $environmentDefault = [
 		'KO7::$base_url'    => '/ko7/',
 		'KO7::$index_file'  => 'index.php',
-		'HTML::$strict' => TRUE,
-		'HTTP_HOST'	=> 'www.koseven.dev',
+		'HTML::$strict'     => TRUE,
+		'HTTP_HOST'	    => 'www.koseven.dev',
 	];
 	// @codingStandardsIgnoreStart
 
