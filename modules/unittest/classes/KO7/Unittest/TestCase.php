@@ -40,7 +40,7 @@ abstract class KO7_Unittest_TestCase extends TestCase
 		$this->_helpers = new Unittest_Helpers();
 
 		// Make sure PHPUnit backup globals
-		$this->setBackupGlobals(true);
+		$this->setBackupGlobals(false);
 
 		$this->setEnvironment($this->environmentDefault);
 
