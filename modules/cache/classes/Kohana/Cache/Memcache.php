@@ -289,7 +289,7 @@ class Kohana_Cache_Memcache extends Cache implements Cache_Arithmetic {
 	{
 		// This is for compatability with anyone using the config
 		// variable from Koseven initail update
-		if ($this->config('instant_death') === false)
+		if ($this->config('instant_death') === FALSE)
 			return;
 
 		// Setup non-existent host
