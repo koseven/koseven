@@ -24,7 +24,7 @@
  *                              'timeout'          => 1,
  *                              'retry_interval'   => 15,
  *                              'status'           => TRUE,
- *				'instant_death'	   => TRUE,
+ *                              'instant_death'    => TRUE,
  *                              'failure_callback' => array('className', 'classMethod')
  *                         ),
  *                         // Second memcache server
@@ -287,7 +287,9 @@ class Kohana_Cache_Memcache extends Cache implements Cache_Arithmetic {
 	 */
 	public function _failed_request($hostname, $port)
 	{
-		if ( ! $this->_config['instant_death'])
+		// This is for compatability with anyone using the config
+		// variable from Koseven initail update
+		if ($this->config('instant_death') === false)
 			return;
 
 		// Setup non-existent host
@@ -301,6 +303,10 @@ class Kohana_Cache_Memcache extends Cache implements Cache_Arithmetic {
 			// We're looking at the failed server
 			if ($hostname == $server['host'] and $port == $server['port'])
 			{
+				// Make sure that we do not disable servers that have `instant_death` set to `FALSE`.
+				if ( ! $server['instant_death'])
+					continue;
+
 				// Server to disable, since it failed
 				$host = $server;
 				continue;
