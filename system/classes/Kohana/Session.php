@@ -441,7 +441,7 @@ abstract class Kohana_Session {
 	 */
 	protected function _unserialize($data)
 	{
-		return unserialize($data);
+		return unserialize($data, ['allowed_classes' => false]);
 	}
 
 	/**
