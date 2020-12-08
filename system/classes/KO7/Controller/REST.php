@@ -126,11 +126,16 @@ abstract class KO7_Controller_REST extends Controller {
         {
             try
             {
-                $parsed_body = json_decode($this->request->body(), true, 512, JSON_THROW_ON_ERROR);
+                // Fix for PHP 7
+                // json_decode() throws and error when decoding an empty string
+                if ( ! empty($this->request->body()) )
+                {
+                    $parsed_body = json_decode($this->request->body(), true, 512, JSON_THROW_ON_ERROR);
+                }
             }
             catch (JsonException $e)
             {
-                throw new REST_Exception($e->getMessage(). NULL, $e->getCode(), $e);
+                throw new REST_Exception($e->getMessage(), NULL, $e->getCode(), $e);
             }
         }
         else
