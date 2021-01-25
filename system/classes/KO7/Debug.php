@@ -13,7 +13,7 @@ class KO7_Debug {
 
 	/**
 	 * Returns an HTML string of debugging information about any number of
-	 * variables, each wrapped in a "pre" tag:
+	 * variables wrapped in a "pre" tag:
 	 *
 	 *     // Displays the type and value of each variable
 	 *     echo Debug::vars($foo, $bar, $baz);
@@ -41,7 +41,7 @@ class KO7_Debug {
 	/**
 	 * Returns an HTML string of information about a single variable.
 	 *
-	 * Borrows heavily on concepts from the Debug class of [Nette](http://nettephp.com/).
+	 * Borrows heavily on concepts from the Debug class of [Nette](https://nette.org).
 	 *
 	 * @param   mixed   $value              variable to dump
 	 * @param   integer $length             maximum length of strings
@@ -78,21 +78,15 @@ class KO7_Debug {
 		}
 		elseif (is_resource($var))
 		{
-			if (($type = get_resource_type($var)) === 'stream' AND $meta = stream_get_meta_data($var))
+			$type = get_resource_type($var);
+			if ($type === 'stream' AND ($meta = stream_get_meta_data($var)))
 			{
-				$meta = stream_get_meta_data($var);
-
 				if (isset($meta['uri']))
 				{
 					$file = $meta['uri'];
-
-					if (function_exists('stream_is_local'))
+					if (stream_is_local($file))
 					{
-						// Only exists on PHP >= 5.2.4
-						if (stream_is_local($file))
-						{
-							$file = Debug::path($file);
-						}
+						$file = Debug::path($file);
 					}
 
 					return '<small>resource</small><span>('.$type.')</span> '.htmlspecialchars($file, ENT_NOQUOTES, KO7::$charset);
@@ -342,7 +336,7 @@ class KO7_Debug {
 	 *     // Displays the entire current backtrace
 	 *     echo implode('<br/>', Debug::trace());
 	 *
-	 * @param   array   $trace
+	 * @param   array|null   $trace     Stack to trace
 	 * @return  string
 	 */
 	public static function trace(array $trace = NULL)
