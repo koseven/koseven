@@ -48,15 +48,17 @@ class Kohana_CookieTest extends Unittest_TestCase
 			'Cookie::$domain'   => 'my.domain',
 			'Cookie::$secure'   => TRUE,
 			'Cookie::$httponly' => FALSE,
+			'Cookie::$samesite' => Kohana_Cookie_Samesite::LAX
 		]);
 
 		Kohana_CookieTest_TestableCookie::set('cookie', 'value');
 
 		$this->assertSetCookieWith([
-			'path'       => '/path',
-			'domain'     => 'my.domain',
-			'secure'     => TRUE,
-			'httponly'   => FALSE
+			Kohana_Cookie_Properties::PATH       => '/path',
+			Kohana_Cookie_Properties::DOMAIN     => 'my.domain',
+			Kohana_Cookie_Properties::SECURE     => TRUE,
+			Kohana_Cookie_Properties::HTTP_ONLY  => FALSE,
+			Kohana_Cookie_Properties::SAME_SITE  => Kohana_Cookie_Samesite::LAX
 		]);
 	}
 
@@ -74,18 +76,19 @@ class Kohana_CookieTest extends Unittest_TestCase
 		];
 	}
 
-	/**
-	 * @param int $expiration
-	 * @param int $expect_expiry
-	 *
-	 * @dataProvider provider_set_calculates_expiry_from_lifetime
-	 * @covers Cookie::set
-	 */
+    /**
+     * @param int $expiration
+     * @param int $expect_expiry
+     *
+     * @dataProvider provider_set_calculates_expiry_from_lifetime
+     * @covers       Cookie::set
+     * @throws Kohana_Exception
+     */
 	public function test_set_calculates_expiry_from_lifetime($expiration, $expect_expiry)
 	{
 		$this->setEnvironment(['Cookie::$expiration' => self::COOKIE_EXPIRATION]);
 		Kohana_CookieTest_TestableCookie::set('foo', 'bar', $expiration);
-		$this->assertSetCookieWith(['expire' => $expect_expiry]);
+		$this->assertSetCookieWith([Kohana_Cookie_Properties::EXPIRES => $expect_expiry]);
 	}
 
 	/**
@@ -121,15 +124,16 @@ class Kohana_CookieTest extends Unittest_TestCase
 		];
 	}
 
-	/**
-	 * Verifies that unsigned cookies are not available to the kohana application, but are not affected for other
-	 * consumers.
-	 *
-	 * @param string $unsigned_value
-	 *
-	 * @dataProvider provider_get_returns_default_without_deleting_if_cookie_unsigned
-	 * @covers Cookie::get
-	 */
+    /**
+     * Verifies that unsigned cookies are not available to the kohana application, but are not affected for other
+     * consumers.
+     *
+     * @param string $unsigned_value
+     *
+     * @dataProvider provider_get_returns_default_without_deleting_if_cookie_unsigned
+     * @covers       Cookie::get
+     * @throws Kohana_Exception
+     */
 	public function test_get_returns_default_without_deleting_if_cookie_unsigned($unsigned_value)
 	{
 		$_COOKIE['cookie'] = $unsigned_value;
@@ -208,13 +212,14 @@ class Kohana_CookieTest extends Unittest_TestCase
 		];
 	}
 
-	/**
-	 * @param array $first_args
-	 * @param array $changed_args
-	 *
-	 * @dataProvider provider_salt_creates_different_hash_for_different_data
-	 * @covers Cookie::salt
-	 */
+    /**
+     * @param array $first_args
+     * @param array $changed_args
+     *
+     * @dataProvider provider_salt_creates_different_hash_for_different_data
+     * @covers       Cookie::salt
+     * @throws Kohana_Exception
+     */
 	public function test_salt_creates_different_hash_for_different_data($first_args, $changed_args)
 	{
 		$second_args = array_merge($first_args, $changed_args);
@@ -243,13 +248,14 @@ class Kohana_CookieTest extends Unittest_TestCase
 		$this->assertArrayNotHasKey($name, $_COOKIE);
 		// To delete the client-side cookie, Cookie::delete should send a new cookie with value NULL and expiry in the past
 		$this->assertSetCookieWith([
-			'name'     => $name,
-			'value'    => NULL,
-			'expire'   => -86400,
-			'path'     => Cookie::$path,
-			'domain'   => Cookie::$domain,
-			'secure'   => Cookie::$secure,
-			'httponly' => Cookie::$httponly
+			Kohana_Cookie_Properties::NAME      => $name,
+			Kohana_Cookie_Properties::VALUE     => NULL,
+			Kohana_Cookie_Properties::EXPIRES   => -86400,
+			Kohana_Cookie_Properties::PATH      => Cookie::$path,
+			Kohana_Cookie_Properties::DOMAIN    => Cookie::$domain,
+			Kohana_Cookie_Properties::SECURE    => Cookie::$secure,
+			Kohana_Cookie_Properties::HTTP_ONLY => Cookie::$httponly,
+			Kohana_Cookie_Properties::SAME_SITE => Cookie::$samesite,
 		]);
 	}
 
@@ -299,16 +305,17 @@ class Kohana_CookieTest_TestableCookie extends Cookie {
 	/**
 	 * {@inheritdoc}
 	 */
-	protected static function _setcookie($name, $value, $expire, $path, $domain, $secure, $httponly)
+	protected static function _setcookie($name, $value, $expires, $path, $domain, $secure, $httponly, $samesite)
 	{
 		self::$_mock_cookies_set[] = [
-			'name'     => $name,
-			'value'    => $value,
-			'expire'   => $expire,
-			'path'     => $path,
-			'domain'   => $domain,
-			'secure'   => $secure,
-			'httponly' => $httponly
+			Kohana_Cookie_Properties::NAME      => $name,
+			Kohana_Cookie_Properties::VALUE     => $value,
+			Kohana_Cookie_Properties::EXPIRES   => $expires,
+			Kohana_Cookie_Properties::PATH      => $path,
+			Kohana_Cookie_Properties::DOMAIN    => $domain,
+			Kohana_Cookie_Properties::SECURE    => $secure,
+			Kohana_Cookie_Properties::HTTP_ONLY => $httponly,
+			Kohana_Cookie_Properties::SAME_SITE => $samesite
 		];
 
 		return TRUE;
