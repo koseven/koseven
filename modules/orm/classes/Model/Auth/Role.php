@@ -11,7 +11,7 @@
 class Model_Auth_Role extends ORM {
 
 	// Relationships
-	protected $_has_many = [
+	protected array $_has_many = [
 		'users' => ['model' => 'User','through' => 'roles_users'],
 	];
 
