@@ -360,18 +360,17 @@ class Kohana_Route {
 	 * Filters to be run before route parameters are returned:
 	 *
 	 *     $route->filter(
-	 *         function(Route $route, $params, Request $request)
+	 *         function(Route $route, array $params, Request $request)
 	 *         {
 	 *             if ($request->method() !== HTTP_Request::POST)
 	 *             {
 	 *                 return FALSE; // This route only matches POST requests
 	 *             }
-	 *             if ($params AND $params['controller'] === 'welcome')
+	 *             if (isset($params['controller']) AND $params['controller'] == 'Welcome')
 	 *             {
-	 *                 $params['controller'] = 'home';
+	 *                 $params['controller'] = 'Home';
+	 *                 return $params;
 	 *             }
-	 *
-	 *             return $params;
 	 *         }
 	 *     );
 	 *
@@ -381,7 +380,7 @@ class Kohana_Route {
 	 * [!!] Default parameters are added before filters are called!
 	 *
 	 * @throws  Kohana_Exception
-	 * @param   mixed   $callback   callback string, array, or closure
+	 * @param   callable   $callback   Filter callback
 	 * @return  $this
 	 */
 	public function filter($callback)
