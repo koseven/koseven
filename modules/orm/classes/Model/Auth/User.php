@@ -15,7 +15,7 @@ class Model_Auth_User extends ORM {
 	 *
 	 * @var array Relationhips
 	 */
-	protected $_has_many = [
+	protected array $_has_many = [
 		'user_tokens' => ['model' => 'User_Token'],
 		'roles'       => ['model' => 'Role', 'through' => 'roles_users'],
 	];
