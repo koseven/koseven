@@ -164,11 +164,21 @@ Kohana::modules([
 // Cookie::$secure = isset($_SERVER['HTTPS']) AND $_SERVER['HTTPS'] == 'on' ? TRUE : FALSE;
 
 /**
+ * Load routes from the routes directory defaults for the URI.
+ */
+Route::load_all();
+
+/**
  * Set the routes. Each route must have a minimum of a name, a URI and a set of
  * defaults for the URI.
+ * 
+ * If preferred all original routes from bootstrap can be moved to the default.php
+ * file in the routes folder.
  */
+/*
 Route::set('default', '(<controller>(/<action>(/<id>)))')
 	->defaults([
 		'controller' => 'welcome',
 		'action'     => 'index',
 	]);
+*/

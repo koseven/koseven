@@ -75,6 +75,29 @@ class Kohana_Route {
 	protected static $_routes = [];
 
 	/**
+	 * Load all the routes from the routes directory.
+	 */
+	public static function load_all()
+	{
+		$path = APPPATH.'routes'.DIRECTORY_SEPARATOR;
+
+		if (is_dir($path))
+		{
+			$dir = new DirectoryIterator($path);
+			foreach ($dir as $file)
+			{
+				// Get the file name
+				$filename = $file->getFilename();
+		
+				if (pathinfo($filename, PATHINFO_EXTENSION) === 'php')
+				{
+					require realpath($file->getPathname());
+				}
+			}
+		}
+	}
+
+	/**
 	 * Stores a named route and returns it. The "action" will always be set to
 	 * "index" if it is not defined.
 	 *

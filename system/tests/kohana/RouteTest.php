@@ -928,6 +928,35 @@ class Kohana_RouteTest extends Unittest_TestCase
 	}
 
 	/**
+	* Route::load_all() should load routes from files in the the route pad
+	*
+	* @test
+	* @covers Route::load_all
+	*/
+	public function test_load_all()
+	{
+		$route_reflection = new ReflectionClass('Route');
+
+		// Clear existing routes from bootstrap.php
+		$routes = $route_reflection->getProperty('_routes');
+		$routes->setAccessible(true);
+		$routes->setValue([]);
+
+		// Check if routes are empty now
+		$this->assertEmpty(Route::all());
+
+		// Actual test
+		Route::load_all();
+
+		$defined_routes = self::readAttribute('Route', '_routes');
+		$this->assertSame($defined_routes, Route::all());
+
+		// There should be some routes
+		$this->assertNotEmpty(Route::all());
+	}
+
+
+	/**
 	 * Get a mock of the Request class with a mocked `uri` method
 	 *
 	 * We are also mocking `method` method as it conflicts with newer PHPUnit,
