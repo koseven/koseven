@@ -202,7 +202,7 @@ class Kohana_Debug {
 				$objects[$hash] = TRUE;
 				foreach ($array as $key => & $val)
 				{
-					if ($key[0] === "\x00")
+					if (is_string($key) && $key && $key[0] === "\x00")
 					{
 						// Determine if the access is protected or protected
 						$access = '<small>'.(($key[1] === '*') ? 'protected' : 'private').'</small>';
