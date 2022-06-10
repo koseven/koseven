@@ -164,6 +164,13 @@ Kohana::modules([
 // Cookie::$secure = isset($_SERVER['HTTPS']) AND $_SERVER['HTTPS'] == 'on' ? TRUE : FALSE;
 
 /**
+ * SameSite attribute of Set-Cookie HTTP response header allows you to declare if your
+ * cookie should be restricted to first-party or same-site context
+ * @see https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Set-Cookie/SameSite
+ */
+// Cookie::$samesite = Kohana_Cookie_Samesite::STRICT;
+
+/**
  * Set the routes. Each route must have a minimum of a name, a URI and a set of
  * defaults for the URI.
  */

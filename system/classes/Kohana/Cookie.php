@@ -40,18 +40,24 @@ class Kohana_Cookie {
 	 */
 	public static $httponly = FALSE;
 
-	/**
-	 * Gets the value of a signed cookie. Cookies without signatures will not
-	 * be returned. If the cookie signature is present, but invalid, the cookie
-	 * will be deleted.
-	 *
-	 *     // Get the "theme" cookie, or use "blue" if the cookie does not exist
-	 *     $theme = Cookie::get('theme', 'blue');
-	 *
-	 * @param   string  $key        cookie name
-	 * @param   mixed   $default    default value to return
-	 * @return  string
-	 */
+    /**
+     * @var string Transmit cookies with third party requests
+     */
+	public static $samesite = Kohana_Cookie_Samesite::LAX;
+
+    /**
+     * Gets the value of a signed cookie. Cookies without signatures will not
+     * be returned. If the cookie signature is present, but invalid, the cookie
+     * will be deleted.
+     *
+     *     // Get the "theme" cookie, or use "blue" if the cookie does not exist
+     *     $theme = Cookie::get('theme', 'blue');
+     *
+     * @param string $key cookie name
+     * @param mixed $default default value to return
+     * @return  string
+     * @throws Kohana_Exception
+     */
 	public static function get($key, $default = NULL)
 	{
 		if ( ! isset($_COOKIE[$key]))
@@ -84,24 +90,25 @@ class Kohana_Cookie {
 		return $default;
 	}
 
-	/**
-	 * Sets a signed cookie. Note that all cookie values must be strings and no
-	 * automatic serialization will be performed!
-	 *
-	 * [!!] By default, Cookie::$expiration is 0 - if you skip/pass NULL for the optional
-	 *      lifetime argument your cookies will expire immediately unless you have separately
-	 *      configured Cookie::$expiration.
-	 *
-	 *
-	 *     // Set the "theme" cookie
-	 *     Cookie::set('theme', 'red');
-	 *
-	 * @param   string  $name       name of cookie
-	 * @param   string  $value      value of cookie
-	 * @param   integer $lifetime   lifetime in seconds
-	 * @return  boolean
-	 * @uses    Cookie::salt
-	 */
+    /**
+     * Sets a signed cookie. Note that all cookie values must be strings and no
+     * automatic serialization will be performed!
+     *
+     * [!!] By default, Cookie::$expiration is 0 - if you skip/pass NULL for the optional
+     *      lifetime argument your cookies will expire immediately unless you have separately
+     *      configured Cookie::$expiration.
+     *
+     *
+     *     // Set the "theme" cookie
+     *     Cookie::set('theme', 'red');
+     *
+     * @param string $name name of cookie
+     * @param string $value value of cookie
+     * @param integer $lifetime lifetime in seconds
+     * @return  boolean
+     * @throws Kohana_Exception
+     * @uses    Cookie::salt
+     */
 	public static function set($name, $value, $lifetime = NULL)
 	{
 		if ($lifetime === NULL)
@@ -119,7 +126,7 @@ class Kohana_Cookie {
 		// Add the salt to the cookie value
 		$value = Cookie::salt($name, $value).'~'.$value;
 
-		return static::_setcookie($name, $value, $lifetime, Cookie::$path, Cookie::$domain, Cookie::$secure, Cookie::$httponly);
+		return static::_setcookie($name, $value, $lifetime, Cookie::$path, Cookie::$domain, Cookie::$secure, Cookie::$httponly, Cookie::$samesite);
 	}
 
 	/**
@@ -136,7 +143,7 @@ class Kohana_Cookie {
 		unset($_COOKIE[$name]);
 
 		// Nullify the cookie and make it expire
-		return static::_setcookie($name, NULL, -86400, Cookie::$path, Cookie::$domain, Cookie::$secure, Cookie::$httponly);
+		return static::_setcookie($name, NULL, -86400, Cookie::$path, Cookie::$domain, Cookie::$secure, Cookie::$httponly, Cookie::$samesite);
 	}
 
 	/**
@@ -170,7 +177,7 @@ class Kohana_Cookie {
 	 *
 	 * @param string  $name
 	 * @param string  $value
-	 * @param integer $expire
+	 * @param integer $expires
 	 * @param string  $path
 	 * @param string  $domain
 	 * @param boolean $secure
@@ -179,9 +186,20 @@ class Kohana_Cookie {
 	 * @return bool
 	 * @see setcookie
 	 */
-	protected static function _setcookie($name, $value, $expire, $path, $domain, $secure, $httponly)
+	protected static function _setcookie($name, $value, $expires, $path, $domain, $secure, $httponly, $samesite)
 	{
-		return setcookie($name, $value, $expire, $path, $domain, $secure, $httponly);
+		return setcookie(
+			$name,
+			$value,
+			[
+				Kohana_Cookie_Properties::EXPIRES => $expires,
+				Kohana_Cookie_Properties::PATH => $path,
+				Kohana_Cookie_Properties::DOMAIN => $domain,
+				Kohana_Cookie_Properties::SECURE => $secure,
+				Kohana_Cookie_Properties::HTTP_ONLY => $httponly,
+				Kohana_Cookie_Properties::SAME_SITE => $samesite,
+			]
+		);
 	}
 
 	/**
