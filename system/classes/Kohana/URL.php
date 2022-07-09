@@ -151,6 +151,9 @@ class Kohana_URL {
 	 */
 	public static function site($uri = '', $protocol = NULL, $index = TRUE, $subdomain = NULL)
 	{
+		if (is_null($uri))
+            		$uri = '';
+		
 		// Chop off possible scheme, host, port, user and pass parts
 		$path = preg_replace('~^[-a-z0-9+.]++://[^/]++/?~', '', trim($uri, '/'));
 
