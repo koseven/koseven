@@ -279,9 +279,15 @@ class Kohana_Date {
 
 		if ($format === Date::MONTHS_LONG OR $format === Date::MONTHS_SHORT)
 		{
+			if ($format === Date::MONTHS_LONG)
+				$format = 'MMMM';
+			else
+				$format = 'MMM';
+
 			for ($i = 1; $i <= 12; ++$i)
 			{
-				$months[$i] = strftime($format, mktime(0, 0, 0, $i, 1));
+				$formatter = new IntlDateFormatter(I18n::$lang, IntlDateFormatter::NONE, IntlDateFormatter::NONE, NULL, NULL, $format);
+				$months[$i] = $formatter->format(mktime(0, 0, 0, $i, 1));
 			}
 		}
 		else
