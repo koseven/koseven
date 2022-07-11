@@ -279,10 +279,11 @@ class Kohana_Date {
 
 		if ($format === Date::MONTHS_LONG OR $format === Date::MONTHS_SHORT)
 		{
-			if ($format === Date::MONTHS_LONG)
+			if ($format === Date::MONTHS_LONG) {
 				$format = 'MMMM';
-			else
+			} else {
 				$format = 'MMM';
+			}
 
 			for ($i = 1; $i <= 12; ++$i)
 			{
