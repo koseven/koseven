@@ -1,4 +1,5 @@
 [![Koseven Logo](https://i.imgur.com/2CeT8JL.png)](https://koseven.dev/)
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fkoseven%2Fkoseven.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2Fkoseven%2Fkoseven?ref=badge_shield)
 
 [![Latest Stable Version](https://poser.pugx.org/koseven/koseven/v/stable)](https://packagist.org/packages/koseven/koseven)
 [![Build Status](https://action-badges.now.sh/koseven/koseven?workflow=test)](https://github.com/koseven/koseven/actions)
@@ -64,3 +65,7 @@ Any help is more than welcome! Please see [Contributing](CONTRIBUTING.md) for de
 ## Special Thanks
 
 Special Thanks to all our Contibuters and our Community!
+
+
+## License
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fkoseven%2Fkoseven.svg?type=large)](https://app.fossa.com/projects/git%2Bgithub.com%2Fkoseven%2Fkoseven?ref=badge_large)
