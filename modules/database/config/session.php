@@ -23,5 +23,13 @@ return [
 			'last_active' => 'last_active',
 			'contents'    => 'contents'
 		],
+		/**
+		 * disable save empty session
+		 */
+		'save_empty_session' => true,
+		/**
+		 * Interval in seconds to update the session content if it hasn't changed
+		 */
+		'session_update_interval' => 0
 	],
 ];
