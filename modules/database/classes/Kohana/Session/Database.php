@@ -161,7 +161,7 @@ class Kohana_Session_Database extends Session {
 	protected function _write()
 	{
 
-		if ( !$this->_save_empty_session &&
+		if ($this->_is_new && !$this->_save_empty_session &&
 			(count($this->_data) === 0 || ((count($this->_data) === 1) && isset($this->_data['last_active'])))
 		) {
 			return true; //do not write empty session
