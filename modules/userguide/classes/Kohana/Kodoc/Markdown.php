@@ -96,7 +96,7 @@ class Kohana_Kodoc_Markdown extends MarkdownExtra_Parser {
 	{
 		if ($matches[3] == '-' AND preg_match('{^- }', $matches[1]))
 			return $matches[0];
-		$level = ($matches[3]{0} == '=') ? 1 : 2;
+		$level = ($matches[3][0] == '=') ? 1 : 2;
 		$attr  = $this->_doHeaders_attr($id =& $matches[2]);
 		
 		// Only auto-generate id if one doesn't exist

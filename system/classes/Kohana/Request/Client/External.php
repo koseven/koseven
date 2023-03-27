@@ -123,7 +123,7 @@ abstract class Kohana_Request_Client_External extends Request_Client {
 		// Resolve the POST fields
 		if ($post = $request->post())
 		{
-			$request->body(http_build_query($post, NULL, '&'))
+			$request->body(http_build_query($post, '', '&'))
 				->headers('content-type', 'application/x-www-form-urlencoded; charset='.Kohana::$charset);
 		}
 

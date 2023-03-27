@@ -144,7 +144,7 @@ class Kohana_URL {
 	 *
 	 * @param   string  $uri        Site URI to convert
 	 * @param   mixed   $protocol   Protocol string or [Request] class to use protocol from
-	 * @param   boolean $index		Include the index_page in the URL
+	 * @param   boolean $index	Include the index_page in the URL
 	 * @param   string  $subdomain  Subdomain string
 	 * @return  string
 	 * @uses    URL::base

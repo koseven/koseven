@@ -1193,7 +1193,7 @@ class Kohana_Request implements HTTP_Request {
 		if ($content === NULL)
 		{
 			// Act as a getter
-			return $this->_body;
+			return $this->_body ?? '';
 		}
 
 		// Act as a setter
@@ -1233,7 +1233,7 @@ class Kohana_Request implements HTTP_Request {
 		}
 		else
 		{
-			$body = http_build_query($post, NULL, '&');
+			$body = http_build_query($post, '', '&');
 			$this->body($body)
 				->headers('content-type', 'application/x-www-form-urlencoded; charset='.Kohana::$charset);
 		}

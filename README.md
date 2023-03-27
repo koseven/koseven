@@ -4,13 +4,11 @@
 [![Build Status](https://action-badges.now.sh/koseven/koseven?workflow=test)](https://github.com/koseven/koseven/actions)
 [![License](https://poser.pugx.org/koseven/koseven/license.svg)](https://packagist.org/packages/koseven/koseven)
 [![Github Issues](https://img.shields.io/github/issues/koseven/koseven.svg)](https://github.com/koseven/koseven/issues)
-[![Forum](https://img.shields.io/badge/Discourse-Join%20Forum-ff9c08.svg?logo=discourse)](https://koseven.discourse.group)
 
 ## [Download 3.3.10](https://github.com/koseven/koseven/releases/tag/3.3.10)
 
-## [Join our Forum](https://koseven.discourse.group/)
 
-Koseven is an elegant, open source, and object oriented HMVC framework built using PHP7, by a team of volunteers. It aims to be swift, secure, and small. It is based and [nearly](https://koseven.discourse.group/t/upgrading-kohana-to-koseven/15) full compatible on defunct [Kohana](http://kohanaframework.org/) 3.3.X.
+Koseven is an elegant, open source, and object oriented HMVC framework built using PHP7, by a team of volunteers. It aims to be swift, secure, and small. It is based and nearly full compatible on defunct [Kohana](http://kohanaframework.org/) 3.3.X.
 
 Released under a [BSD license](LICENSE.md), Koseven can be used legally for any open source, commercial, or personal project.
 
@@ -21,7 +19,7 @@ If you were using 3.3.x version you may need to make some small changes. Please 
 ## I Need help!
 
 You need Help, How-To's, Guides,...?
-Please consider to **[use our Forum](https://koseven.discourse.group/).**, maybe your answer is already there. If not feel free to open a topic and ask for it. If you want to you can also Join our **[Telegram](https://telegram.me/koseven)** Group, but keep in mind that this wan't guarantee you faster answer times, as we get also notified via Telegram if you open a Forum Topic.
+Please consider to look into the GitHub Issues, maybe your answer is already there. If not feel free to open a topic and ask for it. If you want to you can also Join our **[Telegram](https://telegram.me/koseven)** Group, but keep in mind that this wan't guarantee you faster answer times, as we get also notified via Telegram if you open a Forum Topic.
 
 ## History/Why a Kohana alternative?
 
@@ -43,8 +41,6 @@ This was personal choice of @neo22s to keep the project as simple and easier to 
 ## What are the future plans for the project?
 
 Our focus is to keep the framework compatible with new releases of PHP, fix bugs and try to improve the speed. New features can be added using modules.
-
-There is a dedicated [versions and roadmap](https://koseven.discourse.group/t/roadmap-koseven/13) page for the supported versions and plans.
 
 ## Documentation
 
@@ -68,10 +64,3 @@ Any help is more than welcome! Please see [Contributing](CONTRIBUTING.md) for de
 ## Special Thanks
 
 Special Thanks to all our Contibuters and our Community!
-
-## Sponsors
-Many thanks to our Sponsors:
-
-[Discourse Team](https://discourse.org/) for offering us a free Discourse Hosting of their great software!
-
-[JetBrains](https://www.jetbrains.com/) for offering us their awesome IDE(s)!

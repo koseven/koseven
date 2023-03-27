@@ -34,9 +34,6 @@
     "phpunit/phpcov": "^4.0",
     "php-coveralls/php-coveralls": "^2.0"
   },
-  "conflict": {
-    "kohana/core": "3.3.*"
-  },
   "replace": {
     "kohana/core": "3.3.*"
   }

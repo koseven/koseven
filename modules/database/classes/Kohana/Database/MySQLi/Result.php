@@ -28,6 +28,7 @@ class Kohana_Database_MySQLi_Result extends Database_Result {
 		}
 	}
 
+	#[\ReturnTypeWillChange]
 	public function seek($offset)
 	{
 		if ($this->offsetExists($offset) AND $this->_result->data_seek($offset))
@@ -43,6 +44,7 @@ class Kohana_Database_MySQLi_Result extends Database_Result {
 		}
 	}
 
+	#[\ReturnTypeWillChange]
 	public function current()
 	{
 		if ($this->_current_row !== $this->_internal_row AND ! $this->seek($this->_current_row))

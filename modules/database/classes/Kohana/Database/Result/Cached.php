@@ -28,6 +28,7 @@ class Kohana_Database_Result_Cached extends Database_Result {
 		return $this;
 	}
 
+	#[\ReturnTypeWillChange]
 	public function seek($offset)
 	{
 		if ($this->offsetExists($offset))
@@ -42,6 +43,7 @@ class Kohana_Database_Result_Cached extends Database_Result {
 		}
 	}
 
+	#[\ReturnTypeWillChange]
 	public function current()
 	{
 		// Return an array of the row

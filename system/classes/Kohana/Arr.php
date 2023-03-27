@@ -13,7 +13,7 @@ class Kohana_Arr {
 	/**
 	 * @var  string  default delimiter for path()
 	 */
-	public static $delimiter = '.';
+	public static $delimiter = '.'; 
 
 	/**
 	 * Tests if an array is associative or not.
@@ -101,7 +101,7 @@ class Kohana_Arr {
 		}
 		else
 		{
-			if (is_object($array) AND property_exists($array, $path))
+			if ((is_object($array) AND property_exists($array, $path)) || (is_array($array) AND array_key_exists($path, $array)))
 			{
 				// No need to do extra processing
 				return $array[$path];

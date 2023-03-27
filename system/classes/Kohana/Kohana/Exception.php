@@ -52,6 +52,8 @@ class Kohana_Kohana_Exception extends Exception {
         // Set the message
         $message = __($message, $variables);
 
+		if (is_null($message)) $message = '';
+
         // Pass the message and integer code to the parent
         parent::__construct($message, (int) $code, $previous);
 
@@ -163,7 +165,7 @@ class Kohana_Kohana_Exception extends Exception {
     public static function text($e)
     {
         if ( ! $e instanceof Exception AND ! $e instanceof Throwable )
-            throw InvalidArgumentException;
+            throw new InvalidArgumentException;
 
         return sprintf('%s [ %s ]: %s ~ %s [ %d ]',
             get_class($e), $e->getCode(), strip_tags($e->getMessage()), Debug::path($e->getFile()), $e->getLine());
@@ -179,7 +181,7 @@ class Kohana_Kohana_Exception extends Exception {
     public static function response($e)
     {
         if ( ! $e instanceof Exception AND ! $e instanceof Throwable )
-            throw InvalidArgumentException;
+            throw new InvalidArgumentException;
 
         try
         {

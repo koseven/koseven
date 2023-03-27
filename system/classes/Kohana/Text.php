@@ -23,7 +23,7 @@ class Kohana_Text {
 		70 => 'seventy',
 		60 => 'sixty',
 		50 => 'fifty',
-		40 => 'fourty',
+		40 => 'forty',
 		30 => 'thirty',
 		20 => 'twenty',
 		19 => 'nineteen',

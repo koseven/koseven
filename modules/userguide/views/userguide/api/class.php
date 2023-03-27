@@ -39,7 +39,7 @@ should not be accessed directly.
 
 <p class="note">
 <?php if ($path = $doc->class->getFilename()): ?>
-Class declared in <tt><?php echo Debug::path($path) ?></tt> on line <?php echo $doc->class->getStartLine() ?>.
+Class declared in <code><?php echo Debug::path($path) ?></code> on line <?php echo $doc->class->getStartLine() ?>.
 <?php else: ?>
 Class is not declared in a file, it is probably an internal <?php echo html::anchor('http://php.net/manual/class.'.strtolower($doc->class->name).'.php', 'PHP class') ?>.
 <?php endif ?>

@@ -35,7 +35,7 @@ class Kohana_Request_Client_Stream extends Request_Client_External {
 		// Process cookies
 		if ($cookies = $request->cookie())
 		{
-			$request->headers('cookie', http_build_query($cookies, NULL, '; '));
+			$request->headers('cookie', http_build_query($cookies, '', '; '));
 		}
 
 		// Get the message body
@@ -69,7 +69,7 @@ class Kohana_Request_Client_Stream extends Request_Client_External {
 
 		if ($query = $request->query())
 		{
-			$uri .= '?'.http_build_query($query, NULL, '&');
+			$uri .= '?'.http_build_query($query, '', '&');
 		}
 
 		$stream = fopen($uri, $mode, FALSE, $context);

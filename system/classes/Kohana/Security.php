@@ -86,7 +86,7 @@ class Kohana_Security {
 		else
 		{
 			// Otherwise, fall back to a hashed uniqid
-			return sha1(uniqid(NULL, TRUE));
+			return sha1(uniqid('', TRUE));
 		}
 	}
 

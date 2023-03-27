@@ -206,6 +206,7 @@ abstract class Kohana_Database_Result implements Countable, Iterator, SeekableIt
 	 *
 	 * @return  integer
 	 */
+	#[\ReturnTypeWillChange]
 	public function count()
 	{
 		return $this->_total_rows;
@@ -222,6 +223,7 @@ abstract class Kohana_Database_Result implements Countable, Iterator, SeekableIt
 	 * @param   int     $offset
 	 * @return  boolean
 	 */
+	#[\ReturnTypeWillChange]
 	public function offsetExists($offset)
 	{
 		return ($offset >= 0 AND $offset < $this->_total_rows);
@@ -235,6 +237,7 @@ abstract class Kohana_Database_Result implements Countable, Iterator, SeekableIt
 	 * @param   int     $offset
 	 * @return  mixed
 	 */
+	#[\ReturnTypeWillChange]
 	public function offsetGet($offset)
 	{
 		if ( ! $this->seek($offset))
@@ -253,6 +256,7 @@ abstract class Kohana_Database_Result implements Countable, Iterator, SeekableIt
 	 * @return  void
 	 * @throws  Kohana_Exception
 	 */
+	#[\ReturnTypeWillChange]
 	final public function offsetSet($offset, $value)
 	{
 		throw new Kohana_Exception('Database results are read-only');
@@ -267,6 +271,7 @@ abstract class Kohana_Database_Result implements Countable, Iterator, SeekableIt
 	 * @return  void
 	 * @throws  Kohana_Exception
 	 */
+	#[\ReturnTypeWillChange]
 	final public function offsetUnset($offset)
 	{
 		throw new Kohana_Exception('Database results are read-only');
@@ -279,6 +284,7 @@ abstract class Kohana_Database_Result implements Countable, Iterator, SeekableIt
 	 *
 	 * @return  integer
 	 */
+	#[\ReturnTypeWillChange]
 	public function key()
 	{
 		return $this->_current_row;
@@ -291,6 +297,7 @@ abstract class Kohana_Database_Result implements Countable, Iterator, SeekableIt
 	 *
 	 * @return  $this
 	 */
+	#[\ReturnTypeWillChange]
 	public function next()
 	{
 		++$this->_current_row;
@@ -317,6 +324,7 @@ abstract class Kohana_Database_Result implements Countable, Iterator, SeekableIt
 	 *
 	 * @return  $this
 	 */
+	#[\ReturnTypeWillChange]
 	public function rewind()
 	{
 		$this->_current_row = 0;
@@ -330,6 +338,7 @@ abstract class Kohana_Database_Result implements Countable, Iterator, SeekableIt
 	 *
 	 * @return  boolean
 	 */
+	#[\ReturnTypeWillChange]
 	public function valid()
 	{
 		return $this->offsetExists($this->_current_row);
