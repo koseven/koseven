@@ -21,6 +21,11 @@ abstract class Kohana_Session {
 	public static $instances = [];
 
 	/**
+	 * @var bool is a new session
+	 */
+	protected $_is_new = true;
+
+	/**
 	 * Creates a singleton session of the given type. Some session types
 	 * (native, database) also support restarting a session by passing a
 	 * session id as the second parameter.
@@ -328,6 +333,7 @@ abstract class Kohana_Session {
 		{
 			// Load the data locally
 			$this->_data = $data;
+			$this->_is_new = false;
 		}
 	}
 
