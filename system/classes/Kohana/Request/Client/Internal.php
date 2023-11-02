@@ -112,8 +112,8 @@ class Kohana_Request_Client_Internal extends Request_Client {
 		}
 		catch (Exception $e)
 		{
-			// Generate an appropriate Response object
-			$response = Kohana_Exception::_handler($e);
+			// Kaboodle customisation
+			throw $e;
 		}
 
 		// Restore the previous request
