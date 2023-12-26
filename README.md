@@ -14,7 +14,7 @@ Released under a [BSD license](LICENSE.md), Koseven can be used legally for any 
 
 ## Will work as dropin of Kohana?
 
-If you were using 3.3.x version you may need to make some small changes. Please refer to [upgrading from kohana](https://koseven.dev/guide/kohana/upgrading-from-kohana) section of the documentation.
+If you were using 3.3.x version you may need to make some small changes. Please refer to [upgrading from kohana](https://github.com/koseven/koseven.ga/blob/master/documentation/kohana/upgrading-from-kohana.md) section of the documentation.
 
 ## I Need help!
 
