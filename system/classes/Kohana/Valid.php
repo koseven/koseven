@@ -108,14 +108,14 @@ class Kohana_Valid {
      */
     public static function email($email, $strict = FALSE)
     {
-        if ($strict)
-        {
-            return filter_var(filter_var($email, FILTER_SANITIZE_STRING), FILTER_VALIDATE_EMAIL) !== FALSE;
-        }
-        else
-        {
-            return filter_var($email, FILTER_VALIDATE_EMAIL) !== FALSE;
-        }
+       	if ($strict)
+	{
+		return filter_var(filter_var($email, FILTER_SANITIZE_EMAIL), FILTER_VALIDATE_EMAIL) !== FALSE;
+	}
+	else
+	{
+		return filter_var($email, FILTER_VALIDATE_EMAIL) !== FALSE;
+	}
     }
 
 	/**
