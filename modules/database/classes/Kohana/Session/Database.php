@@ -42,6 +42,16 @@ class Kohana_Session_Database extends Session {
 	// The old session id
 	protected $_update_id;
 
+	protected $_save_empty_session = true;
+
+	protected $_session_update_interval = 0;
+
+	// The old session content
+	protected $_old_content;
+
+	// The old session last active
+	protected $_old_last_active;
+
 	public function __construct(array $config = NULL, $id = NULL)
 	{
 		if ( ! isset($config['group']))
@@ -71,6 +81,14 @@ class Kohana_Session_Database extends Session {
 			$this->_columns = $config['columns'];
 		}
 
+		if (isset($config['save_empty_session'])) {
+			$this->_save_empty_session = $config['save_empty_session'];
+		}
+
+		if (isset($config['session_update_interval'])) {
+			$this->_session_update_interval = $config['session_update_interval'];
+		}
+
 		parent::__construct($config, $id);
 
 		if (random_int(0, $this->_gc) === $this->_gc)
@@ -90,7 +108,10 @@ class Kohana_Session_Database extends Session {
 	{
 		if ($id OR $id = Cookie::get($this->_name))
 		{
-			$result = DB::select([$this->_columns['contents'], 'contents'])
+			$result = DB::select(
+				[$this->_columns['contents'], 'contents'],
+				[$this->_columns['last_active'], 'last_active']
+			)
 				->from($this->_table)
 				->where($this->_columns['session_id'], '=', ':id')
 				->limit(1)
@@ -101,6 +122,8 @@ class Kohana_Session_Database extends Session {
 			{
 				// Set the current session id
 				$this->_session_id = $this->_update_id = $id;
+				$this->_old_content = $result->get('contents');
+				$this->_old_last_active = $result->get('last_active');
 
 				// Return the contents
 				return $result->get('contents');
@@ -137,6 +160,25 @@ class Kohana_Session_Database extends Session {
 
 	protected function _write()
 	{
+
+		if ($this->_is_new && !$this->_save_empty_session &&
+			(count($this->_data) === 0 || ((count($this->_data) === 1) && isset($this->_data['last_active'])))
+		) {
+			return true; //do not write empty session
+		}
+
+		if ($this->_session_update_interval > 0) {
+			$new_last_active = $this->_data['last_active'];
+			$this->_data['last_active'] = $this->_old_last_active;
+			if ($this->_old_content === $this->__toString()) {
+				if ($new_last_active - $this->_old_last_active <= $this->_session_update_interval) {
+					return true; // do not update the session if it has not changed and is not older than the $this->_session_update_interval
+				}
+			}
+
+			$this->_data['last_active'] = $new_last_active;
+		}
+
 		if ($this->_update_id === NULL)
 		{
 			// Insert a new row
