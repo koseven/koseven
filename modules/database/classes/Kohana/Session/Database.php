@@ -81,12 +81,12 @@ class Kohana_Session_Database extends Session {
 			$this->_columns = $config['columns'];
 		}
 
-		if (isset($cofig['save_empty_session'])) {
-			$this->_save_empty_session = $cofig['save_empty_session'];
+		if (isset($config['save_empty_session'])) {
+			$this->_save_empty_session = $config['save_empty_session'];
 		}
 
-		if (isset($cofig['session_update_interval'])) {
-			$this->_session_update_interval = $cofig['session_update_interval'];
+		if (isset($config['session_update_interval'])) {
+			$this->_session_update_interval = $config['session_update_interval'];
 		}
 
 		parent::__construct($config, $id);
