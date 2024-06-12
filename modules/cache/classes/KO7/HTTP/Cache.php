@@ -383,6 +383,11 @@ class KO7_HTTP_Cache {
 			else
 			{
 				$hit_count = $this->_cache->get(HTTP_Cache::CACHE_HIT_KEY.$key);
+
+                if (!is_numeric($hit_count)) {
+                    $hit_count = 1;
+                }
+
 				$this->_cache->set(HTTP_Cache::CACHE_HIT_KEY.$key, ++$hit_count);
 			}
 

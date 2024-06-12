@@ -22,7 +22,7 @@ abstract class KO7_Encrypt_Engine {
 	protected $_key;
 
 	/**
-	 * Encryption Mode (mcrypt)
+	 * Encryption Mode
 	 * @var string
 	 */
 	protected $_mode;

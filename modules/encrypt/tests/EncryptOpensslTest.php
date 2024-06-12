@@ -7,7 +7,7 @@
  *
  * @package    KO7/Encrypt
  * @category   Test
- * 
+ *
  * @copyright  (c) 2007-2012 Kohana Team
  * @copyright  (c) 2016-2018 Koseven Team
  * @license    https://koseven.dev/LICENSE
@@ -73,7 +73,10 @@ class EncryptOpensslTest extends EncryptTestBase {
 	public function test_decrypt_invalid()
 	{
 		$encrypt = Encrypt::instance();
-		$this->assertNull($encrypt->decode('invalid!'));
+		$this->assertNull($encrypt->decode(base64_encode(json_encode([
+            'iv' => 'invalid',
+            'value' => 'invalid'
+        ]))));
 	}
 
 	/**

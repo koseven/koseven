@@ -344,13 +344,25 @@ class KO7_UTF8Test extends Unittest_TestCase
 	 */
 	public function provider_strcasecmp()
 	{
-		return [
-			['Cocoñùт',   'Cocoñùт', 0],
-			['Čau',       'Čauo',   -1],
-			['Čau',       'Ča',      1],
-			['Cocoñùт',   'Cocoñ',   4],
-			['Cocoñùт',   'Coco',    6],
-		];
+		//8.2.0	This function now returns -1 or 1, where it previously returned a negative or positive number.
+		if ( version_compare(PHP_VERSION, '8.2.0', '>=') ) {
+			return [
+				['Cocoñùт',   'Cocoñùт', 0],
+				['Čau',       'Čauo',   -1],
+				['Čau',       'Ča',      1],
+				['Cocoñùт',   'Cocoñ',   1],
+				['Cocoñùт',   'Coco',    1],
+			];
+		} else {
+			return [
+				['Cocoñùт',   'Cocoñùт', 0],
+				['Čau',       'Čauo',   -1],
+				['Čau',       'Ča',      1],
+				['Cocoñùт',   'Cocoñ',   4],
+				['Cocoñùт',   'Coco',    6],
+			];
+
+		}
 	}
 
 	/**
@@ -483,11 +495,20 @@ class KO7_UTF8Test extends Unittest_TestCase
 
 	/**
 	 * Tests UTF8::str_pad error
+	 * @test
+	 * @throws ValueError
+	 * @throws UTF8_Exception
 	 */
 	public function test_str_pad_error()
 	{
-		$this->expectException(UTF8_Exception::class);
-		UTF8::str_pad('Cocoñùт', 10, 'š', 15,  'šCocoñùтšš');
+		{
+			if ( version_compare(PHP_VERSION, '8.3.0', '>=') ) {
+				$this->expectException(ValueError::class);
+			} else {
+				$this->expectException(UTF8_Exception::class);
+			}
+			UTF8::str_pad('Cocoñùт', 10, 'š', 15,  'šCocoñùтšš');
+		}
 	}
 
 	/**

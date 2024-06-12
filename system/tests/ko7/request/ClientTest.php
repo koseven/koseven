@@ -36,7 +36,7 @@ class KO7_Request_ClientTest extends Unittest_TestCase
 		$routes_prop = $route_class->getProperty('_routes');
 		$routes_prop->setAccessible(TRUE);
 
-		self::$_original_routes = $routes_prop->getValue('Route');
+		self::$_original_routes = $routes_prop->getValue(new Route);
 
 		$routes = [
 			'ko_request_clienttest' => new Route('<controller>/<action>/<data>',['data'=>'.+'])

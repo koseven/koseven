@@ -20,3 +20,4 @@ composer.lock
 # Coverage reports
 /build/logs/
 /memory
+/.phpunit.cache/code-coverage/

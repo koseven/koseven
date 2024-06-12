@@ -191,7 +191,10 @@ class KO7_Unittest_Tests {
 					// then it's safe to whitelist
 					self::$cache[$file] =  ($cascading_file === $file);
 				}
-				$suite->addFileToWhitelist($file);
+				//$suite->addFileToWhitelist($file);
+				//vendor/phpunit/php-code-coverage/ChangeLog-9.2.md
+				//`SebastianBergmann\CodeCoverage\Filter::addFileToWhitelist()` has been renamed to `SebastianBergmann\CodeCoverage\Filter::includeFile()`
+				(new SebastianBergmann\CodeCoverage\Filter)->includeFile($file);
 			}
 		}
 	}

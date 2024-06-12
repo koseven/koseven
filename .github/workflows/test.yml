@@ -19,21 +19,3 @@ jobs:
 
       - name: Run Koseven Unittest(s)
         run: docker exec unittest /bin/sh -c "cd /tmp/koseven; php vendor/bin/phpunit"
-
-      - name: Link Coverage Report
-        run: ln -s $(pwd) /tmp/koseven
-
-      - name: Upload Application Coverage
-        env:
-          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
-        run: bash <(curl -s https://codecov.io/bash) -f /tmp/koseven/build/logs/clover.xml -F application
-
-      - name: Upload Modules Coverage
-        env:
-          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
-        run: bash <(curl -s https://codecov.io/bash) -f /tmp/koseven/build/logs/clover.xml -F modules
-
-      - name: Upload System Coverage
-        env:
-          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
-        run: bash <(curl -s https://codecov.io/bash) -f /tmp/koseven/build/logs/clover.xml -F system

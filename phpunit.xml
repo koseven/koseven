@@ -1,38 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<phpunit
-		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-		xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/8.0/phpunit.xsd"
-		bootstrap="modules/unittest/bootstrap.php"
-		cacheTokens="true"
-		beStrictAboutOutputDuringTests="true"
-		beStrictAboutTodoAnnotatedTests="true"
-		convertErrorsToExceptions="true"
-		convertNoticesToExceptions="true"
-		convertWarningsToExceptions="true"
-		stopOnFailure="false"
-	>
-	<php>
-		<ini name="memory_limit" value="512M" />
-	</php>
-
-	<!-- Koseven Test Suite -->
-	<testsuite name="default">
-		<directory suffix="tests.php">modules/unittest/</directory>
-		<directory suffix="tests.php">./modules/unittest</directory>
-	</testsuite>
-
-	<!-- Path to store coverage reports -->
-	<logging>
-		<log type="coverage-clover" target="build/logs/clover.xml"/>
-		<log type="coverage-html" target="build/logs/"/>
-	</logging>
-
-	<!-- Whitelist for Coverage Support -->
-	<filter>
-		<whitelist processUncoveredFilesFromWhitelist="true">
-			<directory suffix=".php">./application/classes</directory>
-			<directory suffix=".php">./modules/*/classes</directory>
-			<directory suffix=".php">./system/classes</directory>
-		</whitelist>
-	</filter>
+<!--TODO Refactoring https://github.com/sebastianbergmann/phpunit/issues/4599-->
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/9.6/phpunit.xsd"
+         bootstrap="modules/unittest/bootstrap.php"
+         beStrictAboutOutputDuringTests="true"
+         failOnRisky="false"
+         failOnWarning="false"
+         stopOnFailure="false">
+    <coverage cacheDirectory=".phpunit.cache/code-coverage">
+        <include>
+            <directory suffix=".php">./application/classes</directory>
+            <directory suffix=".php">./modules/*/classes</directory>
+            <directory suffix=".php">./system/classes</directory>
+        </include>
+        <report>
+            <clover outputFile="build/logs/clover.xml"/>
+            <html outputDirectory="build/logs/"/>
+        </report>
+    </coverage>
+    <php>
+        <ini name="memory_limit" value="512M"/>
+    </php>
+    <!-- Koseven Test Suite -->
+    <testsuite name="default">
+        <directory suffix="tests.php">modules/unittest/</directory>
+        <directory suffix="tests.php">./modules/unittest</directory>
+    </testsuite>
+    <!-- Path to store coverage reports -->
+    <logging/>
 </phpunit>

@@ -8,7 +8,7 @@ use PHPUnit\Framework\TestCase;
  *
  * @package    KO7/UnitTest
  *
- * 
+ *
  * @copyright  (c) 2007-2012 Kohana Team
  * @copyright  (c) 2016-2018 Koseven Team
  * @license    https://koseven.dev/LICENSE
@@ -154,7 +154,7 @@ abstract class KO7_Unittest_TestCase extends TestCase {
 	protected static function tag_match(array $matcher, string $actual, $isHtml = NULL) : bool
 	{
 		KO7::deprecated('4.0');
-		$tags = PHPUnit\Util\Xml::load($actual, $isHtml ?? TRUE)->getElementsByTagName($matcher['tag']);
+		$tags = (new PHPUnit\Util\Xml\Loader)->load($actual, $isHtml ?? TRUE)->getElementsByTagName($matcher['tag']);
 
 		return count($tags) > 0 && $tags[0] instanceof DOMNode;
 	}

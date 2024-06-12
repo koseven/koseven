@@ -74,8 +74,10 @@ class EncryptSodiumTest extends EncryptTestBase {
 	public function test_decrypt_invalid()
 	{
 		$encrypt = Encrypt::instance();
-		$this->assertNull($encrypt->decode(':/invalid?1'));
-		$this->assertNull($encrypt->decode(base64_encode('asdasd')));
+        $this->assertNull($encrypt->decode(base64_encode(json_encode([
+            'iv' => 'invalid',
+            'value' => 'invalid'
+        ]))));
 	}
 
 	/**

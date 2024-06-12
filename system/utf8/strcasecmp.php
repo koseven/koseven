@@ -16,5 +16,6 @@ function _strcasecmp($str1, $str2)
 
 	$str1 = UTF8::strtolower($str1);
 	$str2 = UTF8::strtolower($str2);
+	// 8.2.0	This function now returns -1 or 1, where it previously returned a negative or positive number.
 	return strcmp($str1, $str2);
 }

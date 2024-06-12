@@ -68,6 +68,9 @@ abstract class KO7_Unittest_TestSuite extends TestSuite
 	 */
 	public function addFileToWhitelist(string $file) : void
 	{
-		$this->_filter_calls['addFileToWhitelist'][] = $file;
+		//vendor/phpunit/php-code-coverage/ChangeLog-9.2.md
+		//`SebastianBergmann\CodeCoverage\Filter::addFileToWhitelist()` has been renamed to `SebastianBergmann\CodeCoverage\Filter::includeFile()`
+		(new SebastianBergmann\CodeCoverage\Filter)->includeFile($file);
+		//$this->_filter_calls['addFileToWhitelist'][] = $file;
 	}
 }

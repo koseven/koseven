@@ -14,6 +14,11 @@ function _strtolower($str)
 	if (UTF8::is_ascii($str))
 		return strtolower($str);
 
+	//https://www.php.net/manual/en/function.strtolower.php
+	//https://www.php.net/manual/en/function.mb-strtolower.php
+	//@since (PHP 4 >= 4.3.0, PHP 5, PHP 7, PHP 8)
+	return mb_strtolower($str, 'UTF-8');
+
 	static $utf8_upper_to_lower = NULL;
 
 	if ($utf8_upper_to_lower === NULL)

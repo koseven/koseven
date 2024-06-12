@@ -25,7 +25,10 @@ class KO7_HTTPTest extends Unittest_TestCase {
 	public function setUp(): void
 	{
 		parent::setUp();
-		Request::$initial = new Request('/');
+        Request::$initial = new Request('/');
+        $this->environmentDefault += [
+            'Request::$initial' => Request::$initial,
+        ];
 	}
 
 	/**
@@ -34,7 +37,6 @@ class KO7_HTTPTest extends Unittest_TestCase {
 	 * @var array
 	 */
 	protected $environmentDefault = [
-		'Request::$initial',
 		'url.trusted_hosts' => ['www\.example\.com'],
 		'KO7::$base_url' 	=> '/ko7/',
 		'KO7::$index_file' 	=> 'index.php',
@@ -150,7 +152,6 @@ class KO7_HTTPTest extends Unittest_TestCase {
 	 */
 	public function test_request_headers(array $server_globals, array $expected_headers): void
 	{
-		$this->markTestSkipped('HTTP_Header has no public properties');
 		// save the $_SERVER super-global into temporary local var
 		$tmp_server = $_SERVER;
 

@@ -1,6 +1,6 @@
 # Encryption
 
-The encrypt module is included with Koseven, but needs to be enabled before you can use it. To enable, open your 
+The encrypt module is included with Koseven, but needs to be enabled before you can use it. To enable, open your
 `application/bootstrap.php` file and modify the `$modules` variable by including the encrypt module like so:
 
     $modules = [
@@ -9,7 +9,7 @@ The encrypt module is included with Koseven, but needs to be enabled before you 
         ...
     ];
 
-Also ensure you either have the Mcrypt, OpenSSL or Sodium extension loaded to your PHP config. 
+Also ensure you either have the OpenSSL or Sodium extension loaded to your PHP config.
 
 ## Configuration
 Copy the default config/encryption.php to your application/config folder.
@@ -41,14 +41,13 @@ You can generate those for example by using the [pwgen linux program](http://lin
 The 'type' key tells the Encryption module which driver engine to use.
 The following Engines are currently supported by default:
 
-- mcrypt (deprecated)
 - openssl
 - sodium
 
 ## Basic Usage
 
-To use the Encryption class, obtain an instance of the Encrypt class by calling it's *instance* method, optionally 
-passing the desired configuration group. If you do not pass a config group to the instance method, the default group 
+To use the Encryption class, obtain an instance of the Encrypt class by calling it's *instance* method, optionally
+passing the desired configuration group. If you do not pass a config group to the instance method, the default group
 will be used.
 
     $encrypt = Encrypt::instance('tripledes');
@@ -76,6 +75,6 @@ To decode some data, load it from the place you stored it (most likely your data
 
 You can't know in advance what the encoded string will be, and it's not reproducible, either.
 That said, you can encode the same value over and over, but you'll always obtain a different encoded version,
-even without changing your key, cipher and mode. This is because Koseven adds some random entropy before encoding it 
-with your value. This ensures an attacker cannot easily discover your key and cipher, even given a collection of encoded 
+even without changing your key, cipher and mode. This is because Koseven adds some random entropy before encoding it
+with your value. This ensures an attacker cannot easily discover your key and cipher, even given a collection of encoded
 values.

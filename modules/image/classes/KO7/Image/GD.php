@@ -279,7 +279,7 @@ class KO7_Image_GD extends Image {
 		$transparent = imagecolorallocatealpha($this->_image, 0, 0, 0, 127);
 
 		// Rotate, setting the transparent color
-		$image = imagerotate($this->_image, 360 - $degrees, $transparent, 1);
+		$image = imagerotate($this->_image, 360 - $degrees, $transparent);
 
 		// Save the alpha of the rotated image
 		imagesavealpha($image, TRUE);
