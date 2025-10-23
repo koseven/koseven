@@ -115,7 +115,7 @@ class Kohana_Database_Query {
 	 * @param   array   $params
 	 * @return  $this
 	 */
-	public function as_object($class = TRUE, array $params = NULL)
+	public function as_object($class = TRUE, ?array $params = NULL)
 	{
 		$this->_as_object = $class;
 

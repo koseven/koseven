@@ -432,7 +432,7 @@ class Kohana_Response implements HTTP_Response {
 	 * @uses    File::mime
 	 * @uses    Request::send_headers
 	 */
-	public function send_file($filename, $download = NULL, array $options = NULL)
+	public function send_file($filename, $download = NULL, ?array $options = NULL)
 	{
 		if ( ! empty($options['mime_type']))
 		{

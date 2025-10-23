@@ -128,7 +128,7 @@ class Kohana_Minion_CLI {
 	 * @param  array   $options array of options the user is shown
 	 * @return string  the user input
 	 */
-	public static function read($text = '', array $options = NULL)
+	public static function read($text = '', ?array $options = NULL)
 	{
 		// If a question has been asked with the read
 		$options_output = '';

@@ -31,7 +31,7 @@ abstract class Kohana_Unittest_TestSuite extends TestSuite
 	 * @param TestResult|null $result
 	 * @return TestResult
 	 */
-    public function run(TestResult $result = NULL): TestResult
+    public function run(?TestResult $result = NULL): TestResult
     {
 		// Get the code coverage filter from the suite's result object
 		$coverage = $result->getCodeCoverage();

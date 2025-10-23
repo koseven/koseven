@@ -78,7 +78,7 @@ function koggle(elem)
 				</div>
 
 													<pre id="error4ac2453378034source0" class="source collapsed"><code><pre class="source"><code><span class="line"><span class="number">110</span> 	 */
-</span><span class="line"><span class="number">111</span> 	public function __construct($file = NULL, array $data = NULL)
+</span><span class="line"><span class="number">111</span> 	public function __construct($file = NULL, ?array $data = NULL)
 </span><span class="line"><span class="number">112</span> 	{
 </span><span class="line"><span class="number">113</span> 		if ($file !== NULL)
 </span><span class="line"><span class="number">114</span> 		{
@@ -118,7 +118,7 @@ function koggle(elem)
 
 </span><span class="line"><span class="number">22</span> 	 * @return  View
 </span><span class="line"><span class="number">23</span> 	 */
-</span><span class="line"><span class="number">24</span> 	public static function factory($file = NULL, array $data = NULL)
+</span><span class="line"><span class="number">24</span> 	public static function factory($file = NULL, ?array $data = NULL)
 </span><span class="line"><span class="number">25</span> 	{
 </span><span class="line highlight"><span class="number">26</span> 		return new View($file, $data);
 </span><span class="line"><span class="number">27</span> 	}

@@ -152,7 +152,7 @@ if ( ! function_exists('__'))
 	 * @param   string  $lang   source language
 	 * @return  string
 	 */
-	function __($string, array $values = NULL, $lang = 'en-us')
+	function __($string, ?array $values = NULL, $lang = 'en-us')
 	{
 		if ($lang !== I18n::$lang)
 		{

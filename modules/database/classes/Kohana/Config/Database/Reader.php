@@ -20,7 +20,7 @@ class Kohana_Config_Database_Reader implements Kohana_Config_Reader
 	 *
 	 * @param array Configuration for the reader
 	 */
-	public function __construct(array $config = NULL)
+	public function __construct(?array $config = NULL)
 	{
 		if (isset($config['instance']))
 		{

@@ -182,7 +182,7 @@ class Kohana_Cache_Sqlite extends Cache implements Cache_Tagging, Cache_GarbageC
 	 * @return  boolean
 	 * @throws  Cache_Exception
 	 */
-	public function set_with_tags($id, $data, $lifetime = NULL, array $tags = NULL)
+	public function set_with_tags($id, $data, $lifetime = NULL, ?array $tags = NULL)
 	{
 		// Serialize the data
 		$data = serialize($data);

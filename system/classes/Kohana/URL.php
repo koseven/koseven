@@ -197,7 +197,7 @@ class Kohana_URL {
 	 * @param   boolean  $use_get  Include current request GET parameters
 	 * @return  string
 	 */
-	public static function query(array $params = NULL, $use_get = TRUE)
+	public static function query(?array $params = NULL, $use_get = TRUE)
 	{
 		if ($use_get)
 		{
@@ -277,7 +277,7 @@ class Kohana_URL {
 	 * @param array $trusted_hosts
 	 * @return boolean TRUE if $host is trustworthy
 	 */
-	public static function is_trusted_host($host, array $trusted_hosts = NULL)
+	public static function is_trusted_host($host, ?array $trusted_hosts = NULL)
 	{
 
 		// If list of trusted hosts is not directly provided read from config

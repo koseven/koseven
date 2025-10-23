@@ -119,7 +119,7 @@ class Kohana_Log {
 	 * @param   array   $additional  additional custom parameters to supply to the log writer
 	 * @return  Log
 	 */
-	public function add($level, $message, array $values = NULL, array $additional = NULL)
+	public function add($level, $message, ?array $values = NULL, ?array $additional = NULL)
 	{
 		if ($values)
 		{

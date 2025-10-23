@@ -32,7 +32,7 @@ class Kohana_Form {
 	 * @uses    URL::site
 	 * @uses    HTML::attributes
 	 */
-	public static function open($action = NULL, array $attributes = NULL)
+	public static function open($action = NULL, ?array $attributes = NULL)
 	{
 		if ($action instanceof Request)
 		{
@@ -90,7 +90,7 @@ class Kohana_Form {
 	 * @return  string
 	 * @uses    HTML::attributes
 	 */
-	public static function input($name, $value = NULL, array $attributes = NULL)
+	public static function input($name, $value = NULL, ?array $attributes = NULL)
 	{
 		// Set the input name
 		$attributes['name'] = $name;
@@ -118,7 +118,7 @@ class Kohana_Form {
 	 * @return  string
 	 * @uses    Form::input
 	 */
-	public static function hidden($name, $value = NULL, array $attributes = NULL)
+	public static function hidden($name, $value = NULL, ?array $attributes = NULL)
 	{
 		$attributes['type'] = 'hidden';
 
@@ -136,7 +136,7 @@ class Kohana_Form {
 	 * @return  string
 	 * @uses    Form::input
 	 */
-	public static function password($name, $value = NULL, array $attributes = NULL)
+	public static function password($name, $value = NULL, ?array $attributes = NULL)
 	{
 		$attributes['type'] = 'password';
 
@@ -153,7 +153,7 @@ class Kohana_Form {
 	 * @return  string
 	 * @uses    Form::input
 	 */
-	public static function file($name, array $attributes = NULL)
+	public static function file($name, ?array $attributes = NULL)
 	{
 		$attributes['type'] = 'file';
 
@@ -172,7 +172,7 @@ class Kohana_Form {
 	 * @return  string
 	 * @uses    Form::input
 	 */
-	public static function checkbox($name, $value = NULL, $checked = FALSE, array $attributes = NULL)
+	public static function checkbox($name, $value = NULL, $checked = FALSE, ?array $attributes = NULL)
 	{
 		$attributes['type'] = 'checkbox';
 
@@ -198,7 +198,7 @@ class Kohana_Form {
 	 * @return  string
 	 * @uses    Form::input
 	 */
-	public static function radio($name, $value = NULL, $checked = FALSE, array $attributes = NULL)
+	public static function radio($name, $value = NULL, $checked = FALSE, ?array $attributes = NULL)
 	{
 		$attributes['type'] = 'radio';
 
@@ -224,7 +224,7 @@ class Kohana_Form {
 	 * @uses    HTML::attributes
 	 * @uses    HTML::chars
 	 */
-	public static function textarea($name, $body = '', array $attributes = NULL, $double_encode = TRUE)
+	public static function textarea($name, $body = '', ?array $attributes = NULL, $double_encode = TRUE)
 	{
 		// Set the input name
 		$attributes['name'] = $name;
@@ -249,7 +249,7 @@ class Kohana_Form {
 	 * @return  string
 	 * @uses    HTML::attributes
 	 */
-	public static function select($name, array $options = NULL, $selected = NULL, array $attributes = NULL)
+	public static function select($name, ?array $options = NULL, $selected = NULL, ?array $attributes = NULL)
 	{
 		// Set the input name
 		$attributes['name'] = $name;
@@ -351,7 +351,7 @@ class Kohana_Form {
 	 * @return  string
 	 * @uses    Form::input
 	 */
-	public static function submit($name, $value, array $attributes = NULL)
+	public static function submit($name, $value, ?array $attributes = NULL)
 	{
 		$attributes['type'] = 'submit';
 
@@ -370,7 +370,7 @@ class Kohana_Form {
 	 * @return  string
 	 * @uses    Form::input
 	 */
-	public static function image($name, $value, array $attributes = NULL, $index = FALSE)
+	public static function image($name, $value, ?array $attributes = NULL, $index = FALSE)
 	{
 		if ( ! empty($attributes['src']))
 		{
@@ -398,7 +398,7 @@ class Kohana_Form {
 	 * @return  string
 	 * @uses    HTML::attributes
 	 */
-	public static function button($name, $body, array $attributes = NULL)
+	public static function button($name, $body, ?array $attributes = NULL)
 	{
 		// Set the input name
 		$attributes['name'] = $name;
@@ -417,7 +417,7 @@ class Kohana_Form {
 	 * @return  string
 	 * @uses    HTML::attributes
 	 */
-	public static function label($input, $text = NULL, array $attributes = NULL)
+	public static function label($input, $text = NULL, ?array $attributes = NULL)
 	{
 		if ($text === NULL)
 		{

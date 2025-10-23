@@ -210,7 +210,7 @@ class Kohana_Route {
 	 * @since   3.0.7
 	 * @uses    URL::site
 	 */
-	public static function url($name, array $params = NULL, $protocol = NULL)
+	public static function url($name, ?array $params = NULL, $protocol = NULL)
 	{
 		$route = Route::get($name);
 
@@ -237,7 +237,7 @@ class Kohana_Route {
 	 * @uses    Route::REGEX_ESCAPE
 	 * @uses    Route::REGEX_SEGMENT
 	 */
-	public static function compile($uri, array $regex = NULL)
+	public static function compile($uri, ?array $regex = NULL)
 	{
 		// The URI should be considered literal except for keys and optional parts
 		// Escape everything preg_quote would escape except for : ( ) < >
@@ -344,7 +344,7 @@ class Kohana_Route {
 	 * @param   array   $defaults   key values
 	 * @return  $this or array
 	 */
-	public function defaults(array $defaults = NULL)
+	public function defaults(?array $defaults = NULL)
 	{
 		if ($defaults === NULL)
 		{
@@ -506,7 +506,7 @@ class Kohana_Route {
 	 * @uses    Route::REGEX_GROUP
 	 * @uses    Route::REGEX_KEY
 	 */
-	public function uri(array $params = NULL)
+	public function uri(?array $params = NULL)
 	{
 		if ($params)
 		{

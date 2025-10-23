@@ -25,7 +25,7 @@ class Kohana_View {
 	 * @param   array   $data   array of values
 	 * @return  View
 	 */
-	public static function factory($file = NULL, array $data = NULL)
+	public static function factory($file = NULL, ?array $data = NULL)
 	{
 		return new View($file, $data);
 	}
@@ -138,7 +138,7 @@ class Kohana_View {
 	 * @param   array   $data   array of values
 	 * @uses    View::set_filename
 	 */
-	public function __construct($file = NULL, array $data = NULL)
+	public function __construct($file = NULL, ?array $data = NULL)
 	{
 		if ($file !== NULL)
 		{

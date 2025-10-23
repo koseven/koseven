@@ -209,7 +209,7 @@ class Kohana_HTTP_Cache {
 	 * @return  Kohana_Cache
 	 * @return  Kohana_Request_Client
 	 */
-	public function cache(Cache $cache = NULL)
+	public function cache(?Cache $cache = NULL)
 	{
 		if ($cache === NULL)
 			return $this->_cache;
@@ -352,7 +352,7 @@ class Kohana_HTTP_Cache {
 	 * @param   Response    $response   the HTTP Response
 	 * @return  mixed
 	 */
-	public function cache_response($key, Request $request, Response $response = NULL)
+	public function cache_response($key, Request $request, ?Response $response = NULL)
 	{
 		if ( ! $this->_cache instanceof Cache)
 			return FALSE;

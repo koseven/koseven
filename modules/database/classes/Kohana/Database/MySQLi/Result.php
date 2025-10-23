@@ -12,7 +12,7 @@ class Kohana_Database_MySQLi_Result extends Database_Result {
 
 	protected $_internal_row = 0;
 
-	public function __construct($result, $sql, $as_object = FALSE, array $params = NULL)
+	public function __construct($result, $sql, $as_object = FALSE, ?array $params = NULL)
 	{
 		parent::__construct($result, $sql, $as_object, $params);
 

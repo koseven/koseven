@@ -33,7 +33,7 @@ class Kohana_Encrypt {
 	 * @param   string  $name   configuration group name
 	 * @return  Encrypt
 	 */
-	public static function instance($name = NULL, array $config = NULL)
+	public static function instance($name = NULL, ?array $config = NULL)
 	{
 		if ($name === NULL)
 		{

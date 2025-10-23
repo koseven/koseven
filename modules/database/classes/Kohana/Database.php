@@ -49,7 +49,7 @@ abstract class Kohana_Database {
 	 * @param   array    $config  configuration parameters
 	 * @return  Database
 	 */
-	public static function instance($name = NULL, array $config = NULL)
+	public static function instance($name = NULL, ?array $config = NULL)
 	{
 		if ($name === NULL)
 		{
@@ -204,7 +204,7 @@ abstract class Kohana_Database {
 	 * @return  array    list (insert id, row count) for INSERT queries
 	 * @return  integer  number of affected rows for all other queries
 	 */
-	abstract public function query($type, $sql, $as_object = FALSE, array $params = NULL);
+	abstract public function query($type, $sql, $as_object = FALSE, ?array $params = NULL);
 
 	/**
 	 * Start a SQL transaction

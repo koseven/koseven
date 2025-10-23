@@ -22,7 +22,7 @@ interface Kohana_Cache_Tagging {
 	 * @param   array    $tags      tags [Optional]
 	 * @return  boolean
 	 */
-	public function set_with_tags($id, $data, $lifetime = NULL, array $tags = NULL);
+	public function set_with_tags($id, $data, $lifetime = NULL, ?array $tags = NULL);
 
 	/**
 	 * Delete cache entries based on a tag

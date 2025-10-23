@@ -165,7 +165,7 @@ abstract class Kohana_Request_Client {
 	 * @return  HTTP_Cache
 	 * @return  Request_Client
 	 */
-	public function cache(HTTP_Cache $cache = NULL)
+	public function cache(?HTTP_Cache $cache = NULL)
 	{
 		if ($cache === NULL)
 			return $this->_cache;
